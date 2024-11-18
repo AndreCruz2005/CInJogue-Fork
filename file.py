@@ -1,3 +1,7 @@
+"""
+Utiliza a biblioteca PyQt5 para criar a interface de usuário
+"""
+
 import google.generativeai as genai
 from google.generativeai import caching
 from PyQt5.QtCore import *
