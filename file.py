@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.Qt import *
 import sys, datetime
 
-genai.configure(api_key="AIzaSyAGXnQtI-EKxrKwgWXDP7lwV-Zc6udbL8M")
+genai.configure(api_key="API_KEY_PLACEHOLDER")
 
 # Cache
 cache = caching.CachedContent.create(
