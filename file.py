@@ -71,7 +71,7 @@ class MainWindow(QMainWindow):
     def ai_response(self):
         # Take the text in the user input
         prompt = self.input_field.text()
-        if prompt is "":  # Não enviar prompt vazio
+        if prompt == "":  # Não enviar prompt vazio
             return
 
         # Criar objeto de mensagem do prompt
