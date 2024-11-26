@@ -1,8 +1,8 @@
 import requests
 
 # API Keys
-GIANT_BOMB_API = "7c3d6fc91c3c089a173e05efa8c28ecda8a79a40" # Games database
-TMDB_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNDY0YTMyZDYzNThhZjk3ZWZiMDhkNzI0NjY5OGE2OSIsIm5iZiI6MTczMjIwMDg0My45NTY0NjcyLCJzdWIiOiI2NzNmNDZlZjMwNGVmYzlhZDEyMTFkNTEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vYODMIzjBZ4tShcGtcm5z5SsL8P34jSf8wyE_WU328Y" # Movies database
+GIANT_BOMB_API = "PLACEHOLDER" # Games database
+TMDB_API = "PLACEHOLDER" # Movies database
 
 # Função para pesquisar nomes de filmes no TMDB 
 def get_movie_data(movie_name, API_KEY=TMDB_API):
