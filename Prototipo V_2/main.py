@@ -46,7 +46,7 @@ except FileNotFoundError:
     cache = {'game':{}, 'movie':{}}
 
 # API Keys
-GOOGLE_API = "AIzaSyAGXnQtI-EKxrKwgWXDP7lwV-Zc6udbL8M"
+GOOGLE_API = "PLACEHOLDER"
 
 # Inicializa Gemini
 genai.configure(api_key=GOOGLE_API)
