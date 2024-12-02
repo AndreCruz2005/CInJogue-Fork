@@ -226,7 +226,7 @@ class AiResponseThread(QThread):
                         adding = Add(item, self.mode, self.current_library)
                         self.threadpool.start(adding)          
                                 
-                elif command == "Set_state":
+                elif command == "Set State":
                     new_states = response_dictionary.get("new_states", {})
                     for item, state in new_states.items():
                         
@@ -234,7 +234,7 @@ class AiResponseThread(QThread):
                         if item in self.current_library:
                             self.current_library[item]['state'] = state
 
-                elif command == "Set_rating":
+                elif command == "Set Rating":
                     new_ratings = response_dictionary.get("new_ratings", {})
                     for item, rating in new_ratings.items():
                         
@@ -267,7 +267,7 @@ class MainWindow(QMainWindow):
 
         # Informações de uso do app
         self.mode = 'game'
-        self.language = 'en' # Vá em frente, implemente duas idiomas no app e uma configuração pra trocar entre elas pela GUI
+        self.language = 'pt' # Vá em frente, implemente duas idiomas no app e uma configuração pra trocar entre elas pela GUI
         self.user_data = user_data
 
         # Bibilioteca que será enviada a IA
