@@ -27,13 +27,6 @@ class LibaryRegion(QWidget):
             if mode_name != '': # Botões
                 button = QPushButton(self.library_topbar)
                 button.setText("JOGOS" if  mode_name == 'GAME' else "FILMES")
-                button.setStyleSheet(
-                    f"background-color: {app_color_palette['medium' if mode_name == parent.mode.upper() else 'dark-medium'][parent.mode]}; "
-                    f"border-top: 3px solid {app_color_palette['medium'][parent.mode]}; border-left: 3px solid {app_color_palette['medium'][parent.mode]}; border-right: 3px solid {app_color_palette['medium'][parent.mode]};"
-                    f"color: {app_color_palette['light'][parent.mode]}; "
-                    f"font-weight: bold;"
-                    f"font-size: 25px;"
-                )                
                 button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
                 # Conecta cada botão a função switch mode enviado o nome como parâmetro
@@ -43,9 +36,7 @@ class LibaryRegion(QWidget):
 
         # Label com o título da biblioteca na direita do cabeçalho
         self.title = QLabel(self)
-        self.title.setText(f'MINHA BIBLIOTECA DE {"JOGOS" if parent.mode.upper() == 'GAME' else 'FILMES'}')
         self.title.setAlignment(Qt.AlignCenter)
-        self.title.setStyleSheet(f"color: {app_color_palette['light'][parent.mode]}; font-size: 60px; font-weight: bold;")
         self.library_topbar_layout.addWidget(self.title, stretch=7)
 
         # Adiciona o cabeçalho ao layout com stretch de 1
@@ -54,7 +45,6 @@ class LibaryRegion(QWidget):
         # Cria a area de scroll onde ficarão os filmes e jogos e adiciona ao layout stretch de 8
         self.scroll_area = QScrollArea(self)
         self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setStyleSheet(f"border: 3px solid {app_color_palette['medium'][parent.mode]}")
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.layout.addWidget(self.scroll_area, stretch=8)
@@ -65,6 +55,7 @@ class LibaryRegion(QWidget):
         self.scroll_area.setWidget(self.library_content)
         self.libary_grid = QGridLayout(self.library_content) # Grid, cada item na grid será os filmes e jogos
 
+        self.palette_setting(self.parent.mode)
         self.update()
 
     def switch_mode(self, button_text):
@@ -84,8 +75,6 @@ class LibaryRegion(QWidget):
 
     def remove_item(self, item):
         library = self.parent.game_library if self.parent.mode == 'game' else self.parent.movie_library
-        print(item)
-        print(library.keys())
         if item in library:
             del library[item]
             self.update()

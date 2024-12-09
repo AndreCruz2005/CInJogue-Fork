@@ -28,9 +28,6 @@ class AiRecommendationsRegion(QWidget):
         self.clear_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.clear_button.setText("APAGAR")
         self.clear_button.pressed.connect(self.clear_recommendations)
-        self.clear_button.setStyleSheet(f"background-color: {app_color_palette['medium'][parent.mode]};"
-                                        f"color: {app_color_palette['light'][parent.mode]};"
-                                        f"font-size: 15px; border: none; font-weight: bold;")
         self.topbar_layout.addWidget(self.clear_button, stretch=1)
 
         # Botão load more para carregar mover recomendações da low priority para high priority
@@ -38,15 +35,10 @@ class AiRecommendationsRegion(QWidget):
         self.load_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.load_button.setText("MOSTRAR\nMAIS")
         self.load_button.pressed.connect(self.load_recommendations)
-        self.load_button.setStyleSheet(f"background-color: {app_color_palette['medium'][parent.mode]};"
-                                        f"color: {app_color_palette['light'][parent.mode]};"
-                                        f"font-size: 15px; border: none; font-weight: bold;")
     
         # Título da área de recomendações
         self.title = QLabel(self)
-        self.title.setText(f"{'JOGOS' if parent.mode == 'game' else 'FILMES'} RECOMENDADOS")
         self.title.setAlignment(Qt.AlignCenter)
-        self.title.setStyleSheet(f"color: {app_color_palette['medium'][parent.mode]}; font-size: 30px; font-weight: bold;")
         self.topbar_layout.addWidget(self.title, stretch=5)
 
         # Adiciona elementos do layout do cabeçalho
@@ -57,7 +49,6 @@ class AiRecommendationsRegion(QWidget):
         # Scroll area para conter as recomendações
         self.scroll_area = QScrollArea(self)
         self.scroll_area.setStyleSheet("border: none;")
-        self.scroll_area.setStyleSheet(f"border-top: 5px solid {app_color_palette['medium'][parent.mode]}")
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -74,13 +65,11 @@ class AiRecommendationsRegion(QWidget):
         # Entrada de texto onde o usuário digitará sua mensagem para a IA
         self.user_chat_input = QLineEdit(self)
         self.user_chat_input.setPlaceholderText("Peça à IA recomendações ou que altere sua biblioteca")
-        self.user_chat_input.setStyleSheet(f"border-top: 3px solid {app_color_palette['medium'][parent.mode]};"
-                                           f"color: {app_color_palette['light'][parent.mode]};"
-                                           "font-size: 20px")
         self.user_chat_input.returnPressed.connect(parent.ai_response) # Chama a função da MainWindow ai_response() ao apertar enter
         self.user_chat_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.layout.addWidget(self.user_chat_input, stretch=1)
 
+        self.palette_setting(self.parent.mode)
         self.update()
 
     def palette_setting(self, mode):
