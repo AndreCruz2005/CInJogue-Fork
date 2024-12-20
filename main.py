@@ -2,14 +2,13 @@
 GUI feita com a biblioteca PyQt5
 API da Gemini AI: https://aistudio.google.com/app/u/1/apikey
 API do GiantBomb: https://www.giantbomb.com/api/
-API do TMDB: https://developer.themoviedb.org/reference/intro/authentication
 """
 import google.generativeai as genai
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.Qt import *
-from api_calling import get_game_data, get_movie_data, url_to_png
+from api_calling import get_game_data, url_to_png
 from app_function_data import app_color_palette, path_to_folder
 import sys, json, os, socket
 
@@ -22,7 +21,6 @@ directories = [
     'caching',
     'caching/images_cache',
     'caching/images_cache/game',
-    'caching/images_cache/movie'
 ]
 
 # Cria os diretórios caso não existam
@@ -36,18 +34,20 @@ user_data_path = os.path.join(path_to_folder, 'user_data.json')
 try:
     with open(user_data_path, 'r') as file:
         user_data = json.load(file)
-
-except FileNotFoundError:
-    user_data = {'movie_library': {}, 'game_library': {}, 'movie_recommendations': {'High Priority': {}, 'Low Priority': {}}, 'game_recommendations': {'High Priority': {}, 'Low Priority': {}}}
+        if not user_data:  # Verifica se o JSON está vazio
+            raise ValueError("JSON vazio")
+except (FileNotFoundError, ValueError, json.JSONDecodeError):
+    user_data = {'game_library': {}, 'game_recommendations': {'High Priority': {}, 'Low Priority': {}}}
 
 # Carregar dados de API
 api_cache_path = os.path.join(path_to_folder, 'caching/api_data_cache.json')
 try:
-    with open('caching/api_data_cache.json', 'r') as file:
+    with open(api_cache_path, 'r') as file:
         cache = json.load(file)
-
-except FileNotFoundError:
-    cache = {'game':{}, 'movie':{}}
+        if not cache:  # Verifica se o JSON está vazio
+            raise ValueError("JSON vazio")
+except (FileNotFoundError, ValueError, json.JSONDecodeError):
+    cache = {'game':{}}
 
 # Inicializa Gemini
 genai.configure(api_key=GOOGLE_API)
@@ -110,16 +110,14 @@ class Recommend(AICommandRunnable):
         super().__init__(item, mode, current_recommendations=current_recommendations)
 
     def run(self):
-        search_results = get_game_data(self.item) if self.mode == 'game' else get_movie_data(self.item)
+        search_results = get_game_data(self.item)
 
         for idx, result in enumerate(search_results):
 
             # Alta prioridade == Primeiros resultados de cada pesquisa. Serão exibidos antes dos demais na aba de recomendações
             priority = 'High Priority' if idx == 0 else 'Low Priority'
 
-            # TMDB usa a key 'title' para o nome dos filmes, GiantBomb usa a key 'name' para o nome dos jogos  
-            name_key = 'name' if self.mode == 'game' else 'title'
-            name = result.get(name_key)
+            name = result.get('name')
 
             # Evita adicionar None ao dicionário ou sobrescrever items já adicionados
             if name is not None and name not in self.current_recommendations[priority]:
@@ -151,12 +149,10 @@ class Add(AICommandRunnable):
         
         # Chama API caso contrário
         else:
-            search_results = get_game_data(self.item) if self.mode == 'game' else get_movie_data(self.item)
+            search_results = get_game_data(self.item)
             data = search_results[0] # Utiliza o primeiro resultado da pesuisa
 
-            # TMDB usa a key 'title' para o nome dos filmes, GiantBomb usa a key 'name' para o nome dos jogos
-            name_key = 'name' if self.mode == 'game' else 'title'
-            name = data.get(name_key)
+            name = data.get('name')
             
         if name is not None:
             # / Causa problemas ao tentar acessar o diretório para salvar a imagem
@@ -257,7 +253,7 @@ class AiResponseThread(QThread):
         except Exception as e:
             self.error.emit(str(e))
 
-from library_region import LibaryRegion
+from library_region import LibraryRegion
 from ai_recommendations_region import AiRecommendationsRegion
 
 # Janela
@@ -271,11 +267,9 @@ class MainWindow(QMainWindow):
         self.user_data = user_data
 
         # Bibilioteca que será enviada a IA
-        self.movie_library = user_data['movie_library']
         self.game_library = user_data['game_library']
 
         # Resultados de pesquisa associados aos seus dados recolhidos da API com base nas recomendações da IA
-        self.movie_recommendations = user_data['movie_recommendations']
         self.game_recommendations = user_data['game_recommendations']
 
         # Timer para limitar tempo de resposta de APIs
@@ -295,8 +289,8 @@ class MainWindow(QMainWindow):
         self.hbox = QHBoxLayout(self.center_widget)
         self.hbox.setContentsMargins(0, 0, 0, 0)
         
-        # Libary
-        self.library_region = LibaryRegion(self)
+        # LibraryRegion
+        self.library_region = LibraryRegion(self)
 
         # AI
         self.ai_recommendation_region = AiRecommendationsRegion(self)
@@ -309,18 +303,18 @@ class MainWindow(QMainWindow):
             return
         
         # Formata o prompt de usuário
-        current_libarary = self.game_library if self.mode == "game" else self.movie_library
-        current_recommendations = self.game_recommendations if self.mode == "game" else self.movie_recommendations
+        current_library = self.game_library
+        current_recommendations = self.game_recommendations
 
         # Omite os campos de data de cada dicionário para reduzir o tamanho do prompt enviado a IA
-        library_for_ai = {key : {'rating':current_libarary[key]['rating'], 'state':current_libarary[key]['state']} for key in current_libarary}
+        library_for_ai = {key : {'rating':current_library[key]['rating'], 'state':current_library[key]['state']} for key in current_library}
         recom_for_ai = [key for key in current_recommendations['High Priority']]
         
         # Prompt formatado
         formatted_prompt = {'type': self.mode, 'user_prompt': prompt, 'current_library': library_for_ai, 'current_recommendations': recom_for_ai}
 
         # Processa a resposta da IA criando uma instância da AiResponseThread
-        self.ai_thread = AiResponseThread(formatted_prompt, current_libarary, current_recommendations, self.mode)
+        self.ai_thread = AiResponseThread(formatted_prompt, current_library, current_recommendations, self.mode)
         self.ai_thread.processing_request.connect(self.lock_user_input)
         self.ai_thread.error.connect(self.handle_error)
         self.ai_thread.finished.connect(self.handle_response)
@@ -330,7 +324,7 @@ class MainWindow(QMainWindow):
         self.timer.start(60000)
 
     def lock_user_input(self, stage):
-        # Impende novas mensagens de serem enviadas enquato a IA e as APIs não finalizaram o processamento da última
+        # Impede novas mensagens de serem enviadas enquanto a IA e as APIs não finalizam o processamento da última
         self.ai_recommendation_region.user_chat_input.setReadOnly(True)
         self.ai_recommendation_region.user_chat_input.setText("")
 

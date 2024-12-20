@@ -84,7 +84,7 @@ class AiRecommendationsRegion(QWidget):
         self.scroll_area.setStyleSheet(f"border-top: 5px solid {app_color_palette['medium'][mode]}")
 
         # Título
-        self.title.setText(f"{'JOGOS' if mode == 'game' else 'FILMES'} RECOMENDADOS")
+        self.title.setText('JOGOS RECOMENDADOS')
         self.title.setStyleSheet(f"color: {app_color_palette['medium'][mode]}; font-size: 30px; font-weight: bold;")
 
         # Clear button
@@ -108,7 +108,7 @@ class AiRecommendationsRegion(QWidget):
 
         # Pega o modo e recomendações de acordo com o modo da main window
         mode = self.parent.mode
-        recomendations = self.parent.game_recommendations if mode == 'game' else self.parent.movie_recommendations
+        recomendations = self.parent.game_recommendations
 
         for idx, key in enumerate(recomendations['High Priority']):
             item_displayer = RecommendedItemDisplayer(self.scroll_content, mode)
@@ -133,13 +133,13 @@ class AiRecommendationsRegion(QWidget):
 
     def clear_recommendations(self):
         # Excluí todas as recomendações do modo atual quando o usuário aperta o botão "CLICK"
-        recs = self.parent.game_recommendations if self.parent.mode == 'game' else self.parent.movie_recommendations
+        recs = self.parent.game_recommendations
         recs['High Priority'], recs['Low Priority'] = {}, {}
         self.update()
 
     def load_recommendations(self):
         # Move até 6 recomendações aleatórias da low priority pra high priority quando o usuário clica o botão "LOAD MORE"
-        recs = self.parent.game_recommendations if self.parent.mode == 'game' else self.parent.movie_recommendations
+        recs = self.parent.game_recommendations
 
         amount_to_move = min(len(recs['Low Priority']), 6) 
         new_recs = random.sample([keys for keys in recs['Low Priority']], k=amount_to_move)
