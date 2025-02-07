@@ -17,7 +17,7 @@ default_config = {
 
 class GeminiModel(genai.GenerativeModel):
     def __init__(self, 
-                model_name = "gemini-1.5-flash-8b-latest", 
+                model_name = "gemini-2.0-flash", 
                 safety_settings = None, 
                 generation_config = default_config, 
                 tools = None, 
@@ -34,7 +34,7 @@ class GeminiModel(genai.GenerativeModel):
             response = self.chat.send_message(prompt)
         except Exception as e:
             print(e)
-            response = ""
+            return "[]"
         
         return response.text or "[]"
     

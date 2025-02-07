@@ -15,7 +15,7 @@ function App() {
   const [prompt, setPrompt] = useState<string>("");
 
   async function GENAI(prompt: string): Promise<AIOuput> {
-    const response = await fetch(`http://192.168.56.1:3000/genai/${prompt}`);
+    const response = await fetch(`http://127.0.0.1:3000/genai/${prompt}`);
     if (!response.ok) {
       throw new Error(`Falha em comunicar com o backend: ${response.status}`);
     }
