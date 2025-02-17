@@ -1,0 +1,15 @@
+.LibraryContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    
+    width: 50vw;
+    height: 100vh;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    background-color: rgb(7,04,26);
+    border-right: 8px solid black;  
+    scrollbar-color:#A0A0A7 #07041a;
+}

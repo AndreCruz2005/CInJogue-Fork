@@ -1,0 +1,7 @@
+.Rating{
+    font-family: 'Roboto';
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.5s ease;
+}

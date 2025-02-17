@@ -295,9 +295,10 @@ class MainWindow(QMainWindow):
         # AI
         self.ai_recommendation_region = AiRecommendationsRegion(self)
 
-    def ai_response(self):
+    def ai_response(self, message):
         # Pega o texto no prompt de usuário na área de recomendações da IA e deixa a caixa de texto vazia
-        prompt = self.ai_recommendation_region.user_chat_input.text()
+        prompt = message
+        print(prompt)
         self.ai_recommendation_region.user_chat_input.setText('')
         if prompt == "":  # Não enviar prompt vazio
             return
