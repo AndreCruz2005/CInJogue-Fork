@@ -1,2 +1,16 @@
+# Ide
+.vscode/
+.idea/
+
+# Python
 venv/
-__pycache__
+__pycache__/
+
+# JS
+.next/
+node_modules/
+
+# Arquivos criados durante execução
+user_data.json
+caching/
+
