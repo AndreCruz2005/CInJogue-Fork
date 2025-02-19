@@ -98,38 +98,39 @@ class AiRecommendationsRegion(QWidget):
                                         f"font-size: 15px; border: none; font-weight: bold;")
         
     def update(self):
-        # Apaga todos os items do widget de recomendações mas não apaga o layout
+        # Apaga todos os itens do widget de recomendações, exceto o layout
         for child in self.scroll_content.children():
             if type(child) != QGridLayout:
                 child.deleteLater()
 
-        # Número de items por fileira da grid
         items_per_row = 4  
-
-        # Pega o modo e recomendações de acordo com o modo da main window
         mode = self.parent.mode
         recomendations = self.parent.game_recommendations
 
-        for idx, key in enumerate(recomendations['High Priority']):
+        # Cria os displayers para as recomendações de High Priority
+        high_recs = recomendations['High Priority']
+        for idx, key in enumerate(high_recs):
             item_displayer = RecommendedItemDisplayer(self.scroll_content, mode)
-            data = recomendations['High Priority'][key]
+            data = high_recs[key]
 
             image_path = os.path.join(path_to_folder, f'caching/images_cache/{mode}/{key}.png')
             item_displayer.image_thumb.setPixmap(QPixmap(image_path))
             item_displayer.title.setText(key)
 
-            # 4 Items por coluna
-            rows = idx//items_per_row
-            collums = idx%items_per_row
-            self.recommendations_grid.addWidget(item_displayer, rows, collums)
+            rows = idx // items_per_row
+            columns = idx % items_per_row
+            self.recommendations_grid.addWidget(item_displayer, rows, columns)
 
-        # Preenche a grid de recomendações com item_displayers invisíveis de forma que haja pelo menos 4 fileiras para melhor formatação
-        recs_size = len(recomendations)
-        mininum_for_4_rows = max((items_per_row * 3 + 1) - recs_size, 0)
-        for i in range(recs_size, mininum_for_4_rows + recs_size):
+        # Calcula quantos itens preencher para que a grid tenha, pelo menos, 4 fileiras.
+        recs_size = len(high_recs)
+        min_rows = 4
+        total_items_needed = items_per_row * min_rows
+        filler_count = max(total_items_needed - recs_size, 0)
+        for i in range(filler_count):
             filler = RecommendedItemDisplayer(self.scroll_content, mode)
-            filler.make_invisible()
-            self.recommendations_grid.addWidget(filler, i//items_per_row, i%items_per_row)
+            filler.make_invisible()  # Este método já esconde o botão de adicionar
+            index = recs_size + i
+            self.recommendations_grid.addWidget(filler, index // items_per_row, index % items_per_row)
 
     def clear_recommendations(self):
         # Excluí todas as recomendações do modo atual quando o usuário aperta o botão "CLICK"
@@ -162,17 +163,77 @@ class RecommendedItemDisplayer(QWidget):
         # Imagem
         self.image_thumb = QLabel(self)
         self.image_thumb.setScaledContents(True)
-        self.image_thumb.setStyleSheet(f'border: 2px solid {app_color_palette['medium'][mode]}')
+        self.image_thumb.setStyleSheet(f"border: 2px solid {app_color_palette['medium'][mode]}")
         self.image_thumb.setAlignment(Qt.AlignCenter)
 
         # Título
         self.title = QLabel(self)
         self.title.setAlignment(Qt.AlignCenter)
-        self.title.setStyleSheet(f"font-size:15px; color:{app_color_palette['light'][mode]};background-color:{app_color_palette['medium'][mode]};font-weight:bold;")
+        self.title.setStyleSheet(f"font-size:15px; color:{app_color_palette['light'][mode]}; "
+                                 f"background-color:{app_color_palette['medium'][mode]}; font-weight:bold;")
+
+        # Botão de Adicionar (inicialmente oculto)
+        self.add_button = QPushButton("Adicionar", self)
+        self.add_button.setStyleSheet("""
+            QPushButton {
+                background-color: #007BFF;  /* Azul */
+                color: white;
+                border: none;
+                border-radius: 15px;  /* Bordas arredondadas */
+                padding: 10px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #0056b3;  /* Azul mais escuro ao passar o mouse */
+            }
+        """)
+        self.add_button.clicked.connect(self.add_to_library)
+        self.add_button.hide()  # Oculta o botão inicialmente
 
         self.layout.addWidget(self.image_thumb)
         self.layout.addWidget(self.title)
+        # Posiciona o botão de forma absoluta sobre o widget
+        self.add_button.setGeometry(10, 10, 120, 30)
+
+    def enterEvent(self, event):
+        # Exibe o botão somente se houver um título (jogo) definido
+        if self.title.text().strip():
+            self.add_button.show()
+            self.add_button.raise_()  # Garante que o botão fique sobre os demais widgets
+        else:
+            self.add_button.hide()
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        # Oculta o botão quando o mouse sai do widget
+        self.add_button.hide()
+        super().leaveEvent(event)
+
+    def add_to_library(self):
+        if self.title.text().strip():
+            name = self.title.text().strip()
+            # Obtém a janela principal que possui game_library e game_recommendations
+            main_win = self.window()
+
+            # Adiciona o jogo à biblioteca com os valores iniciais desejados
+            main_win.game_library[name] = {'rating': 'unrated', 'state': 'Unplayed', 'data': {}}
+
+            # Remove o jogo das recomendações (verificando High e Low Priority)
+            for priority in ['High Priority', 'Low Priority']:
+                if name in main_win.game_recommendations[priority]:
+                    del main_win.game_recommendations[priority][name]
+
+            # Atualiza as views: biblioteca e recomendações
+            main_win.library_region.update()
+            main_win.ai_recommendation_region.update()
+
+    def reset_add_button(self):
+        self.add_button.setText("Adicionar")
+        self.add_button.setEnabled(True)
+        self.add_button.show()
 
     def make_invisible(self):
+        # Configura os widgets como invisíveis e esconde o botão de adicionar
         self.image_thumb.setStyleSheet("background-color: transparent; border: none;")
         self.title.setStyleSheet("background-color: transparent; border: none;")
+        self.add_button.hide()

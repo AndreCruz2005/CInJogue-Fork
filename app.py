@@ -9,7 +9,6 @@ CORS(app)
 
 def submit_message():
     try:
-        
         data = request.get_json()
         print("Received data:", data)
         message = data.get('message')

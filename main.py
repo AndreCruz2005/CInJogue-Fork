@@ -7,13 +7,14 @@ import google.generativeai as genai
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.Qt import *
 from api_calling import get_game_data, url_to_png
 from app_function_data import app_color_palette, path_to_folder
 import sys, json, os, socket
+from dotenv import load_dotenv
 
-# API Keys
-GOOGLE_API = "AIzaSyAGXnQtI-EKxrKwgWXDP7lwV-Zc6udbL8M"
+load_dotenv()
+GEMINI_API = os.getenv("GEMINI_API")
+GIANT_BOMB_API = os.getenv("GIANT_BOMB_API")
 
 # Checa a existência das pastas de caching
 # Diretórios a serem criados
@@ -50,7 +51,7 @@ except (FileNotFoundError, ValueError, json.JSONDecodeError):
     cache = {'game':{}}
 
 # Inicializa Gemini
-genai.configure(api_key=GOOGLE_API)
+genai.configure(api_key=GEMINI_API)
 
 # Configurações do modelo de IA
 main_generation_config = {
@@ -295,9 +296,9 @@ class MainWindow(QMainWindow):
         # AI
         self.ai_recommendation_region = AiRecommendationsRegion(self)
 
-    def ai_response(self, message):
+    def ai_response(self):
         # Pega o texto no prompt de usuário na área de recomendações da IA e deixa a caixa de texto vazia
-        prompt = message
+        prompt = self.ai_recommendation_region.user_chat_input.text()
         print(prompt)
         self.ai_recommendation_region.user_chat_input.setText('')
         if prompt == "":  # Não enviar prompt vazio
