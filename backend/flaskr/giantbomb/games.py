@@ -23,5 +23,3 @@ def search_game(game_name, API_KEY=api_key):
         return games
     else:
         return []
-
-print(search_game('skyrim'))

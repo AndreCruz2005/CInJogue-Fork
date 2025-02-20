@@ -22,12 +22,12 @@ class GeminiModel(genai.GenerativeModel):
                 generation_config = default_config, 
                 tools = None, 
                 tool_config = None, 
-                system_instruction = open("backend/model_instructions.txt", encoding="utf8").readlines(),
+                system_instruction = open("backend/flaskr/gemini/model_instructions.txt", encoding="utf8").readlines(),
                 ):
         
         super().__init__(model_name, safety_settings, generation_config, tools, tool_config, system_instruction)
         
-        self.conversation()
+        self.start_conversation()
 
     def send_message(self, prompt : str) -> str:
         try:
@@ -38,5 +38,7 @@ class GeminiModel(genai.GenerativeModel):
         
         return response.text or "[]"
     
-    def conversation(self):
+    def start_conversation(self):
         self.chat = self.start_chat()
+        
+GenAI = GeminiModel()
