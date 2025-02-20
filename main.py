@@ -312,21 +312,18 @@ class MainWindow(QMainWindow):
 
         # Cria um layout horizontal para dividir a tela
         self.main_hbox = QHBoxLayout()
-        self.main_hbox.setContentsMargins(0, 0, 0, 0)
-        self.main_hbox.setSpacing(0)
         self.hbox = self.main_hbox  # Necessário para LibraryRegion
 
         self.library_region = LibraryRegion(self)
-
-        # Recomendações (40%)
         self.ai_recommendation_panel = QWidget(self)
         self.recommendation_layout = QVBoxLayout(self.ai_recommendation_panel)
-        self.recommendation_layout.setContentsMargins(0, 0, 0, 0)
-        self.recommendation_layout.setSpacing(5)
         self.ai_recommendation_region = AiRecommendationsRegion(self)
         self.recommendation_layout.addWidget(self.ai_recommendation_region)
 
         self.central_layout.addLayout(self.main_hbox)
+
+        # Variável para controlar o estado do reconhecimento de voz
+        self.voice_recognition_active = False
 
     def ai_response(self):
         # Pega o texto no prompt de usuário na área de recomendações da IA e deixa a caixa de texto vazia
@@ -407,29 +404,38 @@ class MainWindow(QMainWindow):
         sys.exit()
 
     def record_voice(self):
-        # Atualiza o botão de voz usando o widget da região de recomendações
-        voice_btn = self.ai_recommendation_region.voice_button
-        voice_btn.setText("Fale agora")
-        voice_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #ff5733;
-                color: white;
-                border: 2px solid #c70039;
-                border-radius: 10px;
-                padding: 10px;
-                font-size: 16px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #ff704d;
-            }
-        """)
-        # Cria e inicia a thread de voz
-        self.voice_thread = VoiceThread()
-        self.voice_thread.result.connect(self.handle_voice_result)
-        self.voice_thread.error.connect(self.handle_voice_error)
-        self.voice_thread.finished.connect(self.reset_voice_button)
-        self.voice_thread.start()
+        # Verifica se o reconhecimento de voz já está ativo
+        if self.voice_recognition_active:
+            # Cancela o reconhecimento de voz
+            self.voice_thread.terminate()
+            self.voice_thread.wait()
+            self.reset_voice_button()
+            self.voice_recognition_active = False
+        else:
+            # Atualiza o botão de voz usando o widget da região de recomendações
+            voice_btn = self.ai_recommendation_region.voice_button
+            voice_btn.setText("Fale agora")
+            voice_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #ff5733;
+                    color: white;
+                    border: 2px solid #c70039;
+                    border-radius: 10px;
+                    padding: 10px;
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+                QPushButton:hover {
+                    background-color: #ff704d;
+                }
+            """)
+            # Cria e inicia a thread de voz
+            self.voice_thread = VoiceThread()
+            self.voice_thread.result.connect(self.handle_voice_result)
+            self.voice_thread.error.connect(self.handle_voice_error)
+            self.voice_thread.finished.connect(self.reset_voice_button)
+            self.voice_thread.start()
+            self.voice_recognition_active = True
 
     def handle_voice_result(self, text):
         print(f"Você disse: {text}")
@@ -461,6 +467,7 @@ class MainWindow(QMainWindow):
         background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #448aff, stop:1 #0d47a1);
     }
 """)
+        self.voice_recognition_active = False
 
 if __name__ == "__main__":
     App = QApplication(sys.argv)
