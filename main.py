@@ -38,7 +38,7 @@ try:
         if not user_data:  # Verifica se o JSON está vazio
             raise ValueError("JSON vazio")
 except (FileNotFoundError, ValueError, json.JSONDecodeError):
-    user_data = {'game_library': {}, 'game_recommendations': {'High Priority': {}, 'Low Priority': {}}}
+    user_data = {"game_library": {}, "game_recommendations": {"High Priority": {}, "Low Priority": {}},"form":{"completed":False, "platforms" : {}, "budget" : {}}}
 
 # Carregar dados de API
 api_cache_path = os.path.join(path_to_folder, 'caching/api_data_cache.json')
@@ -256,6 +256,7 @@ class AiResponseThread(QThread):
 
 from library_region import LibraryRegion
 from ai_recommendations_region import AiRecommendationsRegion
+from form import ProfileEvaluationForm
 
 # Janela
 class MainWindow(QMainWindow):
@@ -290,11 +291,21 @@ class MainWindow(QMainWindow):
         self.hbox = QHBoxLayout(self.center_widget)
         self.hbox.setContentsMargins(0, 0, 0, 0)
         
+        # Formulário dados usuário
+        if not user_data["form"]["completed"]:
+            self.form = ProfileEvaluationForm(self, user_data)
+            self.user_data = self.form.user_data
+            self.form.form_completed.connect(self.load_main_ui)
+
+        else:
+            self.load_main_ui()
+    def load_main_ui(self):
         # LibraryRegion
         self.library_region = LibraryRegion(self)
 
         # AI
         self.ai_recommendation_region = AiRecommendationsRegion(self)
+
 
     def ai_response(self):
         # Pega o texto no prompt de usuário na área de recomendações da IA e deixa a caixa de texto vazia
@@ -365,11 +376,11 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         # Salva dados de usuário
         with open(user_data_path, 'w') as file:
-            json.dump(user_data, file)
+            json.dump(user_data, file, indent=4)
 
         # Salva o cache
         with open(api_cache_path, 'w') as file:
-            json.dump(cache, file)
+            json.dump(cache, file, indent=4)
 
         event.accept()
         sys.exit()
