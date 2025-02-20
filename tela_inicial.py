@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLabel, QCheckB
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 import sys
+import json
+from main import call_ai, MainWindow  # Importa a função call_ai e a classe MainWindow do main.py
 
 class PreferencesForm(QWidget):
     def __init__(self):
@@ -31,52 +33,73 @@ class PreferencesForm(QWidget):
         layout.setSpacing(10)
 
         # Título
-        title = QLabel("Preferências do Usuário")
+        title = QLabel("Definas suas preferências")
         title.setAlignment(Qt.AlignCenter)
         title.setFont(QFont("Arial", 50, QFont.Bold))
-        title.setStyleSheet("color: #000000;")  # Cor preta
+        title.setStyleSheet("color: #000000;")
         layout.addWidget(title)
 
+        # Função auxiliar para criar um grupo com "Selecionar Todos"
+        def create_checkbox_group(group_title, items, columns=5):
+            group = QGroupBox(group_title)
+            group.setFont(QFont("Arial", 20, QFont.Bold))
+            grid = QGridLayout()
+            grid.setContentsMargins(0, 0, 0, 0)
+            grid.setSpacing(10)
+            # "Selecionar Todos" ocupa uma linha completa
+            select_all = QCheckBox("Selecionar Todos")
+            select_all.setStyleSheet("""
+                QCheckBox {
+                    background-color: #FFFFFF;
+                    color: #000000;
+                    border: 2px solid #000000;
+                    border-radius: 15px;
+                    padding: 10px;
+                    font-weight: bold;
+                    font-size: 18px;
+                }
+                QCheckBox::indicator {
+                    width: 0px;
+                    height: 0px;
+                }
+                QCheckBox::checked {
+                    background-color: #007BFF;
+                    color: white;
+                    border: 4px solid #0056b3;
+                }
+            """)
+            grid.addWidget(select_all, 0, 0, 1, columns)
+            # Cria uma lista de checkboxes para os itens
+            boxes = [self.create_check_button(item) for item in items]
+            for i, box in enumerate(boxes):
+                row = 1 + i // columns
+                col = i % columns
+                grid.addWidget(box, row, col)
+            # Conecta o "Selecionar Todos" para marcar/desmarcar todos
+            select_all.stateChanged.connect(lambda state, b=boxes: [cb.setChecked(state == Qt.Checked) for cb in b])
+            group.setLayout(grid)
+            group.setStyleSheet("color: #000000;")
+            return group, boxes
+
         # Gêneros
-        genre_group = QGroupBox("Preferências de Gêneros")
-        genre_group.setFont(QFont("Arial", 20, QFont.Bold))
-        genre_layout = QGridLayout()
         genres = ["Ação", "Estratégia", "Esportes", "RPG", "Aventura", "Simulação", "Corrida", "Puzzle", "Terror", "Plataforma",
                   "Mundo Aberto", "FPS", "RTS", "MMORPG", "Roguelike", "Stealth", "Survival", "Sandbox", "Metroidvania", "Visual Novel"]
-        self.genre_checkboxes = [self.create_check_button(genre) for genre in genres]
-        for i, checkbox in enumerate(self.genre_checkboxes):
-            genre_layout.addWidget(checkbox, i // 5, i % 5)  # 5 itens por linha
-        genre_group.setLayout(genre_layout)
-        genre_group.setStyleSheet("color: #000000;")
+        genre_group, self.genre_checkboxes = create_checkbox_group("Preferências de Gêneros", genres)
         layout.addWidget(genre_group)
 
         # Plataformas
-        platform_group = QGroupBox("Plataformas de Jogo")
-        platform_group.setFont(QFont("Arial", 20, QFont.Bold))
-        platform_layout = QGridLayout()
         platforms = ["PC", "Xbox", "Mobile", "PlayStation", "Nintendo", "VR", "Mac", "Linux", "Stadia", "Switch",
                      "PS5", "PS4", "Xbox Series X", "Xbox One", "Wii U", "3DS", "PS Vita", "Ouya", "Atari", "Sega"]
-        self.platform_checkboxes = [self.create_check_button(platform) for platform in platforms]
-        for i, checkbox in enumerate(self.platform_checkboxes):
-            platform_layout.addWidget(checkbox, i // 5, i % 5)  # 5 itens por linha
-        platform_group.setLayout(platform_layout)
-        platform_group.setStyleSheet("color: #000000;")
+        platform_group, self.platform_checkboxes = create_checkbox_group("Plataformas de Jogo", platforms)
         layout.addWidget(platform_group)
 
         # Estilo de Jogo
-        style_group = QGroupBox("Estilo de Jogo Preferido")
-        style_group.setFont(QFont("Arial", 20, QFont.Bold))
-        style_layout = QGridLayout()
         styles = ["Multijogador", "Solo", "Coop", "Online", "Offline", "Competitivo", "Casual", "Narrativo", "Exploração", "Puzzle",
                   "Sandbox", "Simulação", "Roguelike", "Stealth", "Survival", "Mundo Aberto", "Plataforma", "Terror", "Visual Novel", "RTS"]
-        self.style_checkboxes = [self.create_check_button(style) for style in styles]
-        for i, checkbox in enumerate(self.style_checkboxes):
-            style_layout.addWidget(checkbox, i // 5, i % 5)  # 5 itens por linha
-        style_group.setLayout(style_layout)
-        style_group.setStyleSheet("color: #000000;")
+        style_group, self.style_checkboxes = create_checkbox_group("Estilo de Jogo Preferido", styles)
         layout.addWidget(style_group)
 
-        # Faixa Etária
+        # Faixa Etária (permanece com botões de rádio)
         age_group = QGroupBox("Faixa Etária Desejada")
         age_group.setFont(QFont("Arial", 20, QFont.Bold))
         age_layout = QGridLayout()
@@ -84,22 +107,20 @@ class PreferencesForm(QWidget):
         self.age_radiobuttons = [self.create_radio_button(age) for age in ages]
         age_button_group = QButtonGroup(self)
         for i, radiobutton in enumerate(self.age_radiobuttons):
-            age_layout.addWidget(radiobutton, i // 5, i % 5)  # 5 itens por linha
+            age_layout.addWidget(radiobutton, i // 5, i % 5)
             age_button_group.addButton(radiobutton)
         age_group.setLayout(age_layout)
         age_group.setStyleSheet("color: #000000;")
         layout.addWidget(age_group)
 
-        # Orçamento
+        # Orçamento - Alterado para checkboxes para permitir selecionar ambos
         budget_group = QGroupBox("Orçamento para Jogos")
         budget_group.setFont(QFont("Arial", 20, QFont.Bold))
         budget_layout = QGridLayout()
         budgets = ["Pagos", "Gratuitos"]
-        self.budget_radiobuttons = [self.create_radio_button(budget) for budget in budgets]
-        budget_button_group = QButtonGroup(self)
-        for i, radiobutton in enumerate(self.budget_radiobuttons):
-            budget_layout.addWidget(radiobutton, i // 5, i % 5)  # 5 itens por linha
-            budget_button_group.addButton(radiobutton)
+        self.budget_checkboxes = [self.create_check_button(budget) for budget in budgets]
+        for i, checkbox in enumerate(self.budget_checkboxes):
+            budget_layout.addWidget(checkbox, i // 5, i % 5)
         budget_group.setLayout(budget_layout)
         budget_group.setStyleSheet("color: #000000;")
         layout.addWidget(budget_group)
@@ -110,6 +131,7 @@ class PreferencesForm(QWidget):
         history_layout = QVBoxLayout()
         self.history_input = QLineEdit()
         self.history_input.setPlaceholderText("Insira os jogos que você já jogou")
+        self.history_input.setFont(QFont("Arial", 24))
         history_layout.addWidget(self.history_input)
         history_group.setLayout(history_layout)
         history_group.setStyleSheet("color: #000000;")
@@ -187,14 +209,25 @@ class PreferencesForm(QWidget):
     def submit_preferences(self):
         # Coleta as preferências do usuário
         preferences = {
-            "genres": {checkbox.text(): checkbox.isChecked() for checkbox in self.genre_checkboxes},
-            "platforms": {checkbox.text(): checkbox.isChecked() for checkbox in self.platform_checkboxes},
-            "styles": {checkbox.text(): checkbox.isChecked() for checkbox in self.style_checkboxes},
-            "age": {radiobutton.text(): radiobutton.isChecked() for radiobutton in self.age_radiobuttons},
-            "budget": {radiobutton.text(): radiobutton.isChecked() for radiobutton in self.budget_radiobuttons},
+            "genres": [checkbox.text() for checkbox in self.genre_checkboxes if checkbox.isChecked()],
+            "platforms": [checkbox.text() for checkbox in self.platform_checkboxes if checkbox.isChecked()],
+            "styles": [checkbox.text() for checkbox in self.style_checkboxes if checkbox.isChecked()],
+            "age": [radiobutton.text() for radiobutton in self.age_radiobuttons if radiobutton.isChecked()],
+            "budget": [checkbox.text() for checkbox in self.budget_checkboxes if checkbox.isChecked()],
             "history": self.history_input.text()
         }
         print(preferences)  # Aqui você pode processar as preferências conforme necessário
+
+        # Envia as preferências para a IA
+        response = call_ai(json.dumps(preferences))
+        print(response)  # Exibe a resposta da IA
+
+        # Abre a tela principal com as preferências escolhidas
+        self.main_window = MainWindow()
+        self.main_window.showMaximized()
+
+        # Fecha a tela inicial
+        self.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
