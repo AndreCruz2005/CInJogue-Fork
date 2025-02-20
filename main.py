@@ -291,15 +291,6 @@ class MainWindow(QMainWindow):
         self.hbox = QHBoxLayout(self.center_widget)
         self.hbox.setContentsMargins(0, 0, 0, 0)
         
-        # Formulário dados usuário
-        if not user_data["form"]["completed"]:
-            self.form = ProfileEvaluationForm(self, user_data)
-            self.user_data = self.form.user_data
-            self.form.form_completed.connect(self.load_main_ui)
-
-        else:
-            self.load_main_ui()
-    def load_main_ui(self):
         # LibraryRegion
         self.library_region = LibraryRegion(self)
 
