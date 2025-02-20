@@ -14,3 +14,4 @@ node_modules/
 user_data.json
 caching/
 
+.env
