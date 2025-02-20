@@ -62,12 +62,43 @@ class AiRecommendationsRegion(QWidget):
         # Grid contendo recomendações
         self.recommendations_grid = QGridLayout(self.scroll_content)
 
-        # Entrada de texto onde o usuário digitará sua mensagem para a IA
+        # Create a horizontal layout for both the input field and the voice button:
+        self.bottom_layout = QHBoxLayout()
+        self.bottom_layout.setContentsMargins(10, 10, 10, 10)
+        self.bottom_layout.setSpacing(10)
+
+        # Configure the text input:
         self.user_chat_input = QLineEdit(self)
         self.user_chat_input.setPlaceholderText("Peça à IA recomendações ou que altere sua biblioteca")
-        self.user_chat_input.returnPressed.connect(parent.ai_response) # Chama a função da MainWindow ai_response() ao apertar enter
-        self.user_chat_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.layout.addWidget(self.user_chat_input, stretch=1)
+        self.user_chat_input.returnPressed.connect(parent.ai_response)
+        self.user_chat_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.bottom_layout.addWidget(self.user_chat_input)
+
+        # Configure the voice button:
+        self.voice_button = QPushButton("Falar", self)
+        self.voice_button.setFixedSize(150, 40)
+        self.voice_button.clicked.connect(self.parent.record_voice)
+        self.voice_button.setStyleSheet("""
+        QPushButton {
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #6ab7ff, stop:1 #1565c0);
+            color: white;
+            border: 2px solid #0d47a1;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font: bold 16px "Arial";
+            min-width: 100px;
+        }
+        QPushButton:hover {
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #82b1ff, stop:1 #1976d2);
+        }
+        QPushButton:pressed {
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #448aff, stop:1 #0d47a1);
+        }
+    """)
+        self.bottom_layout.addWidget(self.voice_button)
+
+        # Finally, add the combined bottom_layout into the main layout:
+        self.layout.addLayout(self.bottom_layout, stretch=1)
 
         self.palette_setting(self.parent.mode)
         self.update()
