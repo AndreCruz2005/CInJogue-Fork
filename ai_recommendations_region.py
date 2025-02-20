@@ -163,14 +163,13 @@ class RecommendedItemDisplayer(QWidget):
         # Imagem
         self.image_thumb = QLabel(self)
         self.image_thumb.setScaledContents(True)
-        self.image_thumb.setStyleSheet(f"border: 2px solid {app_color_palette['medium'][mode]}")
+        self.image_thumb.setStyleSheet("border: 2px solid #000000")
         self.image_thumb.setAlignment(Qt.AlignCenter)
 
         # Título
         self.title = QLabel(self)
         self.title.setAlignment(Qt.AlignCenter)
-        self.title.setStyleSheet(f"font-size:15px; color:{app_color_palette['light'][mode]}; "
-                                 f"background-color:{app_color_palette['medium'][mode]}; font-weight:bold;")
+        self.title.setStyleSheet("font-size:15px; color:#000000; background-color:#FFFFFF; font-weight:bold;")
 
         # Botão de Adicionar (inicialmente oculto)
         self.add_button = QPushButton("Adicionar", self)
@@ -192,8 +191,7 @@ class RecommendedItemDisplayer(QWidget):
 
         self.layout.addWidget(self.image_thumb)
         self.layout.addWidget(self.title)
-        # Posiciona o botão de forma absoluta sobre o widget
-        self.add_button.setGeometry(10, 10, 120, 30)
+        self.layout.addWidget(self.add_button)
 
     def enterEvent(self, event):
         # Exibe o botão somente se houver um título (jogo) definido

@@ -261,6 +261,8 @@ from ai_recommendations_region import AiRecommendationsRegion
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Biblioteca de Jogos")
+        self.setGeometry(100, 100, 800, 600)
 
         # Informações de uso do app
         self.mode = 'game'
@@ -295,6 +297,23 @@ class MainWindow(QMainWindow):
 
         # AI
         self.ai_recommendation_region = AiRecommendationsRegion(self)
+
+        self.initUI()
+
+    def initUI(self):
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        layout = QVBoxLayout(central_widget)
+
+        self.library_region = LibraryRegion(self)
+        self.ai_recommendation_region = AiRecommendationsRegion(self)
+
+        layout.addWidget(self.library_region)
+        layout.addWidget(self.ai_recommendation_region)
+
+    def ai_response(self, message):
+        # Processa a mensagem e atualiza as recomendações
+        pass
 
     def ai_response(self):
         # Pega o texto no prompt de usuário na área de recomendações da IA e deixa a caixa de texto vazia
