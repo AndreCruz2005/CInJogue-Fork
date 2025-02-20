@@ -303,26 +303,29 @@ class MainWindow(QMainWindow):
         # GUI
         #################################
 
-        # Define o widget central da janela e o layout horizontal (hbox) onde todos os widgets do app ficarão
+        # Define o widget central da janela e o layout vertical
         self.center_widget = QWidget(self)
         self.setCentralWidget(self.center_widget)
         self.central_layout = QVBoxLayout(self.center_widget)
         self.central_layout.setContentsMargins(0, 0, 0, 0)
         self.central_layout.setSpacing(0)
 
+        # Cria um layout horizontal para dividir a tela
         self.main_hbox = QHBoxLayout()
         self.main_hbox.setContentsMargins(0, 0, 0, 0)
         self.main_hbox.setSpacing(0)
+        self.hbox = self.main_hbox  # Necessário para LibraryRegion
+
         self.library_region = LibraryRegion(self)
 
+        # Recomendações (40%)
         self.ai_recommendation_panel = QWidget(self)
         self.recommendation_layout = QVBoxLayout(self.ai_recommendation_panel)
         self.recommendation_layout.setContentsMargins(0, 0, 0, 0)
         self.recommendation_layout.setSpacing(5)
-
-        # Widget de recomendações
         self.ai_recommendation_region = AiRecommendationsRegion(self)
         self.recommendation_layout.addWidget(self.ai_recommendation_region)
+
         self.central_layout.addLayout(self.main_hbox)
 
     def ai_response(self):
@@ -403,7 +406,6 @@ class MainWindow(QMainWindow):
         event.accept()
         sys.exit()
 
-    # Em MainWindow, modifique o método record_voice para usar a VoiceThread:
     def record_voice(self):
         # Atualiza o botão de voz usando o widget da região de recomendações
         voice_btn = self.ai_recommendation_region.voice_button
