@@ -22,8 +22,7 @@ def main_window(app, qtbot):
 def test_add_to_library_button(qtbot, main_window):
     print("Iniciando teste: test_add_to_library_button")
     # Simula a adição de um item à biblioteca
-    item_displayer = RecommendedItemDisplayer
-    (main_window.ai_recommendation_region.scroll_content, main_window.mode)
+    item_displayer = RecommendedItemDisplayer(main_window.ai_recommendation_region.scroll_content, main_window.mode)
     item_displayer.title.setText("Test Game")
     qtbot.mouseClick(item_displayer.add_button, Qt.LeftButton)
     # Verifica se o item foi adicionado à biblioteca
@@ -60,6 +59,7 @@ def test_clear_recommendations_button(qtbot, main_window):
     main_window.ai_recommendation_region.update()
     # Clica no botão de limpar recomendações
     qtbot.mouseClick(main_window.ai_recommendation_region.clear_button, Qt.LeftButton)
+
     # Verifica se as recomendações foram limpas
     assert not main_window.game_recommendations['High Priority']
     print("Teste concluído: test_clear_recommendations_button")
