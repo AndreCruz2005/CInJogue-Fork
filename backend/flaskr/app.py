@@ -30,6 +30,8 @@ def promptAI():
     for command in response:
         task = command.get("command", "")
         message = command.get("message", "")
+        titles = command.get("titles", [])
+        other = command.get("other", [])
         
         if task == "Recommend":
             pass
