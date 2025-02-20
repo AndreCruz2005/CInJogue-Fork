@@ -313,12 +313,8 @@ class MainWindow(QMainWindow):
         self.main_hbox = QHBoxLayout()
         self.main_hbox.setContentsMargins(0, 0, 0, 0)
         self.main_hbox.setSpacing(0)
-        self.hbox = self.main_hbox  # <-- Esta linha garante que parent.hbox exista para LibraryRegion
-
-        # Área da biblioteca com 60%
         self.library_region = LibraryRegion(self)
 
-        # Área de recomendações com 40%
         self.ai_recommendation_panel = QWidget(self)
         self.recommendation_layout = QVBoxLayout(self.ai_recommendation_panel)
         self.recommendation_layout.setContentsMargins(0, 0, 0, 0)
