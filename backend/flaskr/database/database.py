@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-from database.models import User, Game, UserLibary
+from database.models import User, Game, UserLibary, UserRecommendations
 
 def create_user(username, password, email, birthdate):
     try:
@@ -56,7 +56,7 @@ def remove_user(username):
     
 def create_game(title, data):
     try:
-        new_game = Game(title=title, rating='UNPLAYED', state='UNPLAYED', data=data)
+        new_game = Game(title=title, rating=0, state='UNPLAYED', data=data)
         db.session.add(new_game)
         db.session.commit()
         return new_game
@@ -81,4 +81,29 @@ def add_game_to_library(user_id, game_id):
     except Exception as e:
         db.session.rollback()
         print("Failed to add game: " + str(e))
+
+
+def add_game_to_recommendations(user_id, game_id):
+    try:
+        new_entry = UserRecommendations.insert().values(user_id=user_id, game_id=game_id)
+        db.session.execute(new_entry)
+        db.session.commit()
+        print(f"Game {game_id} added to user {user_id}'s recommendations.")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to add game: " + str(e))
+        
+
+def remove_game_from_library(user_id, game_id):
+    try:
+        entry_to_delete = UserLibary.delete().where(UserRecommendations.c.user_id == user_id, UserRecommendations.c.game_id == game_id)
+        db.session.execute(entry_to_delete)
+        db.session.commit()
+        print(f"Game {game_id} removed from user {user_id}'s library.")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to remove game: " + str(e))
+
 
