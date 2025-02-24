@@ -2,14 +2,14 @@ from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import db, User, Game, remove_user, create_user, login, get_user_by_name, create_game, add_game_to_recommendations, add_game_to_library, remove_game_from_library
+from database import *
 from gemini import GenAI
 from giantbomb import search_game
 from datetime import date
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.secret_key = os.getenv('SECRET_KEY')
@@ -18,55 +18,66 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-@app.route('/signup/', methods=['GET', 'POST'])
-def r_signup():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    email = request.args.get("email")
-    birthdate = request.args.get("birthdate")
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+
+    username = data.get('username')
+    password = data.get('password')
+    email = data.get('email')
+    birthdate = data.get('birthdate')
     b = [int(n) for n in birthdate.split('-')]
-    
+
+    if not (username and password and email and birthdate):
+        return jsonify({"error": "Missing required fields"}), 400
+
     if create_user(username, password, email, date(b[0], b[1], b[2]))is not None:
-        login(username, password, session)
-        return jsonify(True)
-      
-    return jsonify(False)
+        return jsonify({"message": "User signed up successfully!"}), 201
+
+    return jsonify({"error": "There was an error signing up!"}), 400
 
 @app.route('/logout', methods=['POST'])
-def r_logout():
+def logout():
     session.clear()
-    return jsonify(True)
+    return jsonify({"message":"User logged out succesfully"})
 
-@app.route('/removeuser',  methods=['GET', 'POST'])
-def r_remove_user():
+@app.route('/removeuser', methods=['POST'])
+def remove_user():
     if session.get('username') is None:
-        return jsonify(False)
+        return {"error": "User is not logged in!"}
     
-    password = request.args.get('password')
+    password = request.json.get('password')  
     if check_password_hash(session['password'], password):
         remove_user(session['username'])
         session.clear()
-        return jsonify(True)
+        return {"message": "User deleted successfully!"}
 
-    return jsonify(False)
+    return {"error": "Incorrect password!"}
 
 @app.route('/loggedinuser', methods=['GET'])
 def loggedinuser():
     name = session.get('username')
     if name:
         return jsonify(get_user_by_name(name))
-    return jsonify({})
+    return jsonify({'error':'User not logged in'})
 
-@app.route('/login/', methods=['GET', 'POST'])
-def r_login():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    result = login(username, password, session)
-    return jsonify(result)
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    
+    username = data.get('username')
+    password = data.get('password')
+    result = log_user_in(username, password, session)
+    
+    if result:
+        return jsonify(get_user_by_name(result['username']))
+    else:
+        return jsonify({"error":"Failed to Login"})
 
-@app.route('/genai/', methods=['GET', 'POST'])
+@app.route('/genai/', methods=['GET'])
 def promptAI():
-    if session.get('username') is None:
+    if session.get('id') is None:
         return [], 401
     
     prompt = request.args.get('prompt', 'Failed to send')
@@ -81,27 +92,15 @@ def promptAI():
         
         if command == "Recommend":
             for title in titles:
-                game = db.session.query(Game).filter_by(title=title).first()
-                if not game:
-                    game_results = search_game(title)
-                    for game in game_results:
-                        create_game(title=game['name'], data=str(game))
-                    game = db.session.query(Game).filter_by(title=title).first()
-                
+                game = ensureGameExistence(title)
                 if game and session.get('id'):
-                    add_game_to_recommendations(session['id'], game.id)
+                    add_game_to_recommendations(session['id'], game)
 
         elif command == "Add":
             for title in titles:
-                game = db.session.query(Game).filter_by(title=title).first()
-                if not game:
-                    game_results = search_game(title)
-                    for game in game_results:
-                        create_game(title=game['name'], data=str(game))
-                    game = db.session.query(Game).filter_by(title=title).first()
-                
+                game = ensureGameExistence(title)
                 if game and session.get('id'):
-                    add_game_to_library(session['id'], game.id)
+                    add_game_to_library(session['id'], game)
                     
         elif command == "Remove":
             for title in titles:
@@ -110,12 +109,29 @@ def promptAI():
                     remove_game_from_library(session['id'], game.id)
 
         elif command == "Rate":
-            pass
+            for title, rating in zip(titles, other):
+                game = db.session.query(Game).filter_by(title=title).first()
+                if game and session.get('id'):
+                    update_game_rating(session['id'], game.id, rating)
+                
         elif command == "State":
-            pass
+            for title, state in zip(titles, other):
+                game = db.session.query(Game).filter_by(title=title).first()
+                if game and session.get('id'):
+                    update_game_state(session['id'], game.id, state)
     
     return jsonify(response), 200
 
+def ensureGameExistence(title) -> Game:
+    game = db.session.query(Game).filter_by(title=title).first()
+    if not game:
+        game_results = search_game(title)
+        for i, game in enumerate(game_results):
+            game_name = title if i == 0 else game['name']
+            create_game(title=game_name, data=str(game))
+        game = db.session.query(Game).filter_by(title=title).first()
+        
+    return game
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port='5000')
+    app.run(debug=True, host='0.0.0.0', port='5000', threaded=True)

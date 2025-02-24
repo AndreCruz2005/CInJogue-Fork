@@ -1,38 +1,20 @@
-import { useState } from 'react'
-import axios from 'axios'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { Login } from "./components/login";
+import { Signup } from "./components/signup";
+import axios from "axios";
+
+const backend: string = "http://192.168.15.6:5000";
 
 function App() {
-  return (
-    <div>
-      <label>
-        Username:
-        <input type="text" />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" />
-      </label>
-      <br />
-      <label>
-        Email:
-        <input type="email" />
-      </label>
-      <br />
-      <label>
-        Birthdate:
-        <input type="date" />
-      </label>
-      <button onClick={() => SignUp()}>Submit</button>
-    </div>
-  );
+	return (
+		<div>
+			<div>
+				<Signup />
+				<Login />
+				<br></br>
+			</div>
+		</div>
+	);
 }
 
-function SignUp(username :string, password :string, email:string, birthdate:string) : void{
-  
-}
-
-export default App
+export default App;

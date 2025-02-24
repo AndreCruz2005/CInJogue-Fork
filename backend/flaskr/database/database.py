@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-from database.models import User, Game, UserLibary, UserRecommendations
+from database.models import User, Game, UserLibrary, UserRecommendations
 
 def create_user(username, password, email, birthdate):
     try:
@@ -18,13 +18,14 @@ def create_user(username, password, email, birthdate):
         print(f"Error creating user: {e}")
         return None
 
-def login(username, password, session):
+def log_user_in(username, password, session):
+    print(username, password, sep=" || ")
     user = get_user_by_name(username)
     if user and check_password_hash(user['password'], password):
         for k, v in user.items():
             session[k] = v
-        return True
-    return False
+        return user
+    return None
 
 def get_user_by_name(username):
     user = db.session.query(User).filter_by(username=username).first()
@@ -56,7 +57,7 @@ def remove_user(username):
     
 def create_game(title, data):
     try:
-        new_game = Game(title=title, rating=0, state='UNPLAYED', data=data)
+        new_game = Game(title=title, data=data)
         db.session.add(new_game)
         db.session.commit()
         return new_game
@@ -66,29 +67,24 @@ def create_game(title, data):
         print(f"Error creating game: {e}")
         return None
 
-def add_game_to_library(user_id, game_id):
+def add_game_to_library(user_id, game):
     try:
-        # Create the association in the user_library table
-        new_entry = UserLibary.insert().values(user_id=user_id, game_id=game_id)
-        
-        # Execute the insertion
+        new_entry = UserLibrary.insert().values(user_id=user_id, game_id=game.id, rating=0, state='UNPLAYED')
         db.session.execute(new_entry)
-        
-        # Commit the transaction
         db.session.commit()
-        print(f"Game {game_id} added to user {user_id}'s library.")
+        print(f"Game {game.title} added to user {user_id}'s library.")
         
     except Exception as e:
         db.session.rollback()
         print("Failed to add game: " + str(e))
 
 
-def add_game_to_recommendations(user_id, game_id):
+def add_game_to_recommendations(user_id, game):
     try:
-        new_entry = UserRecommendations.insert().values(user_id=user_id, game_id=game_id)
+        new_entry = UserRecommendations.insert().values(user_id=user_id, game_id=game.id)
         db.session.execute(new_entry)
         db.session.commit()
-        print(f"Game {game_id} added to user {user_id}'s recommendations.")
+        print(f"Game {game.title} added to user {user_id}'s recommendations.")
         
     except Exception as e:
         db.session.rollback()
@@ -97,7 +93,7 @@ def add_game_to_recommendations(user_id, game_id):
 
 def remove_game_from_library(user_id, game_id):
     try:
-        entry_to_delete = UserLibary.delete().where(UserRecommendations.c.user_id == user_id, UserRecommendations.c.game_id == game_id)
+        entry_to_delete = UserLibrary.delete().where(UserLibrary.c.user_id == user_id, UserLibrary.c.game_id == game_id)
         db.session.execute(entry_to_delete)
         db.session.commit()
         print(f"Game {game_id} removed from user {user_id}'s library.")
@@ -107,3 +103,29 @@ def remove_game_from_library(user_id, game_id):
         print("Failed to remove game: " + str(e))
 
 
+def update_game_rating(user_id, game_id, new_rating):
+    try:
+        stmt = db.update(UserLibrary).where((UserLibrary.c.user_id == user_id) & (UserLibrary.c.game_id == game_id)
+        ).values(rating=new_rating)
+
+        db.session.execute(stmt)
+        db.session.commit()
+        print(f"Game {game_id}'s rating changed to {new_rating}")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to update rating: " + str(e))
+
+    
+def update_game_state(user_id, game_id, new_state):
+    try:
+        stmt = db.update(UserLibrary).where((UserLibrary.c.user_id == user_id) & (UserLibrary.c.game_id == game_id)
+        ).values(state=new_state)
+
+        db.session.execute(stmt)
+        db.session.commit()
+        print(f"Game {game_id}'s state changed to {new_state}")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to update state: " + str(e))

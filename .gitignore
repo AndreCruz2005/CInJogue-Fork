@@ -1,7 +1,11 @@
+# Backend folders
 __pycache__/
-.venv/ 
-.env
+.venv/
+.pytest_cache/
 instance/
-.pytest_cache
+
+# Frotend folders
 node_modules/
 
+# Files
+.env
