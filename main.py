@@ -38,7 +38,7 @@ try:
         if not user_data:  # Verifica se o JSON está vazio
             raise ValueError("JSON vazio")
 except (FileNotFoundError, ValueError, json.JSONDecodeError):
-    user_data = {"game_library": {}, "game_recommendations": {"High Priority": {}, "Low Priority": {}},"form":{"completed":False, "platforms" : {}, "budget" : {}}}
+    user_data = {"game_library": {}, "game_recommendations": {"High Priority": {}, "Low Priority": {}}}
 
 # Carregar dados de API
 api_cache_path = os.path.join(path_to_folder, 'caching/api_data_cache.json')
@@ -275,7 +275,6 @@ class VoiceThread(QThread):
 
 from library_region import LibraryRegion
 from ai_recommendations_region import AiRecommendationsRegion
-from form import ProfileEvaluationForm
 
 # Janela
 class MainWindow(QMainWindow):

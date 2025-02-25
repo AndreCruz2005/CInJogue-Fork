@@ -4,7 +4,29 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 import sys
 import json
+import os
+from app_function_data import path_to_folder
 from main import call_ai, MainWindow  # Importa a função call_ai e a classe MainWindow do main.py
+
+user_data_path = os.path.join(path_to_folder, 'user_preferences.json')
+
+
+try:
+    with open(user_data_path, 'r') as file:
+        user_preferences = json.load(file)
+        if not user_preferences:  # Verifica se o JSON está vazio
+            raise ValueError("JSON vazio")
+except (FileNotFoundError, ValueError, json.JSONDecodeError):
+    user_preferences = {
+            "done": False,
+            "genres":{},
+            "platforms":[],
+            "styles": [],
+            "age": [],
+            "budget": [],
+            "history": ""
+    }
+
 
 class PreferencesForm(QWidget):
     def __init__(self):
@@ -154,6 +176,7 @@ class PreferencesForm(QWidget):
             }
         """)
         self.submit_button.clicked.connect(self.submit_preferences)
+        self.submit_button.clicked.connect(self.save_preferences)
         layout.addWidget(self.submit_button)
 
     def create_check_button(self, text):
@@ -206,9 +229,10 @@ class PreferencesForm(QWidget):
         """)
         return button
 
-    def submit_preferences(self):
+    def preferences(self):
         # Coleta as preferências do usuário
         preferences = {
+            "done": True,
             "genres": [checkbox.text() for checkbox in self.genre_checkboxes if checkbox.isChecked()],
             "platforms": [checkbox.text() for checkbox in self.platform_checkboxes if checkbox.isChecked()],
             "styles": [checkbox.text() for checkbox in self.style_checkboxes if checkbox.isChecked()],
@@ -217,10 +241,21 @@ class PreferencesForm(QWidget):
             "history": self.history_input.text()
         }
         print(preferences)  # Aqui você pode processar as preferências conforme necessário
+        return preferences
+    
 
+    def submit_preferences(self):
         # Envia as preferências para a IA
+        preferences = self.preferences()
         response = call_ai(json.dumps(preferences))
         print(response)  # Exibe a resposta da IA
+
+
+
+    def save_preferences(self):
+        preferences = self.preferences()
+        with open(user_data_path, 'w') as file:
+            json.dump(preferences, file, indent=4)
 
         # Abre a tela principal com as preferências escolhidas
         self.main_window = MainWindow()
@@ -228,9 +263,13 @@ class PreferencesForm(QWidget):
 
         # Fecha a tela inicial
         self.close()
-
 if __name__ == "__main__":
+
     app = QApplication(sys.argv)
-    window = PreferencesForm()
-    window.showMaximized()  # Garante que a tela inicie maximizada
+    if not user_preferences["done"]:
+        window = PreferencesForm()
+    else:
+        window = MainWindow()
+
+    window.showMaximized()
     sys.exit(app.exec_())
