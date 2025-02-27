@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import *
 from gemini import GenAI
@@ -37,6 +36,20 @@ def signup():
 
     return jsonify({"error": "There was an error signing up!"}), 400
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    
+    username = data.get('username')
+    password = data.get('password')
+    result = log_user_in(username, password, session)
+    
+    if result:
+        return jsonify(get_user_by_name(result['username']))
+    else:
+        return jsonify({"error":"Failed to Login"})
+
+
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
@@ -62,31 +75,44 @@ def loggedinuser():
         return jsonify(get_user_by_name(name))
     return jsonify({'error':'User not logged in'})
 
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/getrecommendations', methods=['POST'])
+def getrecommendations():
     data = request.get_json()
     
-    username = data.get('username')
-    password = data.get('password')
-    result = log_user_in(username, password, session)
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
     
-    if result:
-        return jsonify(get_user_by_name(result['username']))
-    else:
-        return jsonify({"error":"Failed to Login"})
+    games = get_recommendations(session['id'])
+    response = [{'title': game.title, 'data': eval(game.data)} for game in games]
+    return jsonify(response)
 
-@app.route('/genai/', methods=['GET'])
-def promptAI():
-    if session.get('id') is None:
-        return [], 401
+@app.route('/getlibrary', methods=['POST'])
+def getlibary():
+    data = request.get_json()
     
-    prompt = request.args.get('prompt', 'Failed to send')
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    items = get_libary(session['id'])
+    response = [{'title': game.title, 'data': eval(game.data), 'rating': rating, 'state': state} for game, rating, state in items]
+    return jsonify(response)
+
+@app.route('/genai', methods=['POST'])
+def promptAI():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    prompt = data.get('prompt')
     response = GenAI.send_message(prompt)
     response = eval(response)
     
     for task in response:
         command = task.get("command", "")
-        message = task.get("message", "")
         titles = task.get("titles", [])
         other = task.get("other", [])
         
@@ -122,16 +148,22 @@ def promptAI():
     
     return jsonify(response), 200
 
-def ensureGameExistence(title) -> Game:
+def ensureGameExistence(title: str) -> Game:
     game = db.session.query(Game).filter_by(title=title).first()
+    
     if not game:
         game_results = search_game(title)
-        for i, game in enumerate(game_results):
-            game_name = title if i == 0 else game['name']
-            create_game(title=game_name, data=str(game))
-        game = db.session.query(Game).filter_by(title=title).first()
         
+        if game_results:
+            for i, result in enumerate(game_results):
+                game_name = title if i == 0 else result['name']
+                create_game(title=game_name, data=str(result))
+            
+            db.session.commit() 
+ 
+            game = db.session.query(Game).filter_by(title=title).first()
+    
     return game
-
+    
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port='5000', threaded=True)

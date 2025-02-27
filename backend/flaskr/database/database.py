@@ -19,7 +19,6 @@ def create_user(username, password, email, birthdate):
         return None
 
 def log_user_in(username, password, session):
-    print(username, password, sep=" || ")
     user = get_user_by_name(username)
     if user and check_password_hash(user['password'], password):
         for k, v in user.items():
@@ -129,3 +128,14 @@ def update_game_state(user_id, game_id, new_state):
     except Exception as e:
         db.session.rollback()
         print("Failed to update state: " + str(e))
+    
+def get_libary(user_id):
+    items = db.session.query(Game, UserLibrary.c.rating, UserLibrary.c.state)\
+                                .join(UserLibrary)\
+                                .filter(UserLibrary.c.user_id == user_id)\
+                                .all()
+    return items
+
+def get_recommendations(user_id):
+    games = db.session.query(Game).join(UserRecommendations).filter(UserLibrary.c.user_id == user_id).all()
+    return games 

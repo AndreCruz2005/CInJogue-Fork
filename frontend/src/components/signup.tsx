@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import { backend } from "../global";
 import "../styles/signup.scss";
-
-const backend: string = "http://192.168.15.6:5000";
 
 export const Signup = () => {
 	const [username, setUsername] = useState("");

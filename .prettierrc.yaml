@@ -1,7 +1,7 @@
 arrowParens: "always"
 bracketSpacing: true
 bracketSameLine: false
-printWidth: 60
+printWidth: 120
 proseWrap: "always"
 semi: true
 singleQuote: false

@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
+import { backend, LoginProps } from "../global";
 
-const backend: string = "http://192.168.15.6:5000";
-
-export const Login = () => {
+export const Login = ({ userData, setUserData }: LoginProps) => {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
-	const [userData, setUserData] = useState(null);
 
 	const handleSubmit = () => {
 		login(name, password, setUserData);
@@ -17,30 +15,17 @@ export const Login = () => {
 			<h1>LOGIN</h1>
 			<label>
 				Username
-				<input
-					type="text"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				></input>
+				<input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
 			</label>
 			<br />
 			<label>
 				Password
-				<input
-					type="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				></input>
+				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 			</label>
 			<br />
 			<button onClick={handleSubmit}>SUBMIT</button>
 			<br />
-			<h1>
-				LOGGED IN USER:{" "}
-				{userData && "username" in userData
-					? userData["username"]
-					: "NOT LOGGED IN"}
-			</h1>
+			<h1>LOGGED IN USER: {userData && "username" in userData ? userData["username"] : "NOT LOGGED IN"}</h1>
 			<button
 				onClick={() => {
 					axios
@@ -57,23 +42,18 @@ export const Login = () => {
 	);
 };
 
-function login(
-	username: string,
-	password: string,
-	setUserData: (data: any) => void,
-): void {
+function login(username: string, password: string, setUserData: (data: any) => void): void {
 	axios
 		.post(`${backend}/login`, {
 			username,
 			password,
 		})
 		.then((response) => {
-			setUserData(response["data"]);
+			response.data.password = password;
+			setUserData(response.data);
 		})
 		.catch((error) => {
-			console.error(
-				"There was an error signing up!",
-				error,
-			);
+			console.error("There was an error signing up!", error);
+			setUserData(null);
 		});
 }
