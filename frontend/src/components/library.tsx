@@ -7,7 +7,7 @@ export const Library = ({ userData, setUserData }: LoginProps) => {
 
 	function fetchLibrary() {
 		axios
-			.post(`${backend}/getrecommendations`, {
+			.post(`${backend}/getlibrary`, {
 				username: userData.username,
 				password: userData.password,
 			})
