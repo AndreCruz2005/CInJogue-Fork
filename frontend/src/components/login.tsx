@@ -50,7 +50,7 @@ function login(username: string, password: string, setUserData: (data: any) => v
 		})
 		.then((response) => {
 			response.data.password = password;
-			setUserData(response.data);
+			setUserData("error" in response.data ? null : response.data);
 		})
 		.catch((error) => {
 			console.error("There was an error signing up!", error);

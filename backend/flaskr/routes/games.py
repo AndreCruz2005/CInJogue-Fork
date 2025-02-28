@@ -1,5 +1,5 @@
-from flaskr import *
-
+from flask import Blueprint, request, session, jsonify
+from database import *
 
 games = Blueprint("games", __name__)
 
@@ -12,7 +12,7 @@ def getrecommendations():
         return jsonify({'error':'User not logged in'}), 401
     
     games = get_recommendations(session['id'])
-    response = [{'title': game.title, 'data': eval(game.data)} for game in games]
+    response = { game.title:{ 'data': eval(game.data)} for game in games}
     return jsonify(response)
 
 @games.route('/getlibrary', methods=['POST'])
@@ -24,5 +24,5 @@ def getlibary():
         return jsonify({'error':'User not logged in'}), 401
     
     items = get_libary(session['id'])
-    response = [{'title': game.title, 'data': eval(game.data), 'rating': rating, 'state': state} for game, rating, state in items]
+    response = {game.title:{'data': eval(game.data), 'rating': rating, 'state': state} for game, rating, state in items}
     return jsonify(response)

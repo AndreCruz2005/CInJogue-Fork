@@ -1,4 +1,7 @@
-from flaskr import *
+from flask import Blueprint, request, session, jsonify
+from gemini import GenAI
+from giantbomb import search_game
+from database import *
 
 gai = Blueprint("genai", __name__)
 
@@ -11,7 +14,9 @@ def promptAI():
         return jsonify({'error':'User not logged in'}), 401
     
     prompt = data.get('prompt')
-    response = GenAI.send_message(prompt)
+    prompt = format_prompt(prompt)
+    print(prompt)
+    response = GenAI.send_message(str(prompt))
     response = eval(response)
     
     for task in response:
@@ -20,14 +25,15 @@ def promptAI():
         other = task.get("other", [])
         
         if command == "Recommend":
+            clear_user_recommendations(session['id'])
             for title in titles:
-                game = ensureGameExistence(title)
+                game = ensure_game_existence(title)
                 if game and session.get('id'):
                     add_game_to_recommendations(session['id'], game)
 
         elif command == "Add":
             for title in titles:
-                game = ensureGameExistence(title)
+                game = ensure_game_existence(title)
                 if game and session.get('id'):
                     add_game_to_library(session['id'], game)
                     
@@ -51,7 +57,7 @@ def promptAI():
     
     return jsonify(response), 200
 
-def ensureGameExistence(title: str) -> Game:
+def ensure_game_existence(title: str) -> Game:
     game = db.session.query(Game).filter_by(title=title).first()
     
     if not game:
@@ -67,4 +73,14 @@ def ensureGameExistence(title: str) -> Game:
             game = db.session.query(Game).filter_by(title=title).first()
     
     return game
+
+def format_prompt(prompt: str) -> dict:
+    libray = get_libary(session['id'])
+    recommendations = get_recommendations(session['id'])
     
+    return {
+        "prompt": prompt, 
+        "library": {game.title:{'rating': rating, 'state': state} for game, rating, state in libray}, 
+        "recommendations": {game.title:{ 'title': game.title} for game in recommendations}, 
+        "other": {}
+        }

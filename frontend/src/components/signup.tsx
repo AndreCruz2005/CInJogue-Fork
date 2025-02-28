@@ -1,24 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
 import { backend } from "../global";
-import "../styles/signup.scss";
+import "../styles/signup.sass";
 
 export const Signup = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [passwordConfirm, setPasswordConfirm] =
-		useState("");
+	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [email, setEmail] = useState("");
 	const [birthdate, setBirthdate] = useState("");
 
 	const handleSubmit = () => {
-		SignUp(
-			username,
-			password,
-			passwordConfirm,
-			email,
-			birthdate,
-		);
+		SignUp(username, password, passwordConfirm, email, birthdate);
 	};
 
 	return (
@@ -26,49 +19,27 @@ export const Signup = () => {
 			<h1>SIGN UP</h1>
 			<label>
 				Username:
-				<input
-					type="text"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-				/>
+				<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
 			</label>
 			<br />
 			<label>
 				Password:
-				<input
-					type="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
+				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 			</label>
 			<br />
 			<label>
 				Confirm Password:
-				<input
-					type="password"
-					value={passwordConfirm}
-					onChange={(e) =>
-						setPasswordConfirm(e.target.value)
-					}
-				/>
+				<input type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
 			</label>
 			<br />
 			<label>
 				Email:
-				<input
-					type="email"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
+				<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 			</label>
 			<br />
 			<label>
 				Birthdate:
-				<input
-					type="date"
-					value={birthdate}
-					onChange={(e) => setBirthdate(e.target.value)}
-				/>
+				<input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
 			</label>
 			<br />
 			<button onClick={handleSubmit}>SUBMIT</button>
@@ -76,15 +47,8 @@ export const Signup = () => {
 	);
 };
 
-function SignUp(
-	username: string,
-	password: string,
-	passwordConfirm: string,
-	email: string,
-	birthdate: string,
-): void {
-	if (password != passwordConfirm)
-		console.error("Passwords do not match!");
+function SignUp(username: string, password: string, passwordConfirm: string, email: string, birthdate: string): void {
+	if (password != passwordConfirm) console.error("Passwords do not match!");
 
 	axios
 		.post(`${backend}/signup`, {
@@ -97,9 +61,6 @@ function SignUp(
 			console.log(response.data);
 		})
 		.catch((error) => {
-			console.error(
-				"There was an error signing up!",
-				error,
-			);
+			console.error("There was an error signing up!", error);
 		});
 }

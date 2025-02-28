@@ -100,6 +100,11 @@ def remove_game_from_library(user_id, game_id):
     except Exception as e:
         db.session.rollback()
         print("Failed to remove game: " + str(e))
+        
+
+def clear_user_recommendations(user_id):
+    db.session.query(UserRecommendations).filter_by(user_id=user_id).delete()
+    db.session.commit()
 
 
 def update_game_rating(user_id, game_id, new_rating):

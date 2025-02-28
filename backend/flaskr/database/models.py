@@ -14,7 +14,6 @@ UserRecommendations = db.Table(
     db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True)
 )
 
-
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
