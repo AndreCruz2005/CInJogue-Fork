@@ -59,7 +59,6 @@ export const Library = ({ userData, setUserData }: LoginProps) => {
 
 	return (
 		<div id="library">
-			<button onClick={fetchLibrary}>UPDATE</button>
 			<br></br>
 			<GameLibrary />
 		</div>
