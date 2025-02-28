@@ -65,12 +65,12 @@ def ensure_game_existence(title: str) -> Game:
         
         if game_results:
             for i, result in enumerate(game_results):
-                create_game(title=result['name'], data=str(result))
+                if i == 0:
+                    game = create_game(title=result['name'], data=str(result))
+                else:
+                    create_game(title=result['name'], data=str(result))
             
-            db.session.commit() 
- 
-            game = db.session.query(Game).filter_by(title=title).first()
-    
+            db.session.commit()     
     return game
 
 def format_prompt(prompt: str) -> dict:

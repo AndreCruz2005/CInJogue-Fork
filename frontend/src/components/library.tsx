@@ -29,7 +29,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }:any) => {
 		);
 
 		return (
-			<div>
+			<div id="library">
 				{lst.map((it) => {
 					return <GameCard title={it.title} rating={it.rating} state={it.state} data={it.data} />;
 				})}
@@ -38,9 +38,6 @@ export const Library = ({ userData, setUserData, library, setLibrary }:any) => {
 	};
 
 	return (
-		<div id="library">
-			<br></br>
-			<GameLibrary />
-		</div>
+		<GameLibrary />
 	);
 };
