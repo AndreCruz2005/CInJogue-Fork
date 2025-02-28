@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { backend } from "../global";
+import "../styles/chat.sass";
 
 export const Chat = ({ userData, setUserData, library, setLibrary }: any) => {
 	const [input, setInput] = useState("");
@@ -37,7 +38,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary }: any) => {
 		fetchLibrary();
     }, []);
 	return (
-		<div>
+		<div id='chat'>
 			<textarea value={output}></textarea>
 			<br></br>
 			<input onChange={(e) => setInput(e.target.value)} value={input}></input>

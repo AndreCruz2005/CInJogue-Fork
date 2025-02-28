@@ -4,6 +4,7 @@ import { Signup } from "./components/signup";
 import { Library } from "./components/library";
 import { Chat } from "./components/chat";
 import { backend, LoginProps } from "./global";
+import "./styles/App.sass";
 import axios from "axios";
 
 function App() {
@@ -28,7 +29,7 @@ const InitialScreen = ({ userData, setUserData }: LoginProps) => {
 
 const LibraryScreen = ({ userData, setUserData, library, setLibrary }: any) => {
 	return (
-		<div>
+		<div id='library-screen'>
 			<Library userData={userData} setUserData={setUserData} library={library} setLibrary={setLibrary} />
 			<Chat userData={userData} setUserData={setUserData} library={library} setLibrary={setLibrary} />
 		</div>

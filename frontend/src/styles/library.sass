@@ -1,6 +1,7 @@
 #library
     display: grid
-    grid-template-columns: repeat(auto-fill, minmax(7em, 1fr))
+    grid-template-columns: repeat(auto-fill, minmax(6em, 1em))
+    flex: 8
 
     #game-card-display
         display: flex
@@ -10,8 +11,17 @@
         p
             display: none
         img
-            display: block
             max-width: 9vw
             max-height: 12vh
             width: auto
             height: auto
+            margin: 0.5em
+            border-radius: 0.5em
+            box-shadow: 0 0 0.5em 0.1em black
+            aspect-ratio: 6 / 8
+            transition: transform 0.3s ease, box-shadow 0.3s ease
+
+
+        img:hover
+            cursor: pointer
+            transform: scale(1.5)
