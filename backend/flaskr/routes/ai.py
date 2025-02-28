@@ -65,8 +65,7 @@ def ensure_game_existence(title: str) -> Game:
         
         if game_results:
             for i, result in enumerate(game_results):
-                game_name = title if i == 0 else result['name']
-                create_game(title=game_name, data=str(result))
+                create_game(title=result['name'], data=str(result))
             
             db.session.commit() 
  

@@ -3,32 +3,13 @@ import React, { useEffect, useState } from "react";
 import { backend, LoginProps } from "../global";
 import "../styles/library.sass";
 
-export const Library = ({ userData, setUserData }: LoginProps) => {
+export const Library = ({ userData, setUserData, library, setLibrary }:any) => {
 	type Game = {
 		title: string;
 		data: any;
 		rating: number;
 		state: string;
 	};
-
-	type Library = {
-		[title: string]: Game;
-	};
-
-	const [library, setLibrary] = useState<Library | null>(null);
-
-	function fetchLibrary() {
-		axios
-			.post(`${backend}/getlibrary`, {
-				username: userData.username,
-				password: userData.password,
-			})
-			.then((response) => {
-				setLibrary(response.data);
-				console.log(response.data);
-			})
-			.catch((e) => console.error(e));
-	}
 
 	const GameCard = (g: Game) => {
 		return (
@@ -42,9 +23,8 @@ export const Library = ({ userData, setUserData }: LoginProps) => {
 	};
 
 	const GameLibrary = () => {
-		console.log(library);
 		let lst: Game[] = [];
-		Object.entries(library ? library : {}).forEach((item) =>
+		Object.entries(library ? library : {}).forEach((item:any) =>
 			lst.push({ title: item[0], rating: item[1].rating, state: item[1].state, data: item[1].data }),
 		);
 
