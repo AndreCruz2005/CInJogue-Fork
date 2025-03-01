@@ -1,0 +1,21 @@
+body{
+    background-color: #16181C;
+    margin: 0;
+    padding: 0;
+}
+    
+#library-screen{
+    display: flex;
+    gap: 2vw;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 768px){
+    #library-screen{
+        flex-direction: column;
+        overflow: auto;
+    }
+
+}
