@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { backend } from "../global";
-import "../styles/signup.sass";
+import "../styles/signup.css";
 
 export const Signup = () => {
 	const [username, setUsername] = useState("");
