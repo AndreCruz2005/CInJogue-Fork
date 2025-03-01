@@ -3,7 +3,6 @@ import { Login } from "./components/login";
 import { Signup } from "./components/signup";
 import { Library } from "./components/library";
 import { Chat } from "./components/chat";
-import { backend, LoginProps } from "./global";
 import "./styles/App.css";
 import axios from "axios";
 
@@ -26,7 +25,7 @@ function App() {
 	);
 }
 
-const InitialScreen = ({ userData, setUserData }: LoginProps) => {
+const InitialScreen = ({ userData, setUserData }) => {
 	return (
 		<div id="initial-screen">
 			<Signup />
@@ -35,7 +34,7 @@ const InitialScreen = ({ userData, setUserData }: LoginProps) => {
 	);
 };
 
-const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }: any) => {
+const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	return (
 		<div id="library-screen">
 			<Library

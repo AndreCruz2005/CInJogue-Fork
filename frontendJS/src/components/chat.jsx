@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { backend } from "../global";
 import "../styles/chat.css";
 
-export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }: any) => {
+export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
 
@@ -49,8 +49,8 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 	};
 
 	const RecommendationsGrid = () => {
-		let lst: any[] = [];
-		Object.entries(recommendations ? recommendations : {}).forEach((item: any) =>
+		let lst = [];
+		Object.entries(recommendations ? recommendations : {}).forEach((item) =>
 			lst.push({ title: item[0], data: item[1].data }),
 		);
 

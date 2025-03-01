@@ -1,23 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { backend, LoginProps } from "../global";
+import { backend } from "../global";
 import "../styles/library.css";
 
-export const Library = ({ userData, setUserData, library, setLibrary }: any) => {
-	type Game = {
-		title: string;
-		data: any;
-		rating: number;
-		state: string;
-	};
+export const Library = ({ userData, setUserData, library, setLibrary }) => {
 
-	const GameCard = (g: Game) => {
+	const GameCard = (g) => {
 		return <img src={g.data.image.original_url} alt={g.title}></img>;
 	};
 
 	const GameLibrary = () => {
-		let lst: Game[] = [];
-		Object.entries(library ? library : {}).forEach((item: any) =>
+		let lst = [];
+		Object.entries(library ? library : {}).forEach((item) =>
 			lst.push({ title: item[0], rating: item[1].rating, state: item[1].state, data: item[1].data }),
 		);
 

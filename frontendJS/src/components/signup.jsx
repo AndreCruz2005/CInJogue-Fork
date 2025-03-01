@@ -47,7 +47,7 @@ export const Signup = () => {
 	);
 };
 
-function SignUp(username: string, password: string, passwordConfirm: string, email: string, birthdate: string): void {
+function SignUp(username, password, passwordConfirm, email, birthdate) {
 	if (password != passwordConfirm) console.error("Passwords do not match!");
 
 	axios

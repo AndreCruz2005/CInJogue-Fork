@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { backend, LoginProps } from "../global";
+import { backend } from "../global";
+import React from "react";
 
-export const Login = ({ userData, setUserData }: LoginProps) => {
+export const Login = ({ userData, setUserData }) => {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -42,7 +43,7 @@ export const Login = ({ userData, setUserData }: LoginProps) => {
 	);
 };
 
-function login(username: string, password: string, setUserData: (data: any) => void): void {
+function login(username, password, setUserData) {
 	axios
 		.post(`${backend}/login`, {
 			username,
