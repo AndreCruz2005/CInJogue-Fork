@@ -76,10 +76,11 @@ def ensure_game_existence(title: str) -> Game:
 def format_prompt(prompt: str) -> dict:
     libray = get_libary(session['id'])
     recommendations = get_recommendations(session['id'])
+    userinfo ={k:v for k, v in get_user_by_name(session['username']).items() if k == 'username' or k == 'birthdate'} 
     
     return {
         "prompt": prompt, 
         "library": {game.title:{'rating': rating, 'state': state} for game, rating, state in libray}, 
         "recommendations": {game.title:{ 'title': game.title} for game in recommendations}, 
-        "other": {}
+        "other": {'userinfo': userinfo, 'platforms':[], 'genres':[], 'agerating':[], 'themes':[]}
         }

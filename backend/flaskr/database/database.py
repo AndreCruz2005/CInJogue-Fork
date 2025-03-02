@@ -142,5 +142,5 @@ def get_libary(user_id):
     return items
 
 def get_recommendations(user_id):
-    games = db.session.query(Game).join(UserRecommendations).filter(UserLibrary.c.user_id == user_id).all()
+    games = db.session.query(Game).join(UserRecommendations).filter(UserRecommendations.c.user_id == user_id).all()
     return games 

@@ -9,7 +9,7 @@ app.register_blueprint(users)
 app.register_blueprint(games)
 app.register_blueprint(gai)
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.secret_key = os.getenv('SECRET_KEY')

@@ -36,7 +36,7 @@ const InitialScreen = ({ userData, setUserData }) => {
 
 const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	return (
-		<div id="library-screen">
+		<div id="library-chat-container">
 			<Library
 				userData={userData}
 				setUserData={setUserData}
