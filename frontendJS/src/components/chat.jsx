@@ -5,7 +5,45 @@ import "../styles/chat.css";
 
 export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	const [input, setInput] = useState("");
-	const [output, setOutput] = useState("");
+	const [output, setOutput] = useState("Hi there, how can I help you today?");
+
+	const [infoBoxData, setInfoBoxData] = useState(null);
+	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
+
+	const InfoBox = () => {
+		return !infoBoxStatus ? null : (
+			<div id="info-box-layer">
+				<div id="info-box">
+					<div id="header">
+						<text id="title">{infoBoxData.title}</text>
+						<button id="close-button" onClick={() => setInfoBoxStatus(false)}>
+							X
+						</button>
+					</div>
+					<div id="content">
+						<div id="image-container">
+							<img src={infoBoxData.data.image.original_url} alt={infoBoxData.title} />
+						</div>
+						<div id="description-info-container">
+							<textarea id="description" readOnly value={infoBoxData.data.deck}></textarea>
+							<div id="other-info">
+								<div id="game-info">
+									<text>Platforms: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
+									<br />
+									<text>Release: {infoBoxData.data.original_release_date}</text>
+								</div>
+								<div id="user-options">
+									<button>ADD TO LIBRARY</button>
+									<button>REJECT</button>
+									<button>BLACKLIST</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	};
 
 	function fetchLibrary() {
 		axios
@@ -57,7 +95,16 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 		return (
 			<div id="recommendations-grid">
 				{lst.map((it) => {
-					return <img src={it.data.image.original_url} alt={it.title}></img>;
+					return (
+						<img
+							src={it.data.image.original_url}
+							alt={it.title}
+							onClick={() => {
+								setInfoBoxData({ title: it.title, rating: it.rating, state: it.state, data: it.data });
+								setInfoBoxStatus(true);
+							}}
+						/>
+					);
 				})}
 			</div>
 		);
@@ -70,7 +117,11 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 
 	return (
 		<div id="chat">
-			<text id="output">{output}</text>
+			<InfoBox />
+			<div id="output">
+				<label>AI Assistant</label>
+				<text>{output}</text>
+			</div>
 			<RecommendationsGrid />
 			<div id="input-and-send">
 				<input onChange={(e) => setInput(e.target.value)} value={input} placeholder="Digite sua mensagem"></input>

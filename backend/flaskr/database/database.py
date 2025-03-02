@@ -76,6 +76,16 @@ def add_game_to_library(user_id, game):
     except Exception as e:
         db.session.rollback()
         print("Failed to add game: " + str(e))
+        
+def get_game_by_name(title):
+    game = db.session.query(Game).filter_by(title=title).first()
+    if game:
+        return {
+            "id": game.id,
+            "title": game.title,
+            "data": game.data
+        }
+    return None
 
 
 def add_game_to_recommendations(user_id, game):
@@ -101,6 +111,16 @@ def remove_game_from_library(user_id, game_id):
         db.session.rollback()
         print("Failed to remove game: " + str(e))
         
+def remove_game_from_recommendations(user_id, game_id):
+    try:
+        entry_to_delete = UserRecommendations.delete().where(UserRecommendations.c.user_id == user_id, UserRecommendations.c.game_id == game_id)
+        db.session.execute(entry_to_delete)
+        db.session.commit()
+        print(f"Game {game_id} removed from user {user_id}'s recommendations.")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to remove game: " + str(e))        
 
 def clear_user_recommendations(user_id):
     db.session.query(UserRecommendations).filter_by(user_id=user_id).delete()
