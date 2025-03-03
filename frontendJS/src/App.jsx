@@ -4,6 +4,7 @@ import { Signup } from "./components/signup";
 import { Library } from "./components/library";
 import { Chat } from "./components/chat";
 import "./styles/App.css";
+import "./styles/infobox.css";
 import axios from "axios";
 
 function App() {

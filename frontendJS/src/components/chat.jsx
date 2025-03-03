@@ -32,10 +32,10 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 									<br />
 									<text>Release: {infoBoxData.data.original_release_date}</text>
 								</div>
-								<div id="user-options">
-									<button>ADD TO LIBRARY</button>
-									<button>REJECT</button>
-									<button>BLACKLIST</button>
+								<div id="user-info">
+									<button id="add-button">ADD TO LIBRARY</button>
+									<button id="reject-button">REJECT</button>
+									<button id="blacklist-button">BLACKLIST</button>
 								</div>
 							</div>
 						</div>

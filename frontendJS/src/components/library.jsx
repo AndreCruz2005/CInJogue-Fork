@@ -105,6 +105,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 										</select>
 									</div>
 									<button
+										id="remove-button"
 										onClick={() => {
 											axios
 												.post(`${backend}/removegamefromlibrary`, {
