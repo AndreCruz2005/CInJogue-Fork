@@ -1,4 +1,4 @@
-#signup h1 {
+#login h1 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 25px;
@@ -6,14 +6,14 @@
     font-size: 24px;
 }
 
-#signup label {
+#login label {
     display: block;
     margin-bottom: 20px;
     font-size: 14px;
     font-weight: 500;
 }
 
-#signup input {
+#login input {
     width: 100%;
     padding: 10px 12px;
     margin-top: 6px;
@@ -24,13 +24,13 @@
     box-sizing: border-box;
 }
 
-#signup input:focus {
+#login input:focus {
     border-color: #4a90e2;
     outline: none;
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
-#signup button {
+#login button {
     width: 100%;
     padding: 12px;
     background-color: #4a90e2;
@@ -42,25 +42,21 @@
     cursor: pointer;
     transition: background-color 0.2s;
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-#signup button:hover {
+#login button:hover {
     background-color: #3a7bcb;
 }
 
 /* Remove <br> spacing by hiding it */
-#signup br {
+#login br {
     display: none;
-}
-
-/* Add error styling for inputs */
-#signup input.error {
-    border-color: #e74c3c;
 }
 
 /* Optional: Add responsive design */
 @media (max-width: 400px) {
-    #signup div {
+    #login {
         width: 90%;
         padding: 20px;
     }

@@ -1,22 +1,70 @@
-body{
+body {
     background-color: #16181C;
     margin: 0;
     overflow: hidden;
 
 }
-    
-#library-chat-container{
+
+#App {
     display: flex;
+    flex-direction: row;
+    gap: 0px;
     height: 100vh;
-    overflow: hidden;
-    flex-direction: row-reverse;
-    padding: 1%;
-    box-sizing: border-box; 
-    gap: 2vw;
+
+    @media (max-width: 876px) {
+        flex-direction: column;
+    }
 }
 
-@media (max-width: 876px){
-    #library-chat-container{
+#initial-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 5vw;
+}
+
+#initial-screen div {
+    height: 80%;
+    border: 3px solid#36BCF7;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 350px;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#side-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: #36BCF7;
+    max-width: 80px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+
+
+    @media (max-width: 876px) {
+        max-width: none;
+        width: 100vw;
+        flex-direction: row;
+    }
+}
+
+#library-chat-container {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    padding: 1%;
+    box-sizing: border-box;
+    gap: 2vw;
+    flex: 11;
+}
+
+@media (max-width: 876px) {
+    #library-chat-container {
         flex-direction: column;
         overflow: auto;
         padding: 2vw;

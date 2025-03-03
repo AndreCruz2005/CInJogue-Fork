@@ -1,1 +1,1 @@
-from giantbomb.games import *
+from giantbomb.giantbomb import *

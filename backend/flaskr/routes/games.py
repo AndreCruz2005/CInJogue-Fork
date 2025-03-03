@@ -54,7 +54,7 @@ def removegamefromrecommendations():
     if not game:
         return jsonify({'error':'Game not found'}), 404
     
-    remove_game_from_recommendations(session['id'], game.id)
+    remove_game_from_recommendations(session['id'], game['id'])
     return jsonify({'success':'Game removed from recommendations'})
 
 @games.route('/updaterating', methods=['POST'])
@@ -86,3 +86,48 @@ def updatestate():
     
     update_game_state(session['id'], game['id'], data.get('state'))
     return jsonify({'success':'State updated'})
+
+@games.route('/blacklistgame', methods=['POST'])
+def blacklistgame():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    game = get_game_by_name(data.get('title'))
+    if not game:
+        return jsonify({'error':'Game not found'}), 404
+    
+    add_game_to_blacklist(session['id'], game['id'])
+    return jsonify({'success':'Game blacklisted'})
+
+@games.route('/unblacklistgame', methods=['POST'])
+def unblacklistgame():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    game = get_game_by_name(data.get('title'))
+    if not game:
+        return jsonify({'error':'Game not found'}), 404
+    
+    remove_game_from_blacklist(session['id'], game['id'])
+    return jsonify({'success':'Game unblacklisted'})
+
+@games.route('/addgametolibrary', methods=['POST'])
+def addgametolibrary():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    game = get_game_by_name(data.get('title'))
+    if not game:
+        return jsonify({'error':'Game not found'}), 404
+    
+    add_game_to_library(session['id'], game['id'])
+    return jsonify({'success':'Game added to library'})

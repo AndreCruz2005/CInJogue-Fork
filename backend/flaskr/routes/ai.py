@@ -35,7 +35,7 @@ def promptAI():
             for title in titles:
                 game = ensure_game_existence(title)
                 if game and session.get('id'):
-                    add_game_to_library(session['id'], game)
+                    add_game_to_library(session['id'], game.id)
                     
         elif command == "Remove":
             for title in titles:
@@ -77,10 +77,11 @@ def format_prompt(prompt: str) -> dict:
     libray = get_libary(session['id'])
     recommendations = get_recommendations(session['id'])
     userinfo ={k:v for k, v in get_user_by_name(session['username']).items() if k == 'username' or k == 'birthdate'} 
+    blacklist = [game.title for game in get_blacklist(session['id'])]
     
     return {
         "prompt": prompt, 
         "library": {game.title:{'rating': rating, 'state': state} for game, rating, state in libray}, 
         "recommendations": {game.title:{ 'title': game.title} for game in recommendations}, 
-        "other": {'userinfo': userinfo, 'platforms':[], 'genres':[], 'agerating':[], 'themes':[]}
+        "other": {'userinfo': userinfo, 'platforms':[], 'genres':[], 'age_ratings':[], 'themes':[], 'blacklist':blacklist}
         }

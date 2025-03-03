@@ -6,23 +6,49 @@ import { Chat } from "./components/chat";
 import "./styles/App.css";
 import "./styles/infobox.css";
 import axios from "axios";
+import { backend } from "./global";
 
 function App() {
 	const [userData, setUserData] = useState(null);
 	const [library, setLibrary] = useState(null);
 	const [recommendations, setRecommendations] = useState(null);
 
+	const SideBar = () => {
+		return (
+			<div id="side-bar">
+				<button>ID</button>
+				<button>PREFS</button>
+				<button>BL</button>
+				<button
+					onClick={() => {
+						axios
+							.post(`${backend}/logout`)
+							.then(() => setUserData(null))
+							.catch((error) => {
+								console.log(error);
+							});
+					}}
+				>
+					LOGOUT
+				</button>
+			</div>
+		);
+	};
+
 	return userData == null ? (
 		<InitialScreen userData={userData} setUserData={setUserData} />
 	) : (
-		<LibraryScreen
-			userData={userData}
-			setUserData={setUserData}
-			library={library}
-			setLibrary={setLibrary}
-			recommendations={recommendations}
-			setRecommendations={setRecommendations}
-		/>
+		<div id="App">
+			<SideBar />
+			<LibraryScreen
+				userData={userData}
+				setUserData={setUserData}
+				library={library}
+				setLibrary={setLibrary}
+				recommendations={recommendations}
+				setRecommendations={setRecommendations}
+			/>
+		</div>
 	);
 }
 

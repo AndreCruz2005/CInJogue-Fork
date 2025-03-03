@@ -11,6 +11,12 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
 
 	const InfoBox = () => {
+		const dataToSend = {
+			username: userData.username,
+			password: userData.password,
+			title: infoBoxData ? infoBoxData.title : "",
+		};
+
 		return !infoBoxStatus ? null : (
 			<div id="info-box-layer">
 				<div id="info-box">
@@ -33,9 +39,42 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 									<text>Release: {infoBoxData.data.original_release_date}</text>
 								</div>
 								<div id="user-info">
-									<button id="add-button">ADD TO LIBRARY</button>
-									<button id="reject-button">REJECT</button>
-									<button id="blacklist-button">BLACKLIST</button>
+									<button
+										id="add-button"
+										onClick={() => {
+											axios.post(`${backend}/addgametolibrary`, dataToSend);
+											axios.post(`${backend}/removegamefromrecommendations`, dataToSend).then(() => {
+												fetchLibrary();
+												fetchRecommendations();
+												setInfoBoxStatus(false);
+											});
+										}}
+									>
+										ADD TO LIBRARY
+									</button>
+									<button
+										id="reject-button"
+										onClick={() => {
+											axios.post(`${backend}/removegamefromrecommendations`, dataToSend).then(() => {
+												fetchRecommendations();
+												setInfoBoxStatus(false);
+											});
+										}}
+									>
+										REJECT
+									</button>
+									<button
+										id="blacklist-button"
+										onClick={() => {
+											axios.post(`${backend}/blacklistgame`, dataToSend);
+											axios.post(`${backend}/removegamefromrecommendations`, dataToSend).then(() => {
+												fetchRecommendations();
+												setInfoBoxStatus(false);
+											});
+										}}
+									>
+										BLACKLIST
+									</button>
 								</div>
 							</div>
 						</div>

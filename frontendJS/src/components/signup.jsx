@@ -15,11 +15,11 @@ export const Signup = () => {
 	};
 
 	return (
-		<div>
+		<div id="signup">
 			<h1>SIGN UP</h1>
 			<label>
 				Username:
-				<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+				<input type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
 			</label>
 			<br />
 			<label>

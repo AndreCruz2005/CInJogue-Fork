@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { backend } from "../global";
 import React from "react";
+import "./../styles/login.css";
 
 export const Login = ({ userData, setUserData }) => {
 	const [name, setName] = useState("");
@@ -12,33 +13,17 @@ export const Login = ({ userData, setUserData }) => {
 	};
 
 	return (
-		<div>
+		<div id="login">
 			<h1>LOGIN</h1>
 			<label>
 				Username
-				<input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
+				<input type="username" value={name} onChange={(e) => setName(e.target.value)}></input>
 			</label>
-			<br />
 			<label>
 				Password
 				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 			</label>
-			<br />
 			<button onClick={handleSubmit}>SUBMIT</button>
-			<br />
-			<h1>LOGGED IN USER: {userData && "username" in userData ? userData["username"] : "NOT LOGGED IN"}</h1>
-			<button
-				onClick={() => {
-					axios
-						.post(`${backend}/logout`)
-						.then(() => setUserData(null))
-						.catch((error) => {
-							error.log(error);
-						});
-				}}
-			>
-				LOG OUT
-			</button>
 		</div>
 	);
 };
