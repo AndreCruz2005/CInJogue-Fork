@@ -20,25 +20,6 @@ body {
     }
 }
 
-#initial-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    gap: 5vw;
-
-}
-
-#initial-screen div {
-    height: 80%;
-    border: 3px solid#4a90e2;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    padding: 30px;
-    width: 350px;
-    color: white;
-}
-
 #side-bar {
     display: flex;
     flex-direction: column;

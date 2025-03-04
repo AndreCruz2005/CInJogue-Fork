@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Login } from "./components/login";
-import { Signup } from "./components/signup";
+import { Auth } from "./components/auth";
 import { Library } from "./components/library";
 import { Chat } from "./components/chat";
 import { ProfileBox } from "./components/profile-box";
@@ -96,7 +95,7 @@ function App() {
 	};
 
 	return userData == null ? (
-		<InitialScreen userData={userData} setUserData={setUserData} />
+		<Auth userData={userData} setUserData={setUserData} />
 	) : (
 		<div id="App">
 			<ProfileBox
@@ -135,15 +134,6 @@ function App() {
 		</div>
 	);
 }
-
-const InitialScreen = ({ userData, setUserData }) => {
-	return (
-		<div id="initial-screen">
-			<Signup />
-			<Login userData={userData} setUserData={setUserData} />
-		</div>
-	);
-};
 
 const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	return (
