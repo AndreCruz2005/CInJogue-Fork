@@ -26,13 +26,14 @@ body {
     align-items: center;
     height: 100vh;
     gap: 5vw;
+
 }
 
 #initial-screen div {
     height: 80%;
     border: 3px solid#4a90e2;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     padding: 30px;
     width: 350px;
     color: white;
@@ -43,12 +44,20 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #4a90e2;
-    max-width: 80px;
+    max-width: 90px;
     flex: 1;
     justify-content: center;
     align-items: center;
     justify-content: space-evenly;
 
+    button {
+        border: none;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        background-color: rgba(0, 0, 0, 0.0);
+
+    }
 
     @media (max-width: 876px) {
         max-width: none;

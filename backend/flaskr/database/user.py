@@ -79,6 +79,7 @@ def remove_user(user_id):
         user = db.session.query(User).filter_by(id=user_id).first()
 
         if user:
+            remove_all_user_tags(user_id)
             db.session.delete(user)
             db.session.commit()
             return True  
@@ -130,3 +131,14 @@ def remove_user_tag(user_id, text):
 def get_tags(user_id):
     tags = db.session.query(UserTags).filter_by(user_id=user_id).all()
     return tags 
+
+def remove_all_user_tags(user_id):
+    try:
+        tags_to_delete = UserTags.delete().where(UserTags.c.user_id == user_id)
+        db.session.execute(tags_to_delete)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        print(f"Failed to remove all tags for user_id {user_id}: {e}")
+        return False

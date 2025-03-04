@@ -3,13 +3,21 @@ import { Login } from "./components/login";
 import { Signup } from "./components/signup";
 import { Library } from "./components/library";
 import { Chat } from "./components/chat";
+import axios from "axios";
+import { backend } from "./global";
+
+// Icons
+import UserIcon from "./assets/user_icon.svg";
+import Preferences from "./assets/preferences.svg";
+import Blacklist from "./assets/blacklist.svg";
+import Logout from "./assets/logout.svg";
+
+// Styles
 import "./styles/App.css";
 import "./styles/infobox.css";
 import "./styles/blacklist.css";
 import "./styles/profile-box.css";
 import "./styles/preferences.css";
-import axios from "axios";
-import { backend } from "./global";
 
 function App() {
 	const [userData, setUserData] = useState(null);
@@ -23,7 +31,7 @@ function App() {
 
 	const [prefsStatus, setPrefsStatus] = useState(false);
 	const [prefs, setPrefs] = useState(null);
-	const tagTypes = ["Platforms", "Genres", "Themes", "Age Ratings"];
+	const tagTypes = ["Plataformas", "Gêneros", "Temas", "Classificações Etárias"];
 
 	function getBlacklist() {
 		axios
@@ -61,7 +69,7 @@ function App() {
 						setProfileBoxStatus(true);
 					}}
 				>
-					PROFILE
+					CONTA
 				</button>
 				<button
 					onClick={() => {
@@ -69,7 +77,7 @@ function App() {
 						setPrefsStatus(true);
 					}}
 				>
-					PREFS
+					PREFERÊNCIAS
 				</button>
 				<button
 					onClick={() => {
@@ -77,7 +85,7 @@ function App() {
 						setBlacklistStatus(true);
 					}}
 				>
-					BL
+					BLACKLIST
 				</button>
 				<button
 					onClick={() => {
@@ -89,7 +97,7 @@ function App() {
 							});
 					}}
 				>
-					LOGOUT
+					SAIR
 				</button>
 			</div>
 		);
@@ -135,27 +143,27 @@ function App() {
 			<div id="profile-box-layer">
 				<div id="profile-box">
 					<div id="header">
-						<h2>ACCOUNT SETTINGS</h2>
+						<h2>CONFIGURAÇÕES DE CONTA</h2>
 						<button onClick={() => setProfileBoxStatus(false)}>X</button>
 					</div>
 					<div id="options">
-						<h3>YOUR INFO</h3>
-						<p>Username: {userData.username}</p>
+						<h3>SEUS DADOS</h3>
+						<p>Nome de usuário: {userData.username}</p>
 						<p>Email: {userData.email}</p>
-						<p>Birthdate: {userData.birthdate}</p>
+						<p>Data de nascimento: {userData.birthdate}</p>
 						<p>ID: {userData.id}</p>
 
-						<h3>CHANGE YOUR PASSWORD</h3>
+						<h3>MUDE SUA SENHA</h3>
 						<label>
-							Old Password:
+							Senha atual:
 							<input onChange={(e) => setOldPassword(e.target.value)} type="password"></input>
 						</label>
 						<label>
-							New Password:
+							Nova senha:
 							<input onChange={(e) => setNewPassword(e.target.value)} type="password"></input>
 						</label>
 						<label>
-							Confirm Password:
+							Confirme nova senha:
 							<input onChange={(e) => setPasswordConfirm(e.target.value)} type="password"></input>
 						</label>
 						<button
@@ -163,15 +171,15 @@ function App() {
 								if (passwordConfirm == newPassword) changePassword();
 							}}
 						>
-							Change Password
+							Mudar senha
 						</button>
 
 						<h3>DANGER ZONE</h3>
 						<label>
-							Password:
+							Senha:
 							<input onChange={(e) => setDeletePassword(e.target.value)} type="password"></input>
 						</label>
-						<button onClick={deleteAccount}>Delete Account</button>
+						<button onClick={deleteAccount}>Deletar conta</button>
 					</div>
 				</div>
 			</div>
@@ -253,7 +261,7 @@ function App() {
 			<div id="prefs-layer">
 				<div id="prefs-box">
 					<div id="header">
-						<h2>PREFERENCES</h2>
+						<h2>PREFERÊNCIAS</h2>
 						<button
 							onClick={() => {
 								setPrefsStatus(false);
