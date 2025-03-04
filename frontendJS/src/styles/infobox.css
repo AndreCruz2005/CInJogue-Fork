@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,7 +143,7 @@
     border-radius: 5px;
     background-color: #16181C;
     color: white;
-    border: 1px solid #36BCF7;
+    border: 1px solid #4a90e2;
 }
 
 #user-info select option {
@@ -152,7 +152,7 @@
 }
 
 #user-info button {
-    background-color: #36BCF7;
+    background-color: #4a90e2;
     color: white;
     border: none;
     border-radius: 5px;

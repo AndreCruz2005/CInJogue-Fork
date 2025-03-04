@@ -42,17 +42,14 @@ def logout():
     return jsonify({"message":"User logged out succesfully"})
 
 @users.route('/removeuser', methods=['POST'])
-def remove_user():
-    if session.get('username') is None:
-        return {"error": "User is not logged in!"}
+def removeuser():
+    data = request.get_json()
     
-    password = request.json.get('password')  
-    if check_password_hash(session['password'], password):
-        remove_user(session['username'])
-        session.clear()
-        return {"message": "User deleted successfully!"}
-
-    return {"error": "Incorrect password!"}
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    remove_user(session['id'])
 
 @users.route('/loggedinuser', methods=['GET'])
 def loggedinuser():
@@ -60,3 +57,54 @@ def loggedinuser():
     if name:
         return jsonify(get_user_by_name(name))
     return jsonify({'error':'User not logged in'})
+
+@users.route('/changepassword', methods=['POST'])
+def changepassword():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('oldPassword'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    return change_password(session['id'], data.get('newPassword'))
+
+
+@users.route('/addtags', methods=['POST'])
+def addtags():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    response = add_user_tag(session['id'], data.get('text'), data.get('tag_type'))
+    return jsonify(response)
+
+@users.route('/removetags', methods=['POST'])
+def removetags():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    response = remove_user_tag(session['id'], data.get('text'))
+    return jsonify(response)
+
+@users.route('/gettags', methods=['POST'])
+def gettags():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    tags = get_tags(session['id'])
+    response = {tag[3]:[] for tag in tags}
+    for tag in tags:
+        response[tag[3]].append(tag[2])
+    return response    
+    
+    
+    
+        

@@ -1,0 +1,187 @@
+#prefs-layer {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+
+
+    /* Main preferences container */
+    #prefs-box {
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        width: 90%;
+        max-width: 500px;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+        background-color: #16181C;
+    }
+
+    /* Header section */
+    #header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eaeaea;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: #16181C;
+    }
+
+    #header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    #header button {
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 1.2rem;
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+    }
+
+    #header button:hover {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    p {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    /* Tag manager section */
+    #tag-manager {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    #tag-manager:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    #tag-manager h3 {
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+    }
+
+    /* Tag input field */
+    #tag-input {
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        margin-top: 8px;
+        transition: border-color 0.2s;
+    }
+
+    #tag-input:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+    }
+
+    #tag-input::placeholder {
+        color: #aaa;
+    }
+
+    /* Individual tags */
+    #tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: #4a90e2;
+        border: 1px solid #d0e1ff;
+        border-radius: 16px;
+        padding: 6px 12px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s;
+    }
+
+    #tag:hover {
+        background-color: #e0edff;
+    }
+
+    #tag text {
+        font-size: 0.9rem;
+        margin-right: 6px;
+    }
+
+    #tag button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 0.8rem;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        padding: 0;
+        margin-left: 2px;
+    }
+
+    #tag button:hover {
+        background-color: #ff5555;
+        color: white;
+    }
+
+    /* Tag container layout */
+    #tag-manager>div:not(#tag) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+        #prefs-box {
+            width: 95%;
+            padding: 16px;
+        }
+
+        #header h2 {
+            font-size: 1.3rem;
+        }
+
+        #tag-manager h3 {
+            font-size: 1rem;
+        }
+
+        #tag {
+            padding: 4px 10px;
+        }
+    }
+}

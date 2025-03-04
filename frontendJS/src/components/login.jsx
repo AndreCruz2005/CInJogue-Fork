@@ -16,11 +16,11 @@ export const Login = ({ userData, setUserData }) => {
 		<div id="login">
 			<h1>LOGIN</h1>
 			<label>
-				Username
+				Username:
 				<input type="username" value={name} onChange={(e) => setName(e.target.value)}></input>
 			</label>
 			<label>
-				Password
+				Password:
 				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 			</label>
 			<button onClick={handleSubmit}>SUBMIT</button>

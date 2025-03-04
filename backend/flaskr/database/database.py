@@ -10,7 +10,7 @@ def add_game_to_library(user_id, game_id):
         new_entry = UserLibrary.insert().values(user_id=user_id, game_id=game_id, rating=0, state='UNPLAYED')
         db.session.execute(new_entry)
         db.session.commit()
-        print(f"Game {game_id.title} added to user {user_id}'s library.")
+        print(f"Game {game_id} added to user {user_id}'s library.")
         
     except Exception as e:
         db.session.rollback()
@@ -127,3 +127,7 @@ def remove_game_from_blacklist(user_id, game_id):
 def get_blacklist(user_id):
     games = db.session.query(Game).join(UserBlacklist).filter(UserBlacklist.c.user_id == user_id).all()
     return games 
+
+def get_game_ratings(game_id):
+    ratings = db.session.query(UserLibrary.c.rating).filter(UserLibrary.c.game_id == game_id).all()
+    return [r[0] for r in ratings]

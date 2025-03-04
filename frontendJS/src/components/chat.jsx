@@ -9,6 +9,27 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 
 	const [infoBoxData, setInfoBoxData] = useState(null);
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
+	const [currAvrgRating, setCurrAvrgRating] = useState(0);
+
+	function getGameAverageRating(title) {
+		axios
+			.get(`${backend}/gameratings?title=${title}`)
+			.then((response) => {
+				let rating = 0;
+				let reviewsAmount = 0;
+				for (const r of response.data) {
+					rating += r;
+					reviewsAmount++;
+				}
+				rating /= Math.max(reviewsAmount, 1);
+				rating = Math.round(rating * 10) / 10;
+				setCurrAvrgRating(rating);
+			})
+			.catch((error) => {
+				setCurrAvrgRating(0);
+				console.error(e);
+			});
+	}
 
 	const InfoBox = () => {
 		const dataToSend = {
@@ -37,6 +58,8 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 									<text>Platforms: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
 									<br />
 									<text>Release: {infoBoxData.data.original_release_date}</text>
+									<br />
+									<text>Average Rating: {currAvrgRating}</text>
 								</div>
 								<div id="user-info">
 									<button
@@ -140,6 +163,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 							alt={it.title}
 							onClick={() => {
 								setInfoBoxData({ title: it.title, rating: it.rating, state: it.state, data: it.data });
+								getGameAverageRating(it.title);
 								setInfoBoxStatus(true);
 							}}
 						/>
@@ -158,7 +182,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 		<div id="chat">
 			<InfoBox />
 			<div id="output">
-				<label>AI Assistant</label>
+				<label>Assistente de IA</label>
 				<text>{output}</text>
 			</div>
 			<RecommendationsGrid />
@@ -166,6 +190,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 				<input onChange={(e) => setInput(e.target.value)} value={input} placeholder="Digite sua mensagem"></input>
 				<button
 					onClick={() => {
+						setOutput("Aguardando resposta do modelo.");
 						sendMessage();
 					}}
 				>

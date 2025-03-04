@@ -18,7 +18,15 @@ UserRecommendations = db.Table(
 UserBlacklist = db.Table(
     'user_blacklist',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True)
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+)
+
+UserTags = db.Table(
+    'user_tags',
+    db.Column('id', db.Integer, primary_key=True, autoincrement=True),
+    db.Column('user_id', db.Integer, nullable=False),  
+    db.Column('text', db.String, nullable=False),
+    db.Column('type', db.String, nullable=False)
 )
 
 class User(db.Model):
@@ -66,9 +74,9 @@ def get_user_by_name(username):
         }
     return None
 
-def remove_user(username):
+def remove_user(user_id):
     try:
-        user = db.session.query(User).filter_by(username=username).first()
+        user = db.session.query(User).filter_by(id=user_id).first()
 
         if user:
             db.session.delete(user)
@@ -80,3 +88,45 @@ def remove_user(username):
         db.session.rollback() 
         print(f"Error removing user: {e}")
         return False
+    
+def change_password(user_id, password):
+    try:
+        hashed_password = generate_password_hash(password)
+        user = db.session.query(User).filter_by(id=user_id).first()
+        
+        if user:
+            user.password = hashed_password
+            db.session.commit()
+            return True
+        return False
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error changing password: {e}")
+        return False
+    
+def add_user_tag(user_id, text, tag_type):
+    try:
+        new_tag = UserTags.insert().values(user_id=user_id, text=text, type=tag_type)
+        db.session.execute(new_tag)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding tag: {e}")
+        return False
+    
+def remove_user_tag(user_id, text):
+    try:
+        entry_to_delete = UserTags.delete().where(UserTags.c.user_id == user_id, UserTags.c.text == text)
+        db.session.execute(entry_to_delete)
+        db.session.commit()
+        print(f"Tag deleted successfully.")
+        
+    except Exception as e:
+        db.session.rollback()
+        print("Failed to remove game: " + str(e))
+
+def get_tags(user_id):
+    tags = db.session.query(UserTags).filter_by(user_id=user_id).all()
+    return tags 

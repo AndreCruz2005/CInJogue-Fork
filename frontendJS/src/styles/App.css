@@ -5,6 +5,10 @@ body {
 
 }
 
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 #App {
     display: flex;
     flex-direction: row;
@@ -26,7 +30,7 @@ body {
 
 #initial-screen div {
     height: 80%;
-    border: 3px solid#36BCF7;
+    border: 3px solid#4a90e2;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 30px;
@@ -38,7 +42,7 @@ body {
 #side-bar {
     display: flex;
     flex-direction: column;
-    background-color: #36BCF7;
+    background-color: #4a90e2;
     max-width: 80px;
     flex: 1;
     justify-content: center;

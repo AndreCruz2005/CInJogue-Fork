@@ -16,7 +16,7 @@
         text {
             padding: 1vw;
             border-radius: 8px;
-            background-color: #36BCF7;
+            background-color: #4a90e2;
             font-size: 0.8em;
             text-align: justify;
             font-weight: normal;
@@ -27,7 +27,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, 80px);
         grid-template-rows: repeat(auto-fit, 105px);
-        border: 3px solid #36BCF7;
+        border: 3px solid #4a90e2;
         width: 100%;
         padding: 2%;
         gap: 10px;
@@ -61,7 +61,7 @@
         input {
             width: 80%;
             height: 100%;
-            background-color: #36BCF7;
+            background-color: #4a90e2;
             border: none;
             color: white;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -73,7 +73,7 @@
 
         input:focus {
             outline: none;
-            background-color: #2E9AFE;
+            background-color: #3a7bcb;
             ;
         }
 
@@ -82,7 +82,7 @@
             width: 20%;
             height: 100%;
             border-radius: 8px;
-            background-color: #36BCF7;
+            background-color: #4a90e2;
             border: none;
             color: white;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -93,7 +93,7 @@
 
         button:hover {
             cursor: pointer;
-            background-color: #2E9AFE;
+            background-color: #3a7bcb;
         }
     }
 }

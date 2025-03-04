@@ -11,6 +11,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 
 	const [infoBoxData, setInfoBoxData] = useState(null);
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
+	const [currAvrgRating, setCurrAvrgRating] = useState(0);
 
 	function fetchLibrary() {
 		axios
@@ -55,6 +56,26 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 			.catch((e) => console.error(e));
 	}
 
+	function getGameAverageRating(title) {
+		axios
+			.get(`${backend}/gameratings?title=${title}`)
+			.then((response) => {
+				let rating = 0;
+				let reviewsAmount = 0;
+				for (const r of response.data) {
+					rating += r;
+					reviewsAmount++;
+				}
+				rating /= Math.max(reviewsAmount, 1);
+				rating = Math.round(rating * 10) / 10;
+				setCurrAvrgRating(rating);
+			})
+			.catch((error) => {
+				setCurrAvrgRating(0);
+				console.error(e);
+			});
+	}
+
 	const InfoBox = () => {
 		return !infoBoxStatus ? null : (
 			<div id="info-box-layer">
@@ -76,6 +97,8 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 									<text>Platforms: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
 									<br />
 									<text>Release: {infoBoxData.data.original_release_date}</text>
+									<br />
+									<text>Average Rating: {currAvrgRating}</text>
 								</div>
 								<div id="user-info">
 									<div id="rating">
@@ -139,6 +162,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 				alt={title}
 				onClick={() => {
 					setInfoBoxData({ title: title, rating: rating, state: state, data: data });
+					getGameAverageRating(title);
 					setInfoBoxStatus(true);
 				}}
 			/>
@@ -174,7 +198,9 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 						);
 					})}
 				</div>
-				<text id="counter">{gameCount} GAMES</text>
+				<text id="counter">
+					{gameCount} {gameCount > 1 ? "JOGOS" : "JOGO"}
+				</text>
 			</div>
 			<div id="library" ref={libraryRef}>
 				{lst.map((it) => {

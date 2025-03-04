@@ -1,0 +1,136 @@
+/* Overlay layer */
+#blacklist-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Main blacklist container */
+#blacklist-box {
+    background-color: #16181C;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: floatDown 0.5s;
+}
+
+/* Header section */
+#blacklist-layer #header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 12px;
+}
+
+#blacklist-layer #header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#blacklist-layer #header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+#blacklist-layer #header button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Description text */
+#blacklist-box>text {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+/* Blacklist entries container */
+#blacklist {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+/* Individual blacklist entry */
+#blacklist>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background-color: #4a90e2;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+#blacklist>div:hover {
+    background-color: #3a7bcb;
+}
+
+#blacklist>div text {
+    font-size: 1rem;
+}
+
+#blacklist-layer button {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+#blacklist>div button:hover {
+    background-color: #ff5555;
+}
+
+/* Empty state */
+#blacklist:empty::after {
+    content: "No blacklisted games yet";
+    display: block;
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    #blacklist-box {
+        width: 95%;
+        padding: 16px;
+    }
+
+    #blacklist-box #header h2 {
+        font-size: 1.3rem;
+    }
+}

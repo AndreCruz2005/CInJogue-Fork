@@ -131,3 +131,24 @@ def addgametolibrary():
     
     add_game_to_library(session['id'], game['id'])
     return jsonify({'success':'Game added to library'})
+
+@games.route('/gameratings', methods=['GET'])
+def gameratings():
+    title = request.args.get('title', '')
+    game = get_game_by_name(title)
+    if not game:
+        return jsonify({'error':'Game not found'}), 404
+    
+    return jsonify(get_game_ratings(game['id']))
+
+@games.route('/getblacklist', methods=['POST'])
+def getblacklist():
+    data = request.get_json()
+    
+    user = log_user_in(data.get('username'), data.get('password'), session)
+    if not user:
+        return jsonify({'error':'User not logged in'}), 401
+    
+    items = get_blacklist(session['id'])
+    response = [game.title for game in items]
+    return jsonify(response)

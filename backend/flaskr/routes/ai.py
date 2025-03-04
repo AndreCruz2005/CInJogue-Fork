@@ -78,10 +78,15 @@ def format_prompt(prompt: str) -> dict:
     recommendations = get_recommendations(session['id'])
     userinfo ={k:v for k, v in get_user_by_name(session['username']).items() if k == 'username' or k == 'birthdate'} 
     blacklist = [game.title for game in get_blacklist(session['id'])]
+
+    tags = get_tags(session['id'])
+    preferences = {tag[3]:[] for tag in tags}
+    for tag in tags:
+        preferences[tag[3]].append(tag[2])
     
     return {
         "prompt": prompt, 
         "library": {game.title:{'rating': rating, 'state': state} for game, rating, state in libray}, 
         "recommendations": {game.title:{ 'title': game.title} for game in recommendations}, 
-        "other": {'userinfo': userinfo, 'platforms':[], 'genres':[], 'age_ratings':[], 'themes':[], 'blacklist':blacklist}
+        "other": {'userinfo': userinfo, 'blacklist':blacklist, 'preferences':preferences}
         }
