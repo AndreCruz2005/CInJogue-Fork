@@ -198,14 +198,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 				>
 					ENVIAR
 				</button>
-				<button
-					onClick={() => {
-						setOutput("Aguardando resposta do modelo.");
-						sendMessage();
-					}}
-				>
-					ÁUDIO
-				</button>
+				<button onClick={() => {}}>ÁUDIO</button>
 			</div>
 		</div>
 	);

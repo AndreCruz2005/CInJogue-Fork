@@ -28,6 +28,7 @@
         max-height: 90vh;
         overflow-y: auto;
         background-color: #16181C;
+        animation: floatDown 0.5s;
     }
 
     /* Header section */
