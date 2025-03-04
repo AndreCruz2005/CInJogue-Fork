@@ -5,7 +5,9 @@ import "../styles/chat.css";
 
 export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	const [input, setInput] = useState("");
-	const [output, setOutput] = useState("Hi there, how can I help you today?");
+	const [output, setOutput] = useState(
+		"Olá, bem vindo à CInJogue! Envie uma mensagem para começar a construir sua biblioteca.",
+	);
 
 	const [infoBoxData, setInfoBoxData] = useState(null);
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
@@ -195,6 +197,14 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 					}}
 				>
 					ENVIAR
+				</button>
+				<button
+					onClick={() => {
+						setOutput("Aguardando resposta do modelo.");
+						sendMessage();
+					}}
+				>
+					ÁUDIO
 				</button>
 			</div>
 		</div>

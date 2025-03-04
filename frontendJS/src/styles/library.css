@@ -67,7 +67,6 @@
 
   text {
     color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 1.4em;
     font-weight: bold;
 
@@ -86,7 +85,6 @@
       color: white;
       border-radius: 8px;
       padding: 0.5vw;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       font-size: 0.8vw;
 
       @media (max-width: 876px) {

@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
 from database import db
 from routes import users, games, gai
 import os
 
 app = Flask(__name__)
+migrate = Migrate(app, db)
 app.register_blueprint(users)
 app.register_blueprint(games)
 app.register_blueprint(gai)
