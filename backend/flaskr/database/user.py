@@ -1,33 +1,9 @@
 from database.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
-
-UserLibrary = db.Table(
-    'user_library',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
-    db.Column('rating', db.Integer),
-    db.Column('state', db.String)
-)
-
-UserRecommendations = db.Table(
-    'user_recommendations',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True)
-)
-
-UserBlacklist = db.Table(
-    'user_blacklist',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
-)
-
-UserTags = db.Table(
-    'user_tags',
-    db.Column('id', db.Integer, primary_key=True, autoincrement=True),
-    db.Column('user_id', db.Integer, nullable=False),  
-    db.Column('text', db.String, nullable=False),
-    db.Column('type', db.String, nullable=False)
-)
+from database.tags import remove_all_user_tags
+from database.library import UserLibrary
+from database.recommendations import UserRecommendations
+from database.blacklist import UserBlacklist
 
 class User(db.Model):
     __tablename__ = "users"
@@ -106,39 +82,3 @@ def change_password(user_id, password):
         print(f"Error changing password: {e}")
         return False
     
-def add_user_tag(user_id, text, tag_type):
-    try:
-        new_tag = UserTags.insert().values(user_id=user_id, text=text, type=tag_type)
-        db.session.execute(new_tag)
-        db.session.commit()
-        return True
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error adding tag: {e}")
-        return False
-    
-def remove_user_tag(user_id, text):
-    try:
-        entry_to_delete = UserTags.delete().where(UserTags.c.user_id == user_id, UserTags.c.text == text)
-        db.session.execute(entry_to_delete)
-        db.session.commit()
-        print(f"Tag deleted successfully.")
-        
-    except Exception as e:
-        db.session.rollback()
-        print("Failed to remove game: " + str(e))
-
-def get_tags(user_id):
-    tags = db.session.query(UserTags).filter_by(user_id=user_id).all()
-    return tags 
-
-def remove_all_user_tags(user_id):
-    try:
-        tags_to_delete = UserTags.delete().where(UserTags.c.user_id == user_id)
-        db.session.execute(tags_to_delete)
-        db.session.commit()
-        return True
-    except Exception as e:
-        db.session.rollback()
-        print(f"Failed to remove all tags for user_id {user_id}: {e}")
-        return False

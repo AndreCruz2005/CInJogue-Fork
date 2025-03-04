@@ -17,3 +17,13 @@ def create_game(title, data):
         db.session.rollback() 
         print(f"Error creating game: {e}")
         return None
+    
+def get_game_by_name(title):
+    game = db.session.query(Game).filter_by(title=title).first()
+    if game:
+        return {
+            "id": game.id,
+            "title": game.title,
+            "data": game.data
+        }
+    return None

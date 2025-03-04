@@ -68,7 +68,6 @@ def changepassword():
     
     return change_password(session['id'], data.get('newPassword'))
 
-
 @users.route('/addtags', methods=['POST'])
 def addtags():
     data = request.get_json()
