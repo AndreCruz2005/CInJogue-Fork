@@ -51,7 +51,7 @@
 7. Navegue até o diretório do frontend:
 
    ```sh
-   cd ../frontendJS
+   cd frontendJS
    ```
 
 8. Instale as dependências:
