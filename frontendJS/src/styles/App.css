@@ -59,12 +59,23 @@ body {
         font-weight: bold;
         background-color: rgba(0, 0, 0, 0.0);
 
+        img {
+            width: 60px;
+            height: 60px;
+        }
+
     }
 
     @media (max-width: 876px) {
         max-width: none;
         width: 100vw;
         flex-direction: row;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+
     }
 }
 

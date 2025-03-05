@@ -104,6 +104,7 @@
 
     #options input {
         padding: 10px 12px;
+        color: var(--text-color);
         border: 1px solid var(--input-border-color);
         border-radius: 6px;
         font-size: 0.95rem;
@@ -113,13 +114,13 @@
     }
 
     #options input:focus {
-        border-color: #4a90e2;
+        border-color: var(--primary-color);
         outline: none;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     }
 
     #options button {
-        background-color: #4a90e2;
+        background-color: var(--primary-color);
         border: none;
         border-radius: 6px;
         padding: 10px 16px;

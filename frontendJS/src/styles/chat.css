@@ -90,8 +90,6 @@
         }
     }
 
-
-
     #input-and-send {
         display: flex;
         align-items: center;
@@ -131,6 +129,11 @@
             font-size: 1.2vw;
             transition: 0.3s;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+            img {
+                width: 48px;
+                height: 48px;
+            }
         }
 
         button:hover {
@@ -151,15 +154,22 @@
             gap: 10px;
             overflow: auto;
 
-            img {
-                width: 100px;
-                height: 150px;
+            #recommended-card {
+                img {
+                    width: 100px;
+                    height: 150px;
+                }
             }
         }
 
         #input-and-send {
             button {
                 font-size: 0.8em;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
             }
         }
     }
@@ -185,6 +195,11 @@
         #input-and-send {
             button {
                 font-size: 0.6em;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
             }
         }
     }
