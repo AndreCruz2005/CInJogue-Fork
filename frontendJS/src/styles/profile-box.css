@@ -11,7 +11,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    color: white;
+    color: var(--text-color);
 
 
     /* Main profile container */
@@ -28,7 +28,7 @@
         gap: 16px;
         max-height: 90vh;
         overflow-y: auto;
-        background-color: #16181C;
+        background-color: var(--background-color);
         animation: floatDown 0.5s;
     }
 
@@ -43,7 +43,7 @@
         position: sticky;
         top: 0;
         z-index: 2;
-        background-color: #16181C;
+        background-color: var(--background-color);
     }
 
     #header h2 {
@@ -104,16 +104,18 @@
 
     #options input {
         padding: 10px 12px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--input-border-color);
         border-radius: 6px;
         font-size: 0.95rem;
         transition: border-color 0.2s;
+        background-color: #1a1a2e;
+        ;
     }
 
     #options input:focus {
         border-color: #4a90e2;
         outline: none;
-        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     }
 
     #options button {
@@ -123,11 +125,11 @@
         padding: 10px 16px;
         font-size: 0.95rem;
         cursor: pointer;
-        transition: background-color 0.2s;
         align-self: flex-start;
         margin-top: 8px;
         font-weight: 500;
         color: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     }
 
     #options button:hover {

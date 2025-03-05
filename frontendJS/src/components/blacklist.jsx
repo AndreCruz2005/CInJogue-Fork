@@ -33,7 +33,7 @@ export const Blacklist = ({ userData, blacklist, getBlacklist, blacklistStatus, 
 		<div id="blacklist-layer">
 			<div id="blacklist-box">
 				<div id="header">
-					<h2>BLACKLIST</h2>
+					<h2>NÃO RECOMENDE</h2>
 					<button onClick={() => setBlacklistStatus(false)}>X</button>
 				</div>
 				<text>Os jogos exibidos aqui não serão recomendados pelo assistente de IA</text>

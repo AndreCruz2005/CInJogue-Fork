@@ -14,8 +14,8 @@
 
 /* Main blacklist container */
 #blacklist-box {
-    background-color: #16181C;
-    color: white;
+    background-color: var(--background-color);
+    color: var(--text-color);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     width: 90%;
@@ -25,6 +25,8 @@
     flex-direction: column;
     gap: 16px;
     animation: floatDown 0.5s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+
 }
 
 /* Header section */
@@ -82,13 +84,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 12px;
-    background-color: #4a90e2;
+    background-color: var(--box-color);
     border-radius: 6px;
-    transition: background-color 0.2s;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 #blacklist>div:hover {
-    background-color: #3a7bcb;
+    filter: brightness(1.2);
 }
 
 #blacklist>div text {
@@ -116,7 +120,7 @@
 
 /* Empty state */
 #blacklist:empty::after {
-    content: "No blacklisted games yet";
+    content: "Nenhum jogo aqui ainda";
     display: block;
     text-align: center;
     padding: 20px 0;

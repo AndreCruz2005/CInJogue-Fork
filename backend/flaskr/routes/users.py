@@ -49,7 +49,9 @@ def removeuser():
     if not user:
         return jsonify({'error':'User not logged in'}), 401
     
-    remove_user(session['id'])
+    result = remove_user(session['id'])
+    return jsonify(result), (200 if result else 500)
+
 
 @users.route('/loggedinuser', methods=['GET'])
 def loggedinuser():
@@ -66,7 +68,8 @@ def changepassword():
     if not user:
         return jsonify({'error':'User not logged in'}), 401
     
-    return change_password(session['id'], data.get('newPassword'))
+    result = change_password(session['id'], data.get('newPassword'))
+    return jsonify(result), (200 if result else 500)
 
 @users.route('/addtags', methods=['POST'])
 def addtags():
@@ -77,7 +80,7 @@ def addtags():
         return jsonify({'error':'User not logged in'}), 401
     
     response = add_user_tag(session['id'], data.get('text'), data.get('tag_type'))
-    return jsonify(response)
+    return jsonify(response), 200
 
 @users.route('/removetags', methods=['POST'])
 def removetags():
@@ -88,7 +91,7 @@ def removetags():
         return jsonify({'error':'User not logged in'}), 401
     
     response = remove_user_tag(session['id'], data.get('text'))
-    return jsonify(response)
+    return jsonify(response), 200
 
 @users.route('/gettags', methods=['POST'])
 def gettags():
@@ -102,7 +105,7 @@ def gettags():
     response = {tag[3]:[] for tag in tags}
     for tag in tags:
         response[tag[3]].append(tag[2])
-    return response    
+    return response, 200
     
     
     

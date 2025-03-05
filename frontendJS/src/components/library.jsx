@@ -94,15 +94,15 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 							<textarea id="description" readOnly value={infoBoxData.data.deck}></textarea>
 							<div id="other-info">
 								<div id="game-info">
-									<text>Platforms: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
+									<text>Plataformas: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
 									<br />
-									<text>Release: {infoBoxData.data.original_release_date}</text>
+									<text>Lançamento: {infoBoxData.data.original_release_date}</text>
 									<br />
-									<text>Average Rating: {currAvrgRating}</text>
+									<text>Avaliação média: {currAvrgRating}</text>
 								</div>
 								<div id="user-info">
 									<div id="rating">
-										<label>RATING</label>
+										<label>AVALIAÇÃO</label>
 										<select
 											value={infoBoxData.rating}
 											onChange={(e) => changeGameRating(infoBoxData.title, e.target.value)}
@@ -115,7 +115,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 										</select>
 									</div>
 									<div id="state">
-										<label>STATE</label>
+										<label>STATUS</label>
 										<select
 											value={infoBoxData.state}
 											onChange={(e) => changeGameState(infoBoxData.title, e.target.value)}
@@ -143,7 +143,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 												.catch((e) => console.error(e));
 										}}
 									>
-										REMOVE
+										REMOVER
 									</button>
 								</div>
 							</div>
@@ -157,15 +157,17 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 	const GameCard = ({ title, rating, state, data }) => {
 		const isVisible = filter == state || filter == " ";
 		return isVisible ? (
-			<img
-				src={data.image.original_url}
-				alt={title}
+			<div
+				id="game-card"
 				onClick={() => {
 					setInfoBoxData({ title: title, rating: rating, state: state, data: data });
 					getGameAverageRating(title);
 					setInfoBoxStatus(true);
 				}}
-			/>
+			>
+				<div id="centered-text">{title}</div>
+				<img src={data.image.original_url} alt={title} />
+			</div>
 		) : null;
 	};
 

@@ -12,12 +12,11 @@
 }
 
 #info-box {
-    background: #16181C;
-    ;
+    background: var(--background-color);
     width: auto;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -60,6 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
 }
 
 #image-container img {
@@ -68,12 +69,13 @@
     aspect-ratio: 3 / 4;
     object-fit: cover;
     border-radius: 5px;
+
 }
 
 #description-info-container {
     display: flex;
     flex-direction: column;
-    gap: 5vh;
+    gap: 3vh;
     flex-grow: 1;
     font-size: 14px;
     color: #333;
@@ -84,11 +86,15 @@
     font-size: clamp(12px, 1.3vw, 17px);
     height: 40%;
     resize: none;
-    background-color: #16181C;
-    color: white;
+    color: var(--text-color);
     border: none;
     border-radius: 5px;
     padding: 10px;
+    background-color: var(--box-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 3%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 #description-info-container textarea:focus {
@@ -100,6 +106,13 @@
     display: flex;
     gap: 10px;
     height: 60%;
+    background-color: var(--box-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 3%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+
 }
 
 #other-info text {
@@ -128,36 +141,44 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: space-between;
 }
 
 #user-info label {
     font-size: 0.8em;
-    color: white;
+    color: var(--label-color);
 }
 
 #user-info select {
     width: 100%;
     padding: 5px;
     border-radius: 5px;
-    background-color: #16181C;
-    color: white;
-    border: 1px solid #4a90e2;
+    background-color: var(--primary-color);
+    border: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    font-size: 15px;
+    color: var(--text-color);
+    transition: 0.3s;
 }
 
-#user-info select option {
-    background-color: #16181C;
-    color: white;
+#user-info select:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transform: translateY(-2px);
 }
 
 #user-info button {
-    background-color: #4a90e2;
+    background-color: var(--primary-color);
     color: white;
     border: none;
+    height: 33%;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
     transition: 0.2s;
-
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    font-size: 15px;
 }
 
 #remove-button:hover,

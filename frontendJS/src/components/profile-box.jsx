@@ -17,7 +17,7 @@ export const ProfileBox = ({ userData, setUserData, profileBoxStatus, setProfile
 				newPassword: newPassword,
 			})
 			.then((response) => {
-				if (response.data === true) {
+				if (response.status === 200) {
 					setUserData({ ...userData, password: newPassword });
 				}
 			})
@@ -27,13 +27,17 @@ export const ProfileBox = ({ userData, setUserData, profileBoxStatus, setProfile
 	}
 
 	function deleteAccount() {
-		setUserData(null);
 		axios
 			.post(`${backend}/removeuser`, {
 				username: userData.username,
 				password: deletePassword,
 			})
-			.then(() => {})
+			.then((response) => {
+				if (response.status === 200) {
+					setProfileBoxStatus(false);
+					setUserData(null);
+				}
+			})
 			.catch((error) => {
 				console.error(error);
 			});
