@@ -101,11 +101,17 @@ def gettags():
     if not user:
         return jsonify({'error':'User not logged in'}), 401
     
+    
     tags = get_tags(session['id'])
-    response = {tag[3]:[] for tag in tags}
+    
+    # Cria um dicionário com as tags listadas e associadas ao seus respectivos tipos
+    response = {}
     for tag in tags:
+        if tag[3] not in response:
+            response[tag[3]] = []
+
         response[tag[3]].append(tag[2])
-    return response, 200
+    return jsonify(response), 200
     
     
     

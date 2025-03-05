@@ -2,6 +2,7 @@ from flask import Blueprint, request, session, jsonify
 from gemini import GenAI
 from giantbomb import search_game
 from database import *
+import os
 
 gai = Blueprint("genai", __name__)
 
@@ -90,3 +91,28 @@ def format_prompt(prompt: str) -> dict:
         "recommendations": {game.title:{ 'title': game.title} for game in recommendations}, 
         "other": {'userinfo': userinfo, 'blacklist':blacklist, 'preferences':preferences}
         }
+    
+import speech_recognition as sr
+
+@gai.route('/uploadaudio', methods=['POST'])
+def uploadaudio():
+    recognizer = sr.Recognizer()
+    
+    if 'audio' not in request.files:
+        return jsonify({"error": "No audio file provided"}), 400
+    
+    audio = request.files['audio']
+    audio.save('backend/flaskr/temp/audio.wav')
+    
+    file = sr.WavFile('backend/flaskr/temp/audio.wav')
+    with file as source:
+        audio = recognizer.record(source)
+        
+    string = ""
+    try:
+        string = recognizer.recognize_google(audio)
+        print("Text: "+string)
+    except Exception as e:
+        print("Exception: "+str(e))
+        
+    return jsonify(string), 200

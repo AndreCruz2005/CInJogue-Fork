@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { backend } from "../global";
 import "../styles/chat.css";
 
@@ -60,11 +60,11 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 							<textarea id="description" readOnly value={infoBoxData.data.deck}></textarea>
 							<div id="other-info">
 								<div id="game-info">
-									<text>Platforms: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
+									<text>Plataformas: {infoBoxData.data.platforms.map((platform) => platform.name).join(", ")}</text>
 									<br />
-									<text>Release: {infoBoxData.data.original_release_date}</text>
+									<text>Lançamento: {infoBoxData.data.original_release_date}</text>
 									<br />
-									<text>Average Rating: {currAvrgRating}</text>
+									<text>Avaliação média: {currAvrgRating}</text>
 								</div>
 								<div id="user-info">
 									<button
@@ -184,6 +184,54 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 		);
 	};
 
+	/* Gravar áudio */
+	const [isRecording, setIsRecording] = useState(false);
+	const [audioBlob, setAudioBlob] = useState(null);
+	const mediaRecorderRef = useRef(null);
+
+	const startRecording = () => {
+		navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+			const mediaRecorder = new MediaRecorder(stream);
+			mediaRecorderRef.current = mediaRecorder;
+			mediaRecorder.start();
+
+			const audioChunks = [];
+			mediaRecorder.addEventListener("dataavailable", (event) => {
+				audioChunks.push(event.data);
+			});
+
+			mediaRecorder.addEventListener("stop", () => {
+				const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+				setAudioBlob(audioBlob);
+				sendAudio(audioBlob);
+			});
+
+			setIsRecording(true);
+		});
+	};
+
+	const sendAudio = (audioBlob) => {
+		const formData = new FormData();
+		formData.append("audio", audioBlob, "recording.wav");
+
+		axios
+			.post(`${backend}/uploadaudio`, formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			})
+			.then((response) => {
+				setInput(response.data);
+				sendMessage();
+			})
+			.catch((error) => console.error(error));
+	};
+
+	const stopRecording = () => {
+		mediaRecorderRef.current.stop();
+		setIsRecording(false);
+	};
+
 	useEffect(() => {
 		fetchLibrary();
 		fetchRecommendations();
@@ -206,7 +254,16 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 				>
 					<img src={sendIcon}></img>
 				</button>
-				<button onClick={() => {}}>
+				<button
+					className={isRecording ? "active" : "inactive"}
+					onClick={() => {
+						if (isRecording) {
+							stopRecording();
+						} else {
+							startRecording();
+						}
+					}}
+				>
 					<img src={microphoneIcon}></img>
 				</button>
 			</div>

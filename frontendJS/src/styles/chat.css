@@ -136,6 +136,15 @@
             }
         }
 
+        .active {
+            background-color: var(--error-color);
+            transform: translateY(-2px);
+        }
+
+        .active:hover {
+            background-color: #d95959;
+        }
+
         button:hover {
             background-color: var(--secondary-color);
         }
