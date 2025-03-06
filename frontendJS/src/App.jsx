@@ -19,6 +19,22 @@ import "./styles/App.css";
 import "./styles/infobox.css";
 
 function App() {
+	const [serverStatus, setServerStatus] = useState(null);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			axios
+				.get(`${backend}`)
+				.then((response) => {
+					response.status == 200 ? setServerStatus(true) : serverStatus(false);
+				})
+				.catch(() => {
+					setServerStatus(false);
+				});
+		}, 5000);
+
+		return () => clearInterval(interval);
+	}, []);
+
 	const [userData, setUserData] = useState(null);
 	const [library, setLibrary] = useState(null);
 	const [recommendations, setRecommendations] = useState(null);
@@ -101,7 +117,13 @@ function App() {
 	};
 
 	return userData == null ? (
-		<Auth userData={userData} setUserData={setUserData} />
+		<div>
+			<div id="backend-status" className={serverStatus ? "ok" : "not-ok"}>
+				<label>Backend ({serverStatus ? "Online" : "Offline"})</label>
+				<a href={import.meta.env.VITE_BACKEND_URL}>{import.meta.env.VITE_BACKEND_URL}</a>
+			</div>
+			<Auth userData={userData} setUserData={setUserData} />
+		</div>
 	) : (
 		<div id="App">
 			<ProfileBox

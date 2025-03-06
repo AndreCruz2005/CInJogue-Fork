@@ -31,9 +31,9 @@ def login():
     result = log_user_in(username, password, session)
     
     if result:
-        return jsonify(get_user_by_name(result['username']))
+        return jsonify(get_user_by_name(result['username'])), 200
     else:
-        return jsonify({"error":"Failed to Login"})
+        return jsonify({"error":"Failed to Login"}), 401
 
 
 @users.route('/logout', methods=['POST'])

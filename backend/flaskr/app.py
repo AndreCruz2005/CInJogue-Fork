@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from database import db
@@ -20,7 +20,7 @@ db.init_app(app)
 @app.route("/")
 @app.route("/index")
 def check():
-    return "CInJogue online e operacional!", 200
+    return jsonify("CInJogue online e operacional!"), 200
 
 with app.app_context():
     db.create_all()
