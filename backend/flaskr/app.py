@@ -18,6 +18,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 db.init_app(app)
 
 @app.route("/")
+@app.route("/index")
 def check():
     return "CInJogue online e operacional!", 200
 
