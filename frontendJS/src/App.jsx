@@ -20,17 +20,21 @@ import "./styles/infobox.css";
 
 function App() {
 	const [serverStatus, setServerStatus] = useState(null);
+	const checkServerStatus = () => {
+		axios
+			.get(`${backend}`)
+			.then((response) => {
+				response.status == 200 ? setServerStatus(true) : serverStatus(false);
+			})
+			.catch(() => {
+				setServerStatus(false);
+			});
+	};
 	useEffect(() => {
+		checkServerStatus();
 		const interval = setInterval(() => {
-			axios
-				.get(`${backend}`)
-				.then((response) => {
-					response.status == 200 ? setServerStatus(true) : serverStatus(false);
-				})
-				.catch(() => {
-					setServerStatus(false);
-				});
-		}, 5000);
+			checkServerStatus();
+		}, 3000);
 
 		return () => clearInterval(interval);
 	}, []);
