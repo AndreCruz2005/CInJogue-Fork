@@ -17,8 +17,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.secret_key = os.getenv('SECRET_KEY')
 db.init_app(app)
 
+@app.route("/")
+def check():
+    return "CInJogue online e operacional!", 200
+
 with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port='5000', threaded=True)
+    app.run(debug=True, host='0.0.0.0', port=os.getenv('BACKEND_PORT'), threaded=True)
