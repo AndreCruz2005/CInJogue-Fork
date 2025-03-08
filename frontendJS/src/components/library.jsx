@@ -7,7 +7,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 	const [filter, setFilter] = useState(" ");
 	const [gameCount, setGameCount] = useState(0);
 	const libraryRef = useRef(null);
-	const states = ["UNPLAYED", "PLAYED", "PLAYING", "COMPLETED", "ABANDONED", "WISHLISTED"];
+	const states = ["NÃO JOGADO", "JOGADO", "AINDA JOGANDO", "CONCLUÍDO", "ABANDONADO", "LISTA DE DESEJOS"];
 
 	const [infoBoxData, setInfoBoxData] = useState(null);
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
@@ -196,7 +196,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 					})}
 				</div>
 				<text id="counter">
-					{gameCount} {gameCount > 1 ? "JOGOS" : "JOGO"}
+					{gameCount} {gameCount == 1 ? "JOGO" : "JOGOS"}
 				</text>
 			</div>
 			<div id="library" ref={libraryRef}>

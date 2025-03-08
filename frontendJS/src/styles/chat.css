@@ -90,6 +90,20 @@
         }
     }
 
+    #recommendations-grid:empty {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    #recommendations-grid:empty::after {
+        content: "Os jogos recomendados pela IA serão exibidos aqui";
+        display: block;
+        text-align: center;
+        padding: 20px 0;
+        font-style: italic;
+    }
+
     #input-and-send {
         display: flex;
         align-items: center;

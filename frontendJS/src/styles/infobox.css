@@ -146,7 +146,7 @@
 
 #user-info label {
     font-size: 0.8em;
-    color: var(--label-color);
+    color: var(--text-color);
 }
 
 #user-info select {

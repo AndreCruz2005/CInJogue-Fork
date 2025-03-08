@@ -13,7 +13,7 @@ from database.user import *
 
 def add_game_to_library(user_id, game_id):
     try:
-        new_entry = UserLibrary.insert().values(user_id=user_id, game_id=game_id, rating=0, state='UNPLAYED')
+        new_entry = UserLibrary.insert().values(user_id=user_id, game_id=game_id, rating=0, state='NÃO JOGADO')
         db.session.execute(new_entry)
         db.session.commit()
         print(f"Game {game_id} added to user {user_id}'s library.")

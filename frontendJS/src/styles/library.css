@@ -90,6 +90,19 @@
   }
 }
 
+#library:empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#library:empty::after {
+  content: "Os jogos na sua biblioteca serão exibidos aqui";
+  display: block;
+  text-align: center;
+  padding: 20px 0;
+  font-style: italic;
+}
 
 #header {
   display: flex;

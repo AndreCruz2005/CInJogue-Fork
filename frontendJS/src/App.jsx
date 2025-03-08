@@ -87,6 +87,10 @@ function App() {
 				<button
 					onClick={() => {
 						setUserData(null);
+						setRecommendations(null);
+						setLibrary(null);
+						setBlacklist(null);
+						setPrefs(null);
 					}}
 				>
 					<img src={logoutIcon} />
