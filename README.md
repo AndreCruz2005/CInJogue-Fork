@@ -6,7 +6,7 @@ Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de 
 generativa Gemini.
 
 <div align=center>
-<img src="https://i.ibb.co/hFjs12WG/Screenshot-2025-03-08-at-18-08-59-CIn-Jogue.png" alt="Screenshot-2025-03-08-at-18-08-59-CIn-Jogue" border="0">
+<a href="https://ibb.co/Kxk6zVqt"><img src="https://i.ibb.co/hFjs12WG/Screenshot-2025-03-08-at-18-08-59-CIn-Jogue.png" alt="Screenshot-2025-03-08-at-18-08-59-CIn-Jogue" border="0" /></a>
 </div>
 
 ## Funcionalidades
