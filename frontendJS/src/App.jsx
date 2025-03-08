@@ -8,29 +8,36 @@ import { Blacklist } from "./components/blacklist";
 import axios from "axios";
 import { backend } from "./global";
 
-// Icons
+// Ícones
 import profileIcon from "./assets/user_icon.svg";
 import preferencesIcon from "./assets/preferences.svg";
 import blacklistIcon from "./assets/blacklist.svg";
 import logoutIcon from "./assets/logout.svg";
 
-// Styles
+// Estilos
 import "./styles/App.css";
 import "./styles/infobox.css";
 
 function App() {
+	// Estado para armazenar dados do usuário (null == usuário não logado)
 	const [userData, setUserData] = useState(null);
+
+	// Estados biblioteca/recomendações
 	const [library, setLibrary] = useState(null);
 	const [recommendations, setRecommendations] = useState(null);
 
+	// Estados não recomende
 	const [blacklistStatus, setBlacklistStatus] = useState(false);
 	const [blacklist, setBlacklist] = useState(null);
 
+	// Estado para configurações de perfil
 	const [profileBoxStatus, setProfileBoxStatus] = useState(false);
 
+	// Estados preferências
 	const [prefsStatus, setPrefsStatus] = useState(false);
 	const [prefs, setPrefs] = useState(null);
 
+	// Função para obter o não recomende do usuário
 	function getBlacklist() {
 		axios
 			.post(`${backend}/getblacklist`, {
@@ -41,10 +48,11 @@ function App() {
 				setBlacklist(response.data);
 			})
 			.catch((error) => {
-				console.error("Error fetching blacklist:", error);
+				console.error("Erro ao buscar lista negra:", error);
 			});
 	}
 
+	// Função para obter as preferências do usuário
 	function getPrefs() {
 		axios
 			.post(`${backend}/gettags`, {
@@ -55,12 +63,15 @@ function App() {
 				setPrefs(response.data);
 			})
 			.catch((error) => {
-				console.error("Error fetching blacklist:", error);
+				console.error("Erro ao buscar preferências:", error);
 			});
 	}
+
+	// Componente da barra lateral
 	const SideBar = () => {
 		return (
 			<div id="side-bar">
+				{/* Botão para abrir a caixa de perfil */}
 				<button
 					onClick={() => {
 						setProfileBoxStatus(true);
@@ -68,6 +79,7 @@ function App() {
 				>
 					<img src={profileIcon} />
 				</button>
+				{/* Botão para abrir as preferências */}
 				<button
 					onClick={() => {
 						getPrefs();
@@ -76,6 +88,7 @@ function App() {
 				>
 					<img src={preferencesIcon} />
 				</button>
+				{/* Botão para abrir o não recomende */}
 				<button
 					onClick={() => {
 						getBlacklist();
@@ -84,6 +97,7 @@ function App() {
 				>
 					<img src={blacklistIcon} />
 				</button>
+				{/* Botão para fazer logout */}
 				<button
 					onClick={() => {
 						setUserData(null);
@@ -99,17 +113,22 @@ function App() {
 		);
 	};
 
+	// Estado para armazenar o status do backend
 	const [serverStatus, setServerStatus] = useState(null);
+	// Função para verificar o status do backend
 	const checkServerStatus = () => {
 		axios
 			.get(`${backend}`)
 			.then((response) => {
-				response.status == 200 ? setServerStatus(true) : serverStatus(false);
+				response.status == 200 ? setServerStatus(true) : setServerStatus(false);
 			})
 			.catch(() => {
 				setServerStatus(false);
 			});
 	};
+
+	// Efeito para verificar o status do backend periodicamente somente na tela de login/signup
+	// (quando o usuário não está logado)
 	useEffect(() => {
 		checkServerStatus();
 		const interval = setInterval(() => {
@@ -121,12 +140,16 @@ function App() {
 		return () => clearInterval(interval);
 	}, [userData]);
 
+	// Renderiza a tela de login/signup ou a biblioteca/chat dependendo se o usuário está logado ou não
 	return userData == null ? (
 		<div>
+			{/* Exibição do status do backend */}
 			<div id="backend-status" className={serverStatus ? "ok" : "not-ok"}>
 				<label>Backend ({serverStatus ? "Online" : "Offline"})</label>
-				<a href={import.meta.env.VITE_BACKEND_URL}>{import.meta.env.VITE_BACKEND_URL}</a>
+				<a href={backend}>{backend}</a>
 			</div>
+
+			{/*Tela de login/signup*/}
 			<Auth userData={userData} setUserData={setUserData} />
 		</div>
 	) : (
@@ -168,6 +191,7 @@ function App() {
 	);
 }
 
+// Componente para exibir a biblioteca e o chat
 const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
 	return (
 		<div id="library-chat-container">

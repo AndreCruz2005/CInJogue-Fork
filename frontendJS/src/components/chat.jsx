@@ -7,13 +7,17 @@ import microphoneIcon from "../assets/microphone.svg";
 import sendIcon from "../assets/send-message.svg";
 
 export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
+	// Input = Message enviada pelo usuário. Output = mensagem recebida da Gemini
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState(
 		"Olá, bem vindo à CInJogue! Envie uma mensagem para começar a construir sua biblioteca.",
 	);
 
+	// Estado para armazenar os dados do jogo selecionado para exibir na info box
 	const [infoBoxData, setInfoBoxData] = useState(null);
+	// Estado para controlar a visibilidade da InfoBox
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
+	// Estado para armazenar a média de todas as avaliações do jogo selecionado
 	const [currAvrgRating, setCurrAvrgRating] = useState(0);
 
 	function getGameAverageRating(title) {
@@ -36,13 +40,16 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 			});
 	}
 
+	// Componente InfoBox para exibir informações detalhadas sobre um jogo
 	const InfoBox = () => {
+		// Dados a serem enviados nas requisições
 		const dataToSend = {
 			username: userData.username,
 			password: userData.password,
 			title: infoBoxData ? infoBoxData.title : "",
 		};
 
+		// Retorna null se a InfoBox não estiver visível
 		return !infoBoxStatus ? null : (
 			<div id="info-box-layer">
 				<div id="info-box">
@@ -182,35 +189,50 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 	};
 
 	/* Gravar áudio */
+	// Estado para controlar se a gravação está ativa ou não
 	const [isRecording, setIsRecording] = useState(false);
+	// Estado para armazenar o blob de áudio gravado
 	const [audioBlob, setAudioBlob] = useState(null);
+	// Referência para o MediaRecorder
 	const mediaRecorderRef = useRef(null);
 
+	// Função para iniciar a gravação de áudio
 	const startRecording = () => {
+		// Solicita permissão para acessar o microfone do usuário
 		navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+			// Cria uma nova instância do MediaRecorder com o stream de áudio
 			const mediaRecorder = new MediaRecorder(stream);
+			// Armazena a instância do MediaRecorder na referência
 			mediaRecorderRef.current = mediaRecorder;
+			// Inicia a gravação
 			mediaRecorder.start();
 
+			// Array para armazenar os chunks de áudio gravados
 			const audioChunks = [];
+			// Adiciona um listener para o evento dataavailable, que é disparado quando há dados de áudio disponíveis
 			mediaRecorder.addEventListener("dataavailable", (event) => {
+				// Adiciona os dados de áudio ao array de chunks
 				audioChunks.push(event.data);
 			});
 
+			// Adiciona um listener para o evento stop, que é disparado quando a gravação é interrompida
 			mediaRecorder.addEventListener("stop", () => {
+				// Cria um blob de áudio a partir dos chunks gravados, armazena-o no estado e o envia para o backend
 				const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
 				setAudioBlob(audioBlob);
 				sendAudio(audioBlob);
 			});
-
 			setIsRecording(true);
 		});
 	};
 
+	// Função para enviar o áudio gravado para o backend
 	const sendAudio = (audioBlob) => {
+		// Cria um FormData para enviar o blob de áudio
 		const formData = new FormData();
 		formData.append("audio", audioBlob, "recording.wav");
 
+		// Faz uma requisição POST para enviar o áudio para o backend
 		axios
 			.post(`${backend}/uploadaudio`, formData, {
 				headers: {
@@ -218,17 +240,21 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 				},
 			})
 			.then((response) => {
+				// Atualiza o input com a transcrição do áudio recebida do backend
 				setInput(response.data);
+				// Envia a mensagem transcrita para a IA
 				sendMessage();
 			})
 			.catch((error) => console.error(error));
 	};
 
+	// Função para interromper a gravação de áudio
 	const stopRecording = () => {
 		mediaRecorderRef.current.stop();
 		setIsRecording(false);
 	};
 
+	// Atualiza a biblioteca e recomendações quando a página carrega
 	useEffect(() => {
 		fetchLibrary();
 		fetchRecommendations();

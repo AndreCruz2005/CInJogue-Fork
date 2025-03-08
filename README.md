@@ -19,7 +19,7 @@
    Crie um arquivo .env baseado no .env.example
 
    ```sh
-   cp .env.example .env
+   copy .env.example .env
    ```
 
    Edite o arquivo [.env](http://_vscodecontentref_/3) com suas configurações.
