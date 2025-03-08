@@ -4,9 +4,9 @@ from giantbomb import search_game
 from database import *
 import os
 
-gai = Blueprint("genai", __name__)
+airoute = Blueprint("airoute", __name__)
 
-@gai.route('/genai', methods=['POST'])
+@airoute.route('/genai', methods=['POST'])
 def promptAI():
     data = request.get_json()
     
@@ -94,7 +94,7 @@ def format_prompt(prompt: str) -> dict:
     
 import speech_recognition as sr
 
-@gai.route('/uploadaudio', methods=['POST'])
+@airoute.route('/uploadaudio', methods=['POST'])
 def uploadaudio():
     recognizer = sr.Recognizer()
     
@@ -102,6 +102,7 @@ def uploadaudio():
         return jsonify({"error": "No audio file provided"}), 400
     
     audio = request.files['audio']
+    os.makedirs(os.path.join('backend', 'flaskr', 'temp'), exist_ok=True)
     audio.save('backend/flaskr/temp/audio.wav')
     
     file = sr.WavFile('backend/flaskr/temp/audio.wav')

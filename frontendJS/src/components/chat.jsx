@@ -158,28 +158,25 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 	};
 
 	const RecommendationsGrid = () => {
-		let lst = [];
-		Object.entries(recommendations ? recommendations : {}).forEach((item) =>
-			lst.push({ title: item[0], data: item[1].data }),
-		);
-
 		return (
 			<div id="recommendations-grid">
-				{lst.map((it) => {
-					return (
-						<div
-							id="recommended-card"
-							onClick={() => {
-								setInfoBoxData({ title: it.title, rating: it.rating, state: it.state, data: it.data });
-								getGameAverageRating(it.title);
-								setInfoBoxStatus(true);
-							}}
-						>
-							<div id="centered-text">{it.title}</div>
-							<img src={it.data.image.original_url} alt={it.title} />
-						</div>
-					);
-				})}
+				{recommendations
+					? recommendations.map((it) => {
+							return (
+								<div
+									id="recommended-card"
+									onClick={() => {
+										setInfoBoxData({ title: it.title, rating: it.rating, state: it.state, data: it.data });
+										getGameAverageRating(it.title);
+										setInfoBoxStatus(true);
+									}}
+								>
+									<div id="centered-text">{it.title}</div>
+									<img src={it.data.image.original_url} alt={it.title} />
+								</div>
+							);
+					  })
+					: null}
 			</div>
 		);
 	};

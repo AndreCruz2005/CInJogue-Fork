@@ -171,11 +171,6 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 		) : null;
 	};
 
-	let lst = [];
-	Object.entries(library ? library : {}).forEach((item) =>
-		lst.push({ title: item[0], rating: item[1].rating, state: item[1].state, data: item[1].data }),
-	);
-
 	useEffect(() => {
 		if (libraryRef.current) {
 			setGameCount(libraryRef.current.children.length);
@@ -205,9 +200,11 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 				</text>
 			</div>
 			<div id="library" ref={libraryRef}>
-				{lst.map((it) => {
-					return <GameCard title={it.title} rating={it.rating} state={it.state} data={it.data} />;
-				})}
+				{library
+					? library.map((it) => {
+							return <GameCard title={it.title} rating={it.rating} state={it.state} data={it.data} />;
+					  })
+					: null}
 			</div>
 		</div>
 	);

@@ -19,26 +19,6 @@ import "./styles/App.css";
 import "./styles/infobox.css";
 
 function App() {
-	const [serverStatus, setServerStatus] = useState(null);
-	const checkServerStatus = () => {
-		axios
-			.get(`${backend}`)
-			.then((response) => {
-				response.status == 200 ? setServerStatus(true) : serverStatus(false);
-			})
-			.catch(() => {
-				setServerStatus(false);
-			});
-	};
-	useEffect(() => {
-		checkServerStatus();
-		const interval = setInterval(() => {
-			checkServerStatus();
-		}, 3000);
-
-		return () => clearInterval(interval);
-	}, []);
-
 	const [userData, setUserData] = useState(null);
 	const [library, setLibrary] = useState(null);
 	const [recommendations, setRecommendations] = useState(null);
@@ -106,12 +86,7 @@ function App() {
 				</button>
 				<button
 					onClick={() => {
-						axios
-							.post(`${backend}/logout`)
-							.then(() => setUserData(null))
-							.catch((error) => {
-								console.log(error);
-							});
+						setUserData(null);
 					}}
 				>
 					<img src={logoutIcon} />
@@ -119,6 +94,28 @@ function App() {
 			</div>
 		);
 	};
+
+	const [serverStatus, setServerStatus] = useState(null);
+	const checkServerStatus = () => {
+		axios
+			.get(`${backend}`)
+			.then((response) => {
+				response.status == 200 ? setServerStatus(true) : serverStatus(false);
+			})
+			.catch(() => {
+				setServerStatus(false);
+			});
+	};
+	useEffect(() => {
+		checkServerStatus();
+		const interval = setInterval(() => {
+			if (!userData) {
+				checkServerStatus();
+			}
+		}, 3000);
+
+		return () => clearInterval(interval);
+	}, [userData]);
 
 	return userData == null ? (
 		<div>
