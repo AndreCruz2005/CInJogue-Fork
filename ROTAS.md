@@ -887,14 +887,10 @@ Endpoint para obter as classificações de um jogo.
 ### Response
 
 ```json
-{
-	"ratings": [
-		{
-			"user": "string",
-			"rating": "number"
-		}
-	]
-}
+[
+rating1 :int,
+rating2
+]
 ```
 
 ou
@@ -914,18 +910,11 @@ ou
 #### Response
 
 ```json
-{
-	"ratings": [
-		{
-			"user": "user1",
-			"rating": 4.5
-		},
-		{
-			"user": "user2",
-			"rating": 4.0
-		}
-	]
-}
+[
+rating1,
+rating2,
+rating3
+]
 ```
 
 ## `/blacklistgame` - POST
@@ -1051,7 +1040,7 @@ Endpoint para obter ao não recomende do usuário.
 
 ```json
 {
-	"blacklist": ["Game1", "Game2"]
+	["GameTitle1", "GameTitle2"]
 }
 ```
 
@@ -1078,6 +1067,6 @@ ou
 
 ```json
 {
-	"blacklist": ["Game1", "Game2"]
+	["Game1", "Game2"]
 }
 ```
