@@ -102,10 +102,10 @@ def uploadaudio():
         return jsonify({"error": "No audio file provided"}), 400
     
     audio = request.files['audio']
-    os.makedirs(os.path.join('backend', 'flaskr', 'temp'), exist_ok=True)
-    audio.save('backend/flaskr/temp/audio.wav')
+    os.makedirs(os.path.join('flaskr', 'temp'), exist_ok=True)
+    audio.save('flaskr/temp/audio.wav')
     
-    file = sr.WavFile('backend/flaskr/temp/audio.wav')
+    file = sr.WavFile('flaskr/temp/audio.wav')
     with file as source:
         audio = recognizer.record(source)
         

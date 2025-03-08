@@ -22,7 +22,7 @@ class GeminiModel(genai.GenerativeModel):
                 generation_config = default_config, 
                 tools = None, 
                 tool_config = None, 
-                system_instruction = open("backend/flaskr/gemini/model_instructions.txt", encoding="utf8").readlines(),
+                system_instruction = open("flaskr/gemini/model_instructions.txt", encoding="utf8").readlines(),
                 ):
         
         super().__init__(model_name, safety_settings, generation_config, tools, tool_config, system_instruction)

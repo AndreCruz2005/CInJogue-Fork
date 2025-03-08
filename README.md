@@ -2,53 +2,57 @@
 
 ## Setup
 
-### Tenha instalado
+#### Tenha instalado
 
 - Python 3.13+
 - NodeJS 20.17.0+
 
-1. Clone o repositório:
+1. Clone o repositório e navegue para o diretório do projeto:
+
    ```sh
    git clone <URL_DO_REPOSITORIO>
+   cd <NOME_DO_DIRETÓRIO>
    ```
+
+2. Configure as variáveis de ambiente:
+
+   Crie um arquivo .env baseado no .env.example
+
+   ```sh
+   cp .env.example .env
+   ```
+
+   Edite o arquivo [.env](http://_vscodecontentref_/3) com suas configurações.
 
 ### Backend
 
-2. Navegue até o diretório do projeto:
+3. No diretório do projeto, navegue para o diretório do backend:
 
    ```sh
-   cd CIN0136
+   cd backend
    ```
 
-3. Crie e ative um ambiente virtual:
+4. Crie e ative um ambiente virtual:
 
    ```sh
-   python -m venv backend/.venv
-   backend/.venv/Scripts/activate
+   python -m venv .venv
+   .venv/Scripts/activate
    ```
 
-4. Instale as dependências:
+5. Instale as dependências:
 
    ```sh
-   pip install -r backend/requirements.txt
+   pip install -r requirements.txt
    ```
-
-5. Configure as variáveis de ambiente:
-
-   - Crie um arquivo [.env](http://_vscodecontentref_/1) baseado no [.env.example](http://_vscodecontentref_/2):
-     ```sh
-     cp .env.example .env
-     ```
-   - Edite o arquivo [.env](http://_vscodecontentref_/3) com suas configurações.
 
 6. Inicie o servidor Flask:
    ```sh
-   python backend\flaskr\app.py
+   python flaskr/app.py
    ```
 
 ### Frontend
 
-7. Navegue até o diretório do frontend:
+7. No diretório do projeto, navegue para o diretório do frontend:
 
    ```sh
    cd frontendJS
@@ -64,15 +68,12 @@
    ```sh
    npm run dev
    ```
-10. Acesse o frontend em
-
-    [http://localhost:8000/](http://localhost:8000/)
+10. Acesse o frontend em [http://localhost:8000/](http://localhost:8000/)
 
 ## Estrutura do Projeto
 
-- [backend](http://_vscodecontentref_/4): Contém o código do servidor Flask.
-- [frontendJS](http://_vscodecontentref_/5): Contém o código do frontend em React.
-- [migrations](http://_vscodecontentref_/6): Contém os arquivos de migração do banco de dados.
+- backend: Contém o código do servidor Flask.
+- frontendJS: Contém o código do frontend em React.
 
 ## Tecnologias Utilizadas
 
