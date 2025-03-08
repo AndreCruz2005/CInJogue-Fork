@@ -1,11 +1,86 @@
 # CInJogue
 
+<b>Deployed demo:</b> https://cinjogue.vercel.app/ (lento)
+
+Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de jogos com assistência do modelo de IA
+generativa Gemini.
+
+<div align=center>
+<img src="https://i.ibb.co/hFjs12WG/Screenshot-2025-03-08-at-18-08-59-CIn-Jogue.png" alt="Screenshot-2025-03-08-at-18-08-59-CIn-Jogue" border="0">
+</div>
+
+## Funcionalidades
+
+Obtenção de dados de jogos usando a API do [GiantBomb](https://www.giantbomb.com/api/).
+
+Gerenciamento da biblioteca interagindo com a IA que é capaz de 5 comandos:
+
+- Recomendar: Exibe jogos com base nas preferências do usuário, estes podem ser adicionados à biblioteca ou recusados
+  pelo usuário.
+- Adicionar: Adiciona jogos à biblioteca do usuário
+- Classificar: Define a classificação de items da biblioteca com uma pontuação entre 0 e 10.
+- Definir estado: Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>,
+  <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b>
+- Remover: Remove item da biblioteca
+
+Definição de preferências relacionadas à plataformas, gêneros, temas e faixas etárias com um sistema de tags cridas pelo
+usuário.
+
+Marcar jogos para que a IA não os recomende novamente
+
+## Tecnologias Utilizadas
+
+- **Backend**: Python, Flask, SQLAlchemy
+- **Frontend**: Javascript, React, Vite
+- **Banco de Dados**: SQLite
+
+## Estrutura do Projeto
+
+#### Backend (Servidor em Flask e database com SQLAlchemy e SQLite)
+
+```
+├── backend/
+│   ├── flaskr/
+│   │   ├── app.py
+│   │   ├── database/
+│   │   ├── gemini/
+│   │   ├── giantbomb/
+│   │   ├── routes/
+│   ├── tests/
+│   ├── requirements.txt
+```
+
+#### Frontend (Aplicação web feita com React + Vite)
+
+```
+├── frontendJS/
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── node_modules/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public/
+│   ├── src/
+│   │   ├── Assets/
+│   │   ├── App.jsx
+│   │   ├── components/
+│   │   ├── global.js
+│   │   ├── main.jsx
+│   │   ├── styles/
+│   ├── vite.config.js
+```
+
+## Requisitos
+
+- [Python 3.13](https://www.python.org/downloads/) ou mais recente
+- [Node.js 20.17.0](https://nodejs.org/en/download) ou mais recente
+- Chave de API do [Gemini AI](https://aistudio.google.com/app/apikey)
+- Chave de API do [GiantBomb](https://www.giantbomb.com/api/)
+
+**OBS:** Será necessário criar contas em cada uma das plataformas para conseguir uma chave de API.
+
 ## Setup
-
-#### Tenha instalado
-
-- Python 3.13+
-- NodeJS 20.17.0+
 
 1. Clone o repositório e navegue para o diretório do projeto:
 
@@ -22,7 +97,7 @@
    copy .env.example .env
    ```
 
-   Edite o arquivo [.env](http://_vscodecontentref_/3) com suas configurações.
+   Edite o arquivo .env com suas configurações.
 
 ### Backend
 
@@ -70,13 +145,11 @@
    ```
 10. Acesse o frontend em [http://localhost:8000/](http://localhost:8000/)
 
-## Estrutura do Projeto
+## Equipe
 
-- backend: Contém o código do servidor Flask.
-- frontendJS: Contém o código do frontend em React.
-
-## Tecnologias Utilizadas
-
-- **Backend**: Python, Flask, SQLAlchemy
-- **Frontend**: Javascript, React, Vite
-- **Banco de Dados**: SQLite
+- André Cruz
+- Gabriel Bezerra Moraes
+- Lavoisier Oliveira Cândido
+- Lucas Moraes
+- Lucas Vinicius Moura da Silva
+- Luiz Eduardo de Andrade Lins
