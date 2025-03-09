@@ -1,0 +1,229 @@
+#chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 3;
+    gap: 2vh;
+    border-radius: 8px;
+    background-color: var(--box-color);
+    padding: 0.7%;
+    padding-bottom: 1%;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+
+    #output {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        color: var(--text-color);
+        background-color: var(--primary-color);
+        font-weight: bold;
+        border-radius: 5px;
+        box-sizing: border-box;
+        padding: 2%;
+        gap: 1vh;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+
+        text {
+            border-radius: 5px;
+            font-size: 0.8em;
+            text-align: justify;
+            font-weight: normal;
+        }
+    }
+
+    #recommendations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 80px);
+        grid-template-rows: repeat(auto-fit, 110px);
+        width: 100%;
+        padding: 2%;
+        gap: 10px;
+        flex: 13;
+        overflow: auto;
+        border-radius: 5px;
+        box-sizing: border-box;
+
+        #recommended-card {
+            display: block;
+            position: relative;
+            text-align: center;
+            font-size: 13px;
+            border-radius: 5px;
+            width: 100%;
+            border: 2px solid #494849;
+
+
+            #centered-text {
+                color: rgba(0, 0, 0, 0);
+                position: absolute;
+                font-weight: bold;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 20;
+                transition: inherit;
+            }
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 3 / 4;
+                object-fit: cover;
+                border-radius: 5px;
+                transition: 0.3s;
+            }
+        }
+
+        #recommended-card:hover {
+            cursor: pointer;
+
+            #centered-text {
+                color: rgba(255, 255, 255, 1);
+            }
+
+            img {
+                filter: brightness(0.2);
+            }
+        }
+    }
+
+    #recommendations-grid:empty {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    #recommendations-grid:empty::after {
+        content: "Os jogos recomendados pela IA serão exibidos aqui";
+        display: block;
+        text-align: center;
+        padding: 20px 0;
+        font-style: italic;
+    }
+
+    #input-and-send {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        flex: 1;
+        gap: 10px;
+        box-sizing: border-box;
+
+        input {
+            width: 80%;
+            height: 100%;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--text-color);
+            font-size: 0.8em;
+            padding: 0.4vw;
+            border-radius: 8px;
+            transition: 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        input:focus {
+            outline: none;
+            background-color: #3a7bcb;
+            ;
+        }
+
+        button {
+            padding: 0.4vw;
+            width: 20%;
+            height: 100%;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.2vw;
+            transition: 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+            img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        .active {
+            background-color: var(--error-color);
+            transform: translateY(-2px);
+        }
+
+        .active:hover {
+            background-color: #d95959;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+    }
+}
+
+
+@media (max-width: 876px) {
+    #chat {
+        padding-left: 1vw;
+        padding-right: 1vw;
+
+        #recommendations-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            overflow: auto;
+
+            #recommended-card {
+                img {
+                    width: 80px;
+                    height: 120px;
+                }
+            }
+        }
+
+        #input-and-send {
+            button {
+                font-size: 0.8em;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    #chat {
+        padding-left: 1vw;
+        padding-right: 1vw;
+
+        #recommendations-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            overflow: auto;
+
+            img {
+                width: 70px;
+                height: 100px;
+            }
+        }
+
+        #input-and-send {
+            button {
+                font-size: 0.6em;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}

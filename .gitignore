@@ -1,0 +1,16 @@
+# IDE files
+.idea/
+.vscode/
+
+# Backend folders
+__pycache__/
+.venv/
+.pytest_cache/
+instance/
+temp/
+
+# Frotend folders
+node_modules/
+
+# Files
+.env
