@@ -99,51 +99,58 @@ Marcar jogos para que a IA não os recomende novamente
 
    Edite o arquivo .env com suas configurações.
 
+3. Tendo configurado o arquivo .env, execute o arquivo setup.sh em um terminal bash para configurar e iniciar o backend e frontend
+   ```
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+   Alternativamente, siga os próximos passos para configurar e iniciar o projeto manualmente
+
 ### Backend
 
-3. No diretório do projeto, navegue para o diretório do backend:
+1. No diretório do projeto, navegue para o diretório do backend:
 
    ```sh
    cd backend
    ```
 
-4. Crie e ative um ambiente virtual:
+2. Crie e ative um ambiente virtual:
 
    ```sh
    python -m venv .venv
    .venv/Scripts/activate
    ```
 
-5. Instale as dependências:
+3. Instale as dependências:
 
    ```sh
    pip install -r requirements.txt
    ```
 
-6. Inicie o servidor Flask:
+4. Inicie o servidor Flask:
    ```sh
    python flaskr/app.py
    ```
 
 ### Frontend
 
-7. No diretório do projeto, navegue para o diretório do frontend:
+1. No diretório do projeto, navegue para o diretório do frontend:
 
    ```sh
    cd frontendJS
    ```
 
-8. Instale as dependências:
+2. Instale as dependências:
 
    ```sh
    npm install
    ```
 
-9. Inicie o servidor de desenvolvimento:
+3. Inicie o servidor de desenvolvimento:
    ```sh
    npm run dev
    ```
-10. Acesse o frontend em [http://localhost:8000/](http://localhost:8000/)
+4. Acesse o frontend em [http://localhost:8000/](http://localhost:8000/)
 
 ## Equipe
 
