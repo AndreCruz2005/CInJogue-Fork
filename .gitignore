@@ -14,4 +14,4 @@ node_modules/
 
 # Files
 .env
-.out
+*.out
