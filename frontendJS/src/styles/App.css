@@ -1,0 +1,137 @@
+:root {
+    --background-color: #16213e;
+    --box-color: #0f3460;
+    --text-color: #e0e0e0;
+    --primary-color: #4a90e2;
+    --secondary-color: #3a7bcb;
+    --error-color: #ff6b6b;
+    --input-border-color: #3a3a5a;
+}
+
+button {
+    transition: 0.3s
+}
+
+button:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    overflow: hidden;
+
+}
+
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+#App {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    height: 100vh;
+
+    @media (max-width: 876px) {
+        flex-direction: column;
+    }
+}
+
+#backend-status {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    label {
+        font-size: 12px;
+    }
+
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.4);
+    transition: 0.3s;
+
+    a {
+        color: white;
+    }
+}
+
+#backend-status.ok {
+    background-color: rgb(81, 172, 81);
+}
+
+#backend-status.not-ok {
+    background-color: rgb(209, 74, 74);
+}
+
+#backend-status:hover {
+    transform: translateY(-2px);
+}
+
+#side-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--box-color);
+    max-width: 90px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.7);
+
+    button {
+        border: none;
+        color: var(--text-color);
+        font-size: 12px;
+        font-weight: bold;
+        background-color: rgba(0, 0, 0, 0.0);
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+
+    }
+
+    @media (max-width: 876px) {
+        max-width: none;
+        width: 100vw;
+        flex-direction: row;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+
+    }
+}
+
+#library-chat-container {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    padding: 1%;
+    box-sizing: border-box;
+    gap: 2vw;
+    flex: 11;
+}
+
+@media (max-width: 876px) {
+    #library-chat-container {
+        flex-direction: column;
+        overflow: auto;
+        padding: 2vw;
+    }
+
+    #side-bar {
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.7);
+    }
+
+}
