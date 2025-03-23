@@ -9,7 +9,7 @@ UserLibrary = db.Table(
 )
 
 from database.game import *
-from database.user import *
+from database.user import * 
 
 def add_game_to_library(user_id, game_id):
     try:
@@ -66,7 +66,6 @@ def get_libary(user_id):
                                 .filter(UserLibrary.c.user_id == user_id)\
                                 .all()
     return items
-
 
 def get_game_ratings(game_id):
     ratings = db.session.query(UserLibrary.c.rating).filter(UserLibrary.c.game_id == game_id).all()

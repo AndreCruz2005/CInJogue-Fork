@@ -121,10 +121,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 
 	function fetchLibrary() {
 		axios
-			.post(`${backend}/getlibrary`, {
-				username: userData.username,
-				password: userData.password,
-			})
+			.get(`${backend}/getlibrary?username=${userData.username}`)
 			.then((response) => {
 				setLibrary(response.data);
 				console.log(response.data);

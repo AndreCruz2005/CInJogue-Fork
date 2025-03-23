@@ -22,10 +22,7 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 
 	function fetchLibrary() {
 		axios
-			.post(`${backend}/getlibrary`, {
-				username: userData.username,
-				password: userData.password,
-			})
+			.get(`${backend}/getlibrary?username=${userData.username}`)
 			.then((response) => {
 				setLibrary(response.data);
 				console.log(response.data);
