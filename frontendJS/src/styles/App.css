@@ -14,7 +14,7 @@ button {
 
 button:hover {
     cursor: pointer;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
 }
 
 body {

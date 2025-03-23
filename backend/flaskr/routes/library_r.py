@@ -18,15 +18,15 @@ def addgametolibrary():
     add_game_to_library(session['id'], game['id'])
     return jsonify({'success':'Game added to library'}), 200
 
-@libraryroute.route('/getlibrary', methods=['POST'])
+@libraryroute.route('/getlibrary', methods=['GET'])
 def getlibary():
-    data = request.get_json()
+    data = request.args.get("username")
     
-    user = log_user_in(data.get('username'), data.get('password'), session)
-    if not user:
-        return jsonify({'error':'User not logged in'}), 401
+    if not data:
+        return jsonify({'error':'Bad request'}), 400
     
-    items = get_libary(session['id'])
+    u = get_user_by_name(data)
+    items = get_libary(u['id'])
     response = [{'title':game.title, 'data': eval(game.data), 'rating': rating, 'state': state} for game, rating, state in items]
     return jsonify(response), 200
 

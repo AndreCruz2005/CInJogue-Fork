@@ -6,7 +6,7 @@ from routes import airoute, blacklistroute, libraryroute, recommendationsroute, 
 import os
 
 app = Flask(__name__)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, "database/migrations")
 app.register_blueprint(airoute)
 app.register_blueprint(blacklistroute)
 app.register_blueprint(libraryroute)
