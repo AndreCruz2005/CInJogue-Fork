@@ -14,3 +14,7 @@ node_modules/
 
 # Files
 .env
+<<<<<<< HEAD
+=======
+*.out
+>>>>>>> efb106f34ffe3d973ffd996ae8ecd1e563af597d
