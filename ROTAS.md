@@ -632,7 +632,7 @@ ou
 }
 ```
 
-## `/getlibrary` - POST
+## `/getlibrary` - GET
 
 ### Descrição
 
@@ -640,12 +640,7 @@ Endpoint para obter a biblioteca de jogos do usuário.
 
 ### Request
 
-```json
-{
-	"username": "string",
-	"password": "string"
-}
-```
+- Parâmetro de consulta: `username`
 
 ### Response
 
