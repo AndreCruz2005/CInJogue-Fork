@@ -663,23 +663,12 @@ Endpoint para obter a biblioteca de jogos do usuário.
 }
 ```
 
-ou
-
-```json
-{
-	"error": "User not logged in"
-}
-```
-
 ### Exemplo
 
 #### Request
 
-```json
-{
-	"username": "user1",
-	"password": "password123"
-}
+```
+/getlibrary?username=avnc2005
 ```
 
 #### Response
