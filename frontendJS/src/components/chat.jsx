@@ -12,7 +12,7 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 	const [output, setOutput] = useState(
 		"Olá, bem vindo à CInJogue! Envie uma mensagem para começar a construir sua biblioteca.",
 	);
-	
+
 	// Estado para armazenar os dados do jogo selecionado para exibir na info box
 	const [infoBoxData, setInfoBoxData] = useState(null);
 	// Estado para controlar a visibilidade da InfoBox
@@ -268,7 +268,12 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 			</div>
 			<RecommendationsGrid />
 			<div id="input-and-send">
-				<input ref={inputDOM} onChange={(e) => setInput(e.target.value)} value={input} placeholder="Digite sua mensagem"></input>
+				<input onKeyDown={(e)=>{
+					if (e.key == "Enter"){
+						sendMessage();
+					}
+				}} 
+				onChange={(e) => setInput(e.target.value)} value={input} placeholder="Digite sua mensagem"></input>
 				<button
 					onClick={() => {
 						sendMessage();
