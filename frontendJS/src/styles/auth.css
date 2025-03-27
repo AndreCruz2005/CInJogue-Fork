@@ -148,3 +148,11 @@ a:hover {
 #signup input:invalid {
     border-color: var(--error-color)
 }
+
+#error-message{
+    text-align: center;
+}
+
+#error-message:empty{
+    display: none;
+}

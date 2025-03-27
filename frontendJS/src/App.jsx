@@ -5,6 +5,7 @@ import { Chat } from "./components/chat";
 import { ProfileBox } from "./components/profile-box";
 import { Preferences } from "./components/preferences";
 import { Blacklist } from "./components/blacklist";
+import { Social } from "./components/social";
 import axios from "axios";
 import { backend } from "./global";
 
@@ -36,6 +37,9 @@ function App() {
 	// Estados preferências
 	const [prefsStatus, setPrefsStatus] = useState(false);
 	const [prefs, setPrefs] = useState(null);
+
+	// Estados para tela social
+	const [socialStatus, setSocialStatus] = useState(false);
 
 	// Função para obter o não recomende do usuário
 	function getBlacklist() {
@@ -154,6 +158,12 @@ function App() {
 		</div>
 	) : (
 		<div id="App">
+			<Social
+				userData={userData}
+				socialStatus={socialStatus}
+				setSocialStatus={setSocialStatus}
+			/>
+
 			<ProfileBox
 				userData={userData}
 				setUserData={setUserData}

@@ -5,6 +5,7 @@ import "./../styles/auth.css";
 
 export const Auth = ({ userData, setUserData }) => {
 	const [loginMode, setLoginMode] = useState(true);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const Login = () => {
 		const [username, setUsername] = useState("");
@@ -22,6 +23,7 @@ export const Auth = ({ userData, setUserData }) => {
 				})
 				.catch((error) => {
 					console.error("There was an error signing up!", error);
+					setErrorMessage("Um erro ocorreu. Cheque se seus dados estão corretos e a sua conexão.");
 					setUserData(null);
 				});
 		}
@@ -29,6 +31,7 @@ export const Auth = ({ userData, setUserData }) => {
 		return (
 			<div id="login">
 				<h1>ENTRE NA SUA CONTA</h1>
+				<p id="error-message">{errorMessage}</p>
 				<label>
 					Usuário:
 					<input type="username" value={username} onChange={(e) => setUsername(e.target.value)}></input>
@@ -38,7 +41,14 @@ export const Auth = ({ userData, setUserData }) => {
 					<input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 				</label>
 				<button onClick={login}>ENTRAR</button>
-				<a onClick={() => setLoginMode(false)}>{"Não possui conta? Clique aqui para criar uma"}</a>
+				<a
+					onClick={() => {
+						setErrorMessage("");
+						setLoginMode(false);
+					}}
+				>
+					{"Não possui conta? Clique aqui para criar uma"}
+				</a>
 			</div>
 		);
 	};
@@ -52,7 +62,17 @@ export const Auth = ({ userData, setUserData }) => {
 
 		function signUp() {
 			if (password != passwordConfirm) {
-				console.error("Passwords do not match!");
+				setErrorMessage("As senhas são diferentes.");
+				return;
+			}
+
+			if (password.length < 8) {
+				setErrorMessage("A senha deve ter pelo menos 8 caracteres.");
+				return;
+			}
+
+			if (email.split("").filter((i) => i == "@").length != 1) {
+				setErrorMessage("Endereço de email inválido.");
 				return;
 			}
 
@@ -66,15 +86,18 @@ export const Auth = ({ userData, setUserData }) => {
 				.then((response) => {
 					console.log(response.data);
 					setLoginMode(true);
+					setErrorMessage("");
 				})
 				.catch((error) => {
 					console.error("There was an error signing up!", error);
+					setErrorMessage("Seu nome e email já foi usado ou você não está conectado.");
 				});
 		}
 
 		return (
 			<div id="signup">
 				<h1>CRIE SUA CONTA</h1>
+				<p id="error-message">{errorMessage}</p>
 				<label>
 					Usuário:
 					<input type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -96,7 +119,14 @@ export const Auth = ({ userData, setUserData }) => {
 					<input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
 				</label>
 				<button onClick={signUp}>CRIAR CONTA</button>
-				<a onClick={() => setLoginMode(true)}>{"Já possui conta? Clique aqui para entrar"}</a>
+				<a
+					onClick={() => {
+						setErrorMessage("");
+						setLoginMode(true);
+					}}
+				>
+					{"Já possui conta? Clique aqui para entrar"}
+				</a>
 			</div>
 		);
 	};
