@@ -83,6 +83,14 @@ function App() {
 				>
 					<img src={profileIcon} />
 				</button>
+				{/* Botão para abrir a caixa social */}
+				<button
+					onClick={() => {
+						setSocialStatus(true);
+					}}
+				>
+					SOCIAL
+				</button>
 				{/* Botão para abrir as preferências */}
 				<button
 					onClick={() => {
@@ -158,11 +166,7 @@ function App() {
 		</div>
 	) : (
 		<div id="App">
-			<Social
-				userData={userData}
-				socialStatus={socialStatus}
-				setSocialStatus={setSocialStatus}
-			/>
+			<Social userData={userData} socialStatus={socialStatus} setSocialStatus={setSocialStatus} />
 
 			<ProfileBox
 				userData={userData}
