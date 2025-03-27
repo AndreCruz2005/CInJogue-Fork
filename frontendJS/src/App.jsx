@@ -14,6 +14,7 @@ import profileIcon from "./assets/user_icon.svg";
 import preferencesIcon from "./assets/preferences.svg";
 import blacklistIcon from "./assets/blacklist.svg";
 import logoutIcon from "./assets/logout.svg";
+import shareIcon from "./assets/share.svg";
 
 // Estilos
 import "./styles/App.css";
@@ -89,7 +90,7 @@ function App() {
 						setSocialStatus(true);
 					}}
 				>
-					SOCIAL
+					<img src={shareIcon} />
 				</button>
 				{/* Botão para abrir as preferências */}
 				<button

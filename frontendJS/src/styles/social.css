@@ -62,16 +62,17 @@
 }
 
 #social-layer #library-item img {
-    width: 100%;
+    width: 120px;
     aspect-ratio: 3/4;
     object-fit: cover;
     object-position: center;
 }
 
 #social-layer #library-item p {
-    margin: 5px 0;
+    margin: 3px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+    font-size: 14px;
 }
