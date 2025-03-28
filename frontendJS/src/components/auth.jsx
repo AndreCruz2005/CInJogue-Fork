@@ -3,9 +3,29 @@ import React, { useState } from "react";
 import { backend } from "../global";
 import "./../styles/auth.css";
 
+// Background
+import terrariaBG from "./../assets/background/terraria-bg.jpeg";
+import portalBG from "./../assets/background/portal-bg.jpeg";
+import hollowKnightBG from "./../assets/background/hollowknight-bg.jpg";
+import skyrimBG from "./../assets/background/skyrim-bg.jpg";
+import nomansSkyBG from "./../assets/background/nomanssky-bg.jpg";
+import outerworldsBG from "./../assets/background/outerworlds-bg.jpg";
+import baldursgateBG from "./../assets/background/baldursgate-bg.jpg";
+import falloutBG from "./../assets/background/fallout-bg.jpg";
+
 export const Auth = ({ userData, setUserData }) => {
 	const [loginMode, setLoginMode] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
+	const background = [
+		terrariaBG,
+		portalBG,
+		hollowKnightBG,
+		skyrimBG,
+		nomansSkyBG,
+		outerworldsBG,
+		baldursgateBG,
+		falloutBG,
+	][Math.floor(Math.random() * 8)];
 
 	const Login = () => {
 		const [username, setUsername] = useState("");
@@ -61,6 +81,11 @@ export const Auth = ({ userData, setUserData }) => {
 		const [birthdate, setBirthdate] = useState("");
 
 		function signUp() {
+			if (!username || !password || !passwordConfirm || !email || !birthdate) {
+				setErrorMessage("Preencha todos os campos.");
+				return;
+			}
+
 			if (password != passwordConfirm) {
 				setErrorMessage("As senhas são diferentes.");
 				return;
@@ -73,6 +98,11 @@ export const Auth = ({ userData, setUserData }) => {
 
 			if (email.split("").filter((i) => i == "@").length != 1) {
 				setErrorMessage("Endereço de email inválido.");
+				return;
+			}
+
+			if (Number(birthdate.split("-").length[0]) >= 2012) {
+				setErrorMessage("Você deve ter mais de 12 anos para criar uma conta.");
 				return;
 			}
 
@@ -104,11 +134,16 @@ export const Auth = ({ userData, setUserData }) => {
 				</label>
 				<label>
 					Senha:
-					<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+					<input type="password" value={password} minLength={8} onChange={(e) => setPassword(e.target.value)} />
 				</label>
 				<label>
 					Confirme Senha:
-					<input type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
+					<input
+						type="password"
+						value={passwordConfirm}
+						minLength={8}
+						onChange={(e) => setPasswordConfirm(e.target.value)}
+					/>
 				</label>
 				<label>
 					Email:
@@ -116,7 +151,7 @@ export const Auth = ({ userData, setUserData }) => {
 				</label>
 				<label>
 					Data de nascimento:
-					<input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
+					<input type="date" value={birthdate} max="2012-01-01" onChange={(e) => setBirthdate(e.target.value)} />
 				</label>
 				<button onClick={signUp}>CRIAR CONTA</button>
 				<a
@@ -133,8 +168,17 @@ export const Auth = ({ userData, setUserData }) => {
 
 	return (
 		<div id="auth">
-			<h1 id="website-title">CInJogue</h1>
+			<img id="background-image" src={background}></img>
 			{loginMode ? <Login /> : <SignUp />}
+			<div id="description">
+				<h1 id="website-title">CInJogue</h1>
+				<p id="website-subtitle">
+					Descubra, catalogue e explore o universo dos jogos como nunca antes. Com inteligência artificial de ponta,
+					transformamos sua coleção de games em uma experiência personalizada de descoberta. Recomendações sob medida,
+					análises inteligentes e um acervo totalmente seu - tudo em um único lugar épico. Sua jornada gamer nunca mais
+					vai ser a mesma!{" "}
+				</p>
+			</div>
 		</div>
 	);
 };

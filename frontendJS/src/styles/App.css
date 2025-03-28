@@ -21,12 +21,10 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
-    overflow: hidden;
-
 }
 
 * {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #App {
@@ -37,7 +35,7 @@ body {
 
     @media (max-width: 876px) {
         flex-direction: column;
-        max-height: min-content;
+
     }
 }
 
