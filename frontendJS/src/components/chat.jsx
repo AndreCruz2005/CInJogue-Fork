@@ -6,7 +6,7 @@ import "../styles/chat.css";
 import microphoneIcon from "../assets/microphone.svg";
 import sendIcon from "../assets/send-message.svg";
 
-export const Chat = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
+export const Chat = ({ userData, recommendations, setRecommendations, fetchLibrary }) => {
 	// Input = Message enviada pelo usuário. Output = mensagem recebida da Gemini
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState(
@@ -118,16 +118,6 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 			</div>
 		);
 	};
-
-	function fetchLibrary() {
-		axios
-			.get(`${backend}/getlibrary?username=${userData.username}`)
-			.then((response) => {
-				setLibrary(response.data);
-				console.log(response.data);
-			})
-			.catch((e) => console.error(e));
-	}
 
 	function fetchRecommendations() {
 		axios
@@ -268,12 +258,16 @@ export const Chat = ({ userData, setUserData, library, setLibrary, recommendatio
 			</div>
 			<RecommendationsGrid />
 			<div id="input-and-send">
-				<input onKeyDown={(e)=>{
-					if (e.key == "Enter"){
-						sendMessage();
-					}
-				}} 
-				onChange={(e) => setInput(e.target.value)} value={input} placeholder="Digite sua mensagem"></input>
+				<input
+					onKeyDown={(e) => {
+						if (e.key == "Enter") {
+							sendMessage();
+						}
+					}}
+					onChange={(e) => setInput(e.target.value)}
+					value={input}
+					placeholder="Digite sua mensagem"
+				></input>
 				<button
 					onClick={() => {
 						sendMessage();

@@ -7,7 +7,7 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 	const [searchedUser, setSearchedUser] = useState(userData.username);
 	const [visualizedLibrary, setVisualizedLibrary] = useState([]);
 
-	function fetchLibrary() {
+	function fetchVisualizedLibrary() {
 		axios
 			.get(`${backend}/getlibrary?username=${searchedUser}`)
 			.then((response) => {
@@ -45,7 +45,7 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 	};
 
 	useEffect(() => {
-		fetchLibrary();
+		fetchVisualizedLibrary();
 	}, [socialStatus]);
 
 	return socialStatus ? (
@@ -61,14 +61,17 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 						X
 					</button>
 				</div>
-				<p>Insira o nome de um usuário e pressione ENTER para visualizar sua biblioteca aqui.</p>
+				<p>
+					Insira o nome de um usuário e pressione ENTER para visualizar a biblioteca do usuário aqui. Clique duas vezes
+					em um jogo para adicionar-lo à sua própria biblioteca.
+				</p>
 				<input
 					value={searchedUser}
 					placeholder="Nome de usuário"
 					onChange={(e) => setSearchedUser(e.target.value)}
 					onKeyDown={(e) => {
 						if (e.key == "Enter") {
-							fetchLibrary();
+							fetchVisualizedLibrary();
 						}
 					}}
 				></input>

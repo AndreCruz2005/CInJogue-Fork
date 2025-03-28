@@ -42,6 +42,17 @@ function App() {
 	// Estados para tela social
 	const [socialStatus, setSocialStatus] = useState(false);
 
+	// Função para buscar a biblioteca do usuário
+	function fetchLibrary() {
+		axios
+			.get(`${backend}/getlibrary?username=${userData.username}`)
+			.then((response) => {
+				setLibrary(response.data);
+				console.log(response.data);
+			})
+			.catch((e) => console.error(e));
+	}
+
 	// Função para obter o não recomende do usuário
 	function getBlacklist() {
 		axios
@@ -171,16 +182,7 @@ function App() {
 				userData={userData}
 				socialStatus={socialStatus}
 				setSocialStatus={setSocialStatus}
-				fetchLibrary={() => {
-					axios
-						.get(`${backend}/getlibrary?username=${userData.username}`)
-						.then((response) => {
-							setLibrary(response.data);
-						})
-						.catch((e) => {
-							console.error(e);
-						});
-				}}
+				fetchLibrary={fetchLibrary}
 			/>
 
 			<ProfileBox
@@ -210,35 +212,25 @@ function App() {
 
 			<LibraryScreen
 				userData={userData}
-				setUserData={setUserData}
 				library={library}
-				setLibrary={setLibrary}
 				recommendations={recommendations}
 				setRecommendations={setRecommendations}
+				fetchLibrary={fetchLibrary}
 			/>
 		</div>
 	);
 }
 
 // Componente para exibir a biblioteca e o chat
-const LibraryScreen = ({ userData, setUserData, library, setLibrary, recommendations, setRecommendations }) => {
+const LibraryScreen = ({ userData, library, recommendations, setRecommendations, fetchLibrary }) => {
 	return (
 		<div id="library-chat-container">
-			<Library
-				userData={userData}
-				setUserData={setUserData}
-				library={library}
-				setLibrary={setLibrary}
-				recommendations={recommendations}
-				setRecommendations={setRecommendations}
-			/>
+			<Library userData={userData} library={library} fetchLibrary={fetchLibrary} />
 			<Chat
 				userData={userData}
-				setUserData={setUserData}
-				library={library}
-				setLibrary={setLibrary}
 				recommendations={recommendations}
 				setRecommendations={setRecommendations}
+				fetchLibrary={fetchLibrary}
 			/>
 		</div>
 	);

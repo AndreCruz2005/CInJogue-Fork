@@ -3,7 +3,7 @@ import { backend } from "../global";
 import axios from "axios";
 import "../styles/library.css";
 
-export const Library = ({ userData, setUserData, library, setLibrary }) => {
+export const Library = ({ userData, library, fetchLibrary }) => {
 	const [filter, setFilter] = useState(" ");
 	const states = ["NÃO JOGADO", "JOGADO", "AINDA JOGANDO", "CONCLUÍDO", "ABANDONADO", "LISTA DE DESEJOS"];
 
@@ -19,16 +19,6 @@ export const Library = ({ userData, setUserData, library, setLibrary }) => {
 	const [infoBoxStatus, setInfoBoxStatus] = useState(false);
 	// Estado para armazenar a média de todas as avaliações do jogo selecionado
 	const [currAvrgRating, setCurrAvrgRating] = useState(0);
-
-	function fetchLibrary() {
-		axios
-			.get(`${backend}/getlibrary?username=${userData.username}`)
-			.then((response) => {
-				setLibrary(response.data);
-				console.log(response.data);
-			})
-			.catch((e) => console.error(e));
-	}
 
 	function changeGameRating(title, rating) {
 		axios
