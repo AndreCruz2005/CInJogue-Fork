@@ -5,7 +5,6 @@ import "./../styles/auth.css";
 
 // Backgrounds
 import terrariaBG from "./../assets/background/terraria-bg.jpeg";
-import portalBG from "./../assets/background/portal-bg.jpeg";
 import hollowKnightBG from "./../assets/background/hollowknight-bg.jpg";
 import skyrimBG from "./../assets/background/skyrim-bg.jpg";
 import nomansSkyBG from "./../assets/background/nomanssky-bg.jpg";
@@ -14,13 +13,15 @@ import baldursgateBG from "./../assets/background/baldursgate-bg.jpg";
 import falloutBG from "./../assets/background/fallout-bg.jpg";
 import outerwildsBG from "./../assets/background/outerwilds-bg.png";
 import spidermanBG from "./../assets/background/spiderman-bg.jpg";
-
+import rainworldBG from "./../assets/background/rainworld-bg.png";
+import rdr2BG from "./../assets/background/rdr2-bg.jpg";
+import subnauticaBG from "./../assets/background/subnautica-bg.jpg";
 export const Auth = ({ userData, setUserData }) => {
 	const [loginMode, setLoginMode] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const background = [
 		terrariaBG,
-		portalBG,
+		rainworldBG,
 		hollowKnightBG,
 		skyrimBG,
 		nomansSkyBG,
@@ -29,7 +30,9 @@ export const Auth = ({ userData, setUserData }) => {
 		falloutBG,
 		outerwildsBG,
 		spidermanBG,
-	][Math.floor(Math.random() * 10)];
+		rdr2BG,
+		subnauticaBG,
+	][Date.now() % 12];
 
 	const Login = () => {
 		const [username, setUsername] = useState("");

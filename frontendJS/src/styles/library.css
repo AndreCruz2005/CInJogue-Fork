@@ -25,7 +25,7 @@
   @media(max-width: 876px) {
     grid-template-columns: repeat(auto-fit, 90px);
     grid-template-rows: repeat(auto-fit, 120px);
-    height: 40vh;
+    height: 50vh;
   }
 
   #game-card {
