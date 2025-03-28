@@ -10,7 +10,7 @@
 
 #library {
   display: grid;
-  background-color: var(--box-color);
+  background-color: rgba(0, 43, 92, 0.5);
   grid-template-columns: repeat(auto-fit, 100px);
   grid-template-rows: repeat(auto-fit, 135px);
   gap: 10px;

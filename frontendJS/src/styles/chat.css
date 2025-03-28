@@ -5,7 +5,7 @@
     flex: 3;
     gap: 2vh;
     border-radius: 8px;
-    background-color: var(--box-color);
+    background-color: rgba(0, 43, 92, 0.5);
     padding: 0.7%;
     padding-bottom: 1%;
     box-sizing: border-box;

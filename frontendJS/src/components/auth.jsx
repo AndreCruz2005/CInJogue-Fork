@@ -12,6 +12,8 @@ import nomansSkyBG from "./../assets/background/nomanssky-bg.jpg";
 import outerworldsBG from "./../assets/background/outerworlds-bg.jpg";
 import baldursgateBG from "./../assets/background/baldursgate-bg.jpg";
 import falloutBG from "./../assets/background/fallout-bg.jpg";
+import outerwildsBG from "./../assets/background/outerwilds-bg.png";
+import spidermanBG from "./../assets/background/spiderman-bg.jpg";
 
 export const Auth = ({ userData, setUserData }) => {
 	const [loginMode, setLoginMode] = useState(true);
@@ -25,7 +27,9 @@ export const Auth = ({ userData, setUserData }) => {
 		outerworldsBG,
 		baldursgateBG,
 		falloutBG,
-	][Math.floor(Math.random() * 8)];
+		outerwildsBG,
+		spidermanBG,
+	][Math.floor(Math.random() * 10)];
 
 	const Login = () => {
 		const [username, setUsername] = useState("");

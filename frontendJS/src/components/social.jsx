@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { backend } from "../global";
 import "./../styles/social.css";
 
-export const Social = ({ userData, socialStatus, setSocialStatus }) => {
+export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }) => {
 	const [searchedUser, setSearchedUser] = useState(userData.username);
 	const [visualizedLibrary, setVisualizedLibrary] = useState([]);
 
@@ -22,7 +22,20 @@ export const Social = ({ userData, socialStatus, setSocialStatus }) => {
 
 	const LibraryItem = ({ game }) => {
 		return (
-			<div id="library-item">
+			<div
+				id="library-item"
+				onDoubleClick={() => {
+					axios
+						.post(`${backend}/addgametolibrary`, {
+							username: userData.username,
+							password: userData.password,
+							title: game.title,
+						})
+						.then(() => {
+							fetchLibrary();
+						});
+				}}
+			>
 				<p>{game.title}</p>
 				<img src={game.data.image.original_url}></img>
 				<p>{game.state}</p>

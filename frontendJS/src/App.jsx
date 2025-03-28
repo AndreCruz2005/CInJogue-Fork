@@ -167,7 +167,21 @@ function App() {
 		</div>
 	) : (
 		<div id="App">
-			<Social userData={userData} socialStatus={socialStatus} setSocialStatus={setSocialStatus} />
+			<Social
+				userData={userData}
+				socialStatus={socialStatus}
+				setSocialStatus={setSocialStatus}
+				fetchLibrary={() => {
+					axios
+						.get(`${backend}/getlibrary?username=${userData.username}`)
+						.then((response) => {
+							setLibrary(response.data);
+						})
+						.catch((e) => {
+							console.error(e);
+						});
+				}}
+			/>
 
 			<ProfileBox
 				userData={userData}
