@@ -63,7 +63,7 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 				</div>
 				<p>
 					Insira o nome de um usuário e pressione ENTER para visualizar a biblioteca do usuário aqui. Clique duas vezes
-					em um jogo para adicionar-lo à sua própria biblioteca.
+					em um jogo para adiciona-lo à sua própria biblioteca.
 				</p>
 				<input
 					value={searchedUser}
