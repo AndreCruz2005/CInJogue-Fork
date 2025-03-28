@@ -78,7 +78,7 @@
     }
 
     input:focus {
-        outline: 1px solid #4a90e2;
+        outline: 1px solid var(--primary-color);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -89,6 +89,10 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 10px;
+
+        @media(max-width: 768px) {
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        }
     }
 
     #visualized-library:empty {

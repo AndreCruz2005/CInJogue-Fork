@@ -127,8 +127,8 @@
 
         input:focus {
             outline: none;
-            background-color: #3a7bcb;
-            ;
+            background-color: var(--secondary-color);
+
         }
 
         button {

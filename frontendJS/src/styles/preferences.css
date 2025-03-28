@@ -108,7 +108,7 @@
     }
 
     #tag-input:focus {
-        border-color: #4a90e2;
+        border-color: var(--primary-color);
         outline: none;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     }

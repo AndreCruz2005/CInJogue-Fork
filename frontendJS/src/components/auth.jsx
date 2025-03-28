@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { backend } from "../global";
 import "./../styles/auth.css";
 
-// Background
+// Backgrounds
 import terrariaBG from "./../assets/background/terraria-bg.jpeg";
 import portalBG from "./../assets/background/portal-bg.jpeg";
 import hollowKnightBG from "./../assets/background/hollowknight-bg.jpg";

@@ -132,7 +132,7 @@
     }
 
     .active-filter {
-      background-color: #4a90e2;
+      background-color: var(--primary-color);
       transform: translateY(-2px);
     }
 
