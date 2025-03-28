@@ -12,6 +12,7 @@
     align-items: center;
     z-index: 1000;
     color: var(--text-color);
+    backdrop-filter: blur(6px);
 
 
     /* Main profile container */
@@ -29,7 +30,6 @@
         max-height: 90vh;
         overflow-y: auto;
         background-color: var(--background-color);
-        animation: floatDown 0.5s;
     }
 
     /* Header section */
@@ -54,7 +54,7 @@
     #header button {
         background: none;
         border: none;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         cursor: pointer;
         width: 32px;
         height: 32px;
@@ -62,12 +62,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.2s;
         color: white;
+        transition: 0.2s;
     }
 
     #header button:hover {
-        background-color: #f0f0f0;
+        background-color: var(--error-color);
     }
 
     /* Options section */

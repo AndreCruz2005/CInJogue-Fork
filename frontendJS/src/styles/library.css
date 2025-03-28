@@ -1,16 +1,3 @@
-@keyframes floatDown {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
 /* Container for the images */
 #library-container {
   display: flex;
@@ -38,6 +25,7 @@
   @media(max-width: 876px) {
     grid-template-columns: repeat(auto-fit, 90px);
     grid-template-rows: repeat(auto-fit, 120px);
+    height: 40vh;
   }
 
   #game-card {

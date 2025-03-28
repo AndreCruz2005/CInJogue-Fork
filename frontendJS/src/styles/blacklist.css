@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    backdrop-filter: blur(6px);
 }
 
 /* Main blacklist container */
@@ -24,7 +25,6 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    animation: floatDown 0.5s;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
 
 }
@@ -46,7 +46,7 @@
 #blacklist-layer #header button {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     cursor: pointer;
     width: 32px;
     height: 32px;
@@ -54,11 +54,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: 0.2s;
 }
 
 #blacklist-layer #header button:hover {
-    background-color: #f0f0f0;
+    background-color: var(--error-color);
 }
 
 /* Description text */

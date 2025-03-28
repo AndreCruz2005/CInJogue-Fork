@@ -33,7 +33,7 @@ export const Social = ({ userData, socialStatus, setSocialStatus }) => {
 
 	useEffect(() => {
 		fetchLibrary();
-	}, []);
+	}, [socialStatus]);
 
 	return socialStatus ? (
 		<div id="social-layer">

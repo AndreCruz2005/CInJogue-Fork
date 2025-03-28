@@ -37,6 +37,7 @@ body {
 
     @media (max-width: 876px) {
         flex-direction: column;
+        max-height: min-content;
     }
 }
 

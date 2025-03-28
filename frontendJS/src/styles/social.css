@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(6px);
 
 
     #social-box {
