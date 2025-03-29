@@ -182,6 +182,7 @@ function App() {
 				userData={userData}
 				socialStatus={socialStatus}
 				setSocialStatus={setSocialStatus}
+				library={library}
 				fetchLibrary={fetchLibrary}
 			/>
 

@@ -103,15 +103,24 @@
     }
 
     #library-item {
-        background: var(--box-color);
         border-radius: 10px;
         padding: 10px;
         text-align: center;
         transition: transform 0.2s ease;
+        box-shadow: 0 5px 7px rgba(0, 0, 0, 0.5);
+    }
+
+    .in-library {
+        background: var(--happy-color);
+    }
+
+    .not-in-library {
+        background: var(--box-color);
     }
 
     #library-item:hover {
-        transform: translateY(-2px);
+        cursor: pointer;
+        transform: translateY(-4px);
     }
 
     #library-item p:first-child {
@@ -159,5 +168,20 @@
 
     #visualized-library::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.3);
+    }
+
+    #footer {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+        padding-top: 12px;
+        gap: 10px;
+
+        div {
+            width: 40px;
+            height: 20px;
+            background: var(--happy-color);
+            border-radius: 7px;
+        }
     }
 }

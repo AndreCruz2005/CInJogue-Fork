@@ -77,9 +77,8 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 									<button
 										id="add-button"
 										onClick={() => {
-											axios.post(`${backend}/addgametolibrary`, dataToSend);
+											axios.post(`${backend}/addgametolibrary`, dataToSend).then(() => fetchLibrary());
 											axios.post(`${backend}/removegamefromrecommendations`, dataToSend).then(() => {
-												fetchLibrary();
 												fetchRecommendations();
 												setInfoBoxStatus(false);
 											});

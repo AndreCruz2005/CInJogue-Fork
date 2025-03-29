@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { backend } from "../global";
 import "./../styles/social.css";
 
-export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }) => {
+export const Social = ({ userData, socialStatus, setSocialStatus, library, fetchLibrary }) => {
 	const [searchedUser, setSearchedUser] = useState(userData.username);
 	const [visualizedLibrary, setVisualizedLibrary] = useState([]);
 
@@ -24,7 +24,8 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 		return (
 			<div
 				id="library-item"
-				onDoubleClick={() => {
+				className={library.some((it) => it.title == game.title) ? "in-library" : "not-in-library"}
+				onClick={() => {
 					axios
 						.post(`${backend}/addgametolibrary`, {
 							username: userData.username,
@@ -62,8 +63,8 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 					</button>
 				</div>
 				<p>
-					Insira o nome de um usuário e pressione ENTER para visualizar a biblioteca do usuário aqui. Clique duas vezes
-					em um jogo para adiciona-lo à sua própria biblioteca.
+					Insira o nome de um usuário e pressione ENTER para visualizar a biblioteca do usuário aqui. Clique em um jogo
+					para adiciona-lo à sua própria biblioteca.
 				</p>
 				<input
 					value={searchedUser}
@@ -79,6 +80,10 @@ export const Social = ({ userData, socialStatus, setSocialStatus, fetchLibrary }
 					{visualizedLibrary.map((it, i) => {
 						return <LibraryItem key={i} game={it} />;
 					})}
+				</div>
+				<div id="footer">
+					<div></div>
+					<span>Jogos em comum.</span>
 				</div>
 			</div>
 		</div>
