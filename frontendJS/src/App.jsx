@@ -137,20 +137,6 @@ function App() {
 		);
 	};
 
-	// Estado para armazenar o status do backend
-	const [serverStatus, setServerStatus] = useState(null);
-	// Função para verificar o status do backend
-	const checkServerStatus = () => {
-		axios
-			.get(`${backend}`)
-			.then((response) => {
-				response.status == 200 ? setServerStatus(true) : setServerStatus(false);
-			})
-			.catch(() => {
-				setServerStatus(false);
-			});
-	};
-
 	// Renderiza a tela de login/signup ou a biblioteca/chat dependendo se o usuário está logado ou não
 	return userData == null ? (
 		// Tela de login/signup
