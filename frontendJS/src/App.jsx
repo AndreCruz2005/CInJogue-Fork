@@ -151,31 +151,10 @@ function App() {
 			});
 	};
 
-	// Efeito para verificar o status do backend periodicamente somente na tela de login/signup
-	// (quando o usuário não está logado)
-	useEffect(() => {
-		checkServerStatus();
-		const interval = setInterval(() => {
-			if (!userData) {
-				checkServerStatus();
-			}
-		}, 3000);
-
-		return () => clearInterval(interval);
-	}, [userData]);
-
 	// Renderiza a tela de login/signup ou a biblioteca/chat dependendo se o usuário está logado ou não
 	return userData == null ? (
-		<div>
-			{/* Exibição do status do backend */}
-			<div id="backend-status" className={serverStatus ? "ok" : "not-ok"}>
-				<label>Backend ({serverStatus ? "Online" : "Offline"})</label>
-				<a href={backend}>{backend}</a>
-			</div>
-
-			{/*Tela de login/signup*/}
-			<Auth userData={userData} setUserData={setUserData} />
-		</div>
+		// Tela de login/signup
+		<Auth userData={userData} setUserData={setUserData} />
 	) : (
 		<div id="App">
 			<Social

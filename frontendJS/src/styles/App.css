@@ -41,41 +41,6 @@ body {
     }
 }
 
-#backend-status {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-
-    label {
-        font-size: 12px;
-    }
-
-    top: 10px;
-    left: 10px;
-    z-index: 100;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.4);
-    transition: 0.3s;
-
-    a {
-        color: white;
-    }
-}
-
-#backend-status.ok {
-    display: none;
-}
-
-#backend-status.not-ok {
-    background: --var(--error-color);
-}
-
-#backend-status:hover {
-    transform: translateY(-2px);
-}
-
 #side-bar {
     display: flex;
     flex-direction: column;
