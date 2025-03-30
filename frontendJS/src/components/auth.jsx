@@ -16,6 +16,7 @@ import spidermanBG from "./../assets/background/spiderman-bg.jpg";
 import rainworldBG from "./../assets/background/rainworld-bg.png";
 import rdr2BG from "./../assets/background/rdr2-bg.jpg";
 import subnauticaBG from "./../assets/background/subnautica-bg.jpg";
+
 export const Auth = ({ userData, setUserData }) => {
 	const [loginMode, setLoginMode] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +33,7 @@ export const Auth = ({ userData, setUserData }) => {
 		spidermanBG,
 		rdr2BG,
 		subnauticaBG,
-	][Date.now() % 12];
+	][Math.floor(Math.random() * 12)];
 
 	const Login = () => {
 		const [username, setUsername] = useState("");

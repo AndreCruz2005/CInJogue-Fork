@@ -5,7 +5,7 @@
     flex: 3;
     gap: 2vh;
     border-radius: 8px;
-    background-color: rgba(0, 43, 92, 0.5);
+    background: rgba(0, 43, 92, 0.5);
     padding: 0.7%;
     padding-bottom: 1%;
     box-sizing: border-box;
@@ -16,14 +16,13 @@
         width: 100%;
         flex-direction: column;
         color: var(--text-color);
-        background-color: var(--primary-color);
+        background: var(--primary-color);
         font-weight: bold;
         border-radius: 5px;
         box-sizing: border-box;
         padding: 2%;
         gap: 1vh;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-
 
         text {
             border-radius: 5px;
@@ -35,13 +34,11 @@
 
     #recommendations-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, 80px);
-        grid-template-rows: repeat(auto-fit, 110px);
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
         width: 100%;
         padding: 2%;
-        gap: 10px;
-        flex: 13;
-        overflow: auto;
+        gap: 5px;
+        overflow-x: hidden;
         border-radius: 5px;
         box-sizing: border-box;
 
@@ -51,8 +48,8 @@
             text-align: center;
             font-size: 13px;
             border-radius: 5px;
-            width: 100%;
             border: 2px solid #494849;
+            aspect-ratio: 3 / 4;
 
 
             #centered-text {
@@ -100,7 +97,7 @@
         content: "Os jogos recomendados pela IA serão exibidos aqui";
         display: block;
         text-align: center;
-        padding: 20px 0;
+        padding: 20px;
         font-style: italic;
     }
 
@@ -108,14 +105,14 @@
         display: flex;
         align-items: center;
         width: 100%;
-        flex: 1;
+        height: 10%;
         gap: 10px;
         box-sizing: border-box;
 
         input {
             width: 80%;
             height: 100%;
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             border: none;
             color: var(--text-color);
             font-size: 0.8em;
@@ -127,7 +124,7 @@
 
         input:focus {
             outline: none;
-            background-color: var(--secondary-color);
+            background: var(--secondary-color);
 
         }
 
@@ -136,7 +133,7 @@
             width: 20%;
             height: 100%;
             border-radius: 8px;
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             border: none;
             color: var(--text-color);
             text-align: center;
@@ -151,16 +148,16 @@
         }
 
         .active {
-            background-color: var(--error-color);
+            background: var(--error-color);
             transform: translateY(-2px);
         }
 
         .active:hover {
-            background-color: #d95959;
+            background: #d95959;
         }
 
         button:hover {
-            background-color: var(--secondary-color);
+            background: var(--secondary-color);
         }
     }
 }
@@ -209,9 +206,11 @@
             gap: 10px;
             overflow: auto;
 
-            img {
-                width: 70px;
-                height: 100px;
+            #recommended-card {
+                img {
+                    width: 70px;
+                    height: 100px;
+                }
             }
         }
 

@@ -255,7 +255,19 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 				<label>Assistente de IA</label>
 				<text>{output}</text>
 			</div>
-			<RecommendationsGrid />
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					height: "100%",
+					width: "100%",
+					overflowY: "hidden",
+					overflowX: "hidden",
+				}}
+			>
+				<RecommendationsGrid />
+			</div>
 			<div id="input-and-send">
 				<input
 					onKeyDown={(e) => {

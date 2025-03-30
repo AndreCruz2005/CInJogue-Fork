@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,11 +28,12 @@
         gap: 20px;
         max-height: 90vh;
         overflow-y: auto;
-        background-color: var(--background-color);
+        background: var(--background);
     }
 
     /* Header section */
     #header {
+        background: var(--background);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -42,7 +43,6 @@
         position: sticky;
         top: 0;
         z-index: 2;
-        background-color: var(--background-color);
     }
 
     #header h2 {
@@ -66,7 +66,7 @@
     }
 
     #header button:hover {
-        background-color: var(--error-color);
+        background: var(--error-color);
 
     }
 
@@ -104,7 +104,7 @@
         margin-top: 8px;
         transition: border-color 0.2s;
         color: var(--text-color);
-        background-color: #1a1a2e;
+        background: #1a1a2e;
     }
 
     #tag-input:focus {
@@ -121,12 +121,12 @@
     #tag {
         display: inline-flex;
         align-items: center;
-        background-color: var(--box-color);
+        background: var(--box-color);
         border-radius: 12px;
         padding: 6px 12px;
         margin-right: 8px;
         margin-bottom: 8px;
-        transition: background-color 0.2s;
+        transition: background 0.2s;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
         transition: 0.3s;
     }
@@ -158,7 +158,7 @@
     }
 
     #tag button:hover {
-        background-color: #ff5555;
+        background: #ff5555;
         color: white;
     }
 

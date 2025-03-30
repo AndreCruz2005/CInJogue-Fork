@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +13,7 @@
 }
 
 #info-box {
-    background: var(--background-color);
+    background: var(--background);
     width: auto;
     padding: 20px;
     border-radius: 10px;
@@ -54,7 +54,7 @@
 }
 
 #close-button:hover {
-    background-color: var(--error-color);
+    background: var(--error-color);
 }
 
 #content {
@@ -100,7 +100,7 @@
     border: none;
     border-radius: 5px;
     padding: 10px;
-    background-color: var(--box-color);
+    background: var(--box-color);
     border-radius: 5px;
     box-sizing: border-box;
     padding: 3%;
@@ -116,7 +116,7 @@
     display: flex;
     gap: 10px;
     height: 60%;
-    background-color: var(--box-color);
+    background: var(--box-color);
     border-radius: 5px;
     box-sizing: border-box;
     padding: 3%;
@@ -163,7 +163,7 @@
     width: 100%;
     padding: 5px;
     border-radius: 5px;
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     border: none;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     font-size: 15px;
@@ -172,13 +172,13 @@
 }
 
 #user-info select:hover {
-    background-color: var(--secondary-color);
+    background: var(--secondary-color);
     cursor: pointer;
     transform: translateY(-2px);
 }
 
 #user-info button {
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     color: white;
     border: none;
     height: 33%;
@@ -193,15 +193,15 @@
 
 #remove-button:hover,
 #reject-button:hover {
-    background-color: var(--error-color);
+    background: var(--error-color);
 }
 
 #add-button:hover {
-    background-color: var(--happy-color)
+    background: var(--happy-color)
 }
 
 #blacklist-button:hover {
-    background-color: black;
+    background: black;
 }
 
 @media (max-width: 876px) {

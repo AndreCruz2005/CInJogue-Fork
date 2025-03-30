@@ -1,5 +1,5 @@
 :root {
-    --background-color: #001F3F;
+    --background: #001F3F;
     --box-color: #002b5c;
     --text-color: #F6F6F6;
     --primary-color: #007BFF;
@@ -19,7 +19,7 @@ button:hover {
 }
 
 body {
-    background-color: var(--background-color);
+    background: var(--background);
     color: var(--text-color);
     margin: 0;
 }
@@ -69,7 +69,7 @@ body {
 }
 
 #backend-status.not-ok {
-    background-color: rgb(209, 74, 74);
+    background: --var(--error-color);
 }
 
 #backend-status:hover {
@@ -79,7 +79,7 @@ body {
 #side-bar {
     display: flex;
     flex-direction: column;
-    background-color: var(--box-color);
+    background: var(--box-color);
     max-width: 90px;
     flex: 1;
     justify-content: center;
@@ -92,7 +92,7 @@ body {
         color: var(--text-color);
         font-size: 12px;
         font-weight: bold;
-        background-color: rgba(0, 0, 0, 0.0);
+        background: rgba(0, 0, 0, 0.0);
 
         img {
             width: 60px;

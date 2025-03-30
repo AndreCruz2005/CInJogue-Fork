@@ -83,7 +83,7 @@ export const Social = ({ userData, socialStatus, setSocialStatus, library, fetch
 				</div>
 				<div id="footer">
 					<div></div>
-					<span>Jogos em comum.</span>
+					<span>Jogos em comum</span>
 				</div>
 			</div>
 		</div>

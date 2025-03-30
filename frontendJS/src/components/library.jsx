@@ -220,9 +220,11 @@ export const Library = ({ userData, library, fetchLibrary }) => {
 			</div>
 			<div id="library" ref={libraryRef}>
 				{library
-					? library.map((it) => {
-							return <GameCard title={it.title} rating={it.rating} state={it.state} data={it.data} />;
-					  })
+					? library
+							.sort((a, b) => a.title.localeCompare(b.title))
+							.map((it) => {
+								return <GameCard title={it.title} rating={it.rating} state={it.state} data={it.data} />;
+							})
 					: null}
 			</div>
 		</div>
