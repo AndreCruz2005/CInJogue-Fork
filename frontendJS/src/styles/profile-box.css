@@ -109,7 +109,7 @@
         border-radius: 6px;
         font-size: 0.95rem;
         transition: border-color 0.2s;
-        background: #1a1a2e;
+        background: var(--input-background);
         ;
     }
 
@@ -134,22 +134,22 @@
     }
 
     #options button:hover {
-        background: #3a80d2;
+        background: var(--secondary-color);
     }
 
     /* Danger zone styling */
     #options h3:last-of-type {
-        color: #e74c3c;
+        color: var(--error-color);
         margin-top: 20px;
     }
 
     #options h3:last-of-type+label+button {
-        background: #e74c3c;
+        background: var(--error-color);
         margin-bottom: 12px;
     }
 
     #options h3:last-of-type+label+button:hover {
-        background: #c0392b;
+        filter: brightness(0.8);
     }
 
     /* Responsive adjustments */

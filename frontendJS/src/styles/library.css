@@ -38,20 +38,18 @@
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 4;
-    transition: .3s;
-    border: 2px solid #494849;
+    border: 2px solid var(--input-border-color);
     border-radius: 5px;
-    transition: 0.3s;
 
     #centered-text {
-      color: rgba(0, 0, 0, 0);
+      display: none;
       position: absolute;
       font-weight: bold;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 20;
-      transition: inherit;
+      color: var(--text-color);
     }
 
     /* Images inside the grid */
@@ -62,8 +60,6 @@
       aspect-ratio: 3 / 4;
       object-fit: cover;
       border-radius: 5px;
-      transition: inherit;
-
     }
   }
 
@@ -71,7 +67,7 @@
     cursor: pointer;
 
     #centered-text {
-      color: rgba(255, 255, 255, 1);
+      display: inline;
     }
 
     img {

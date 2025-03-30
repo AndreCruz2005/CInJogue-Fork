@@ -48,12 +48,13 @@
             text-align: center;
             font-size: 13px;
             border-radius: 5px;
-            border: 2px solid #494849;
+            border: 2px solid var(--input-border-color);
             aspect-ratio: 3 / 4;
 
 
             #centered-text {
-                color: rgba(0, 0, 0, 0);
+                display: none;
+                color: var(--text-color);
                 position: absolute;
                 font-weight: bold;
                 top: 50%;
@@ -78,7 +79,7 @@
             cursor: pointer;
 
             #centered-text {
-                color: rgba(255, 255, 255, 1);
+                display: inline;
             }
 
             img {
@@ -153,7 +154,7 @@
         }
 
         .active:hover {
-            background: #d95959;
+            background: var(--error-color);
         }
 
         button:hover {

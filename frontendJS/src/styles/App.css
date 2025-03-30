@@ -4,8 +4,9 @@
     --text-color: #F6F6F6;
     --primary-color: #007BFF;
     --secondary-color: #00a2ff;
-    --error-color: #e74c3c;
     --input-border-color: #3a3a5a;
+    --input-background: #1a1a2e;
+    --error-color: #e74c3c;
     --happy-color: #28A745;
 }
 

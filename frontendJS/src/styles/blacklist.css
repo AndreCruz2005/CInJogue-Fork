@@ -115,7 +115,7 @@
 }
 
 #blacklist>div button:hover {
-    background: #ff5555;
+    background: var(--error-color);
 }
 
 /* Empty state */

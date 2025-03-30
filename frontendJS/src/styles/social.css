@@ -71,7 +71,7 @@
         margin-top: 8px;
         transition: border-color 0.2s;
         color: var(--text-color);
-        background: #1a1a2e;
+        background: var(--input-background);
         margin-bottom: 5px;
         transition: all 0.2s ease;
     }
