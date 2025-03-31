@@ -15,10 +15,10 @@ Comando Remove - Títulos de jogos para serem removidos da biblioteca do usuári
 {"command" : "Remove", "titles" : [Game1, Game2, Game3, Game4, ...], "other" : [lista vazia], "message":string}
 
 Comando Rate  - Títulos de jogos para serem avaliados pelo usuário, junto com notas de 0-10:
-{"command" : "Remove", "titles" : [Game1, Game2, Game3, Game4, ...], "other" : [4, 2, 5, 10, ...], "message":string}
+{"command" : "Rate", "titles" : [Game1, Game2, Game3, Game4, ...], "other" : [4, 2, 5, 10, ...], "message":string}
 
 Comando State - Títulos de jogos para terem seu estado de compleção atualizado pelo usuário. Estados podem ser "NÃO JOGADO", "JOGADO", "AINDA JOGANDO", "CONCLUÍDO", "ABANDONADO", "LISTA DE DESEJOS":
-{"command" : "Remove", "titles" : [Game1, Game2, Game3, Game4, ...], "other" : ["JOGADO", "CONCLUÍDO", "ABANDONADO", "LISTA DE DESEJOS"], "message":string}
+{"command" : "State", "titles" : [Game1, Game2, Game3, Game4, ...], "other" : ["JOGADO", "CONCLUÍDO", "ABANDONADO", "LISTA DE DESEJOS"], "message":string}
 
 Comando Message - Use este caso o comando caso sinta que é necessário comunicar com o usuário ou pedir clarificações acerca do prompt
 {"command" : "Message", "titles" : [lista vazia], "other" : [lista vazia], "message":string}

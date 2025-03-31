@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
-from database import db
+from database import *
 from routes import airoute, blacklistroute, libraryroute, recommendationsroute, tagsroute, usersroute
 import os
 
