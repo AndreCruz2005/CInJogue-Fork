@@ -21,27 +21,41 @@ Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de 
 
 ## Funcionalidades
 
-Obtenção de dados de jogos usando a API do [GiantBomb](https://www.giantbomb.com/api/).
+### Gerenciamento da biblioteca interagindo com a IA que é capaz de 5 comandos:
+| Commando | Descrição |
+|---|---|
+|Recomendar|Exibe jogos com base nas preferências do usuário, estes podem ser adicionados à biblioteca ou recusados pelo usuário.|
+|Adicionar|Adiciona jogos à biblioteca do usuário.|
+|Classificar|Define a classificação de items da biblioteca com uma pontuação entre 0 e 10.|
+|Definir estado|Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>, <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b>|
+|Remover|Remove item da biblioteca|
 
-Gerenciamento da biblioteca interagindo com a IA que é capaz de 5 comandos:
+### Visualizar a biblioteca de outros usuários e compartilhamento de jogos entre bibliotecas
+Clique no ícone de compartilhamento e insira o nome de um usuário na caixa de entrada indicada. Você sera capaz de visualizar os jogos na biblioteca deste. Items que você possui em comum com o outro usuário serão distinguidos com a cor verde. Clique em um item para adiciona-lo à sua prórpira biblioteca.
 
-- Recomendar: Exibe jogos com base nas preferências do usuário, estes podem ser adicionados à biblioteca ou recusados
-  pelo usuário.
-- Adicionar: Adiciona jogos à biblioteca do usuário
-- Classificar: Define a classificação de items da biblioteca com uma pontuação entre 0 e 10.
-- Definir estado: Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>, <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b>
-- Remover: Remove item da biblioteca
+### Definição de preferências relacionadas à plataformas, gêneros, temas e faixas etárias com um sistema de tags cridas pelo usuário.
+Clique no ícone de coração, 4 categorias de preferência serão exibidas. Insira suas preferências relevantes a cada categoria em suas respectivas caixas de entrada o que criará tags para cada uma. Você pode remover as tags clicando nos botões X em cada tag. As preferência serão enviadas ao modelo de IA toda vez que você mandar uma mensagem.
 
-Definição de preferências relacionadas à plataformas, gêneros, temas e faixas etárias com um sistema de tags cridas pelo
-usuário.
+### Marcar jogos para que a IA não os recomende novamente
+Clique em um jogo na aba de recomendações da IA e clique no botão não recomende, o título do jogo será adiconado à uma lista que será enviada ao modelo com a instrução explicíta de que aqueles jogos não devem ser recomendados novamente. Você pode visualizar os jogos nessa lista e removê-los dela clicando no ícone de linhas com um X.
 
-Marcar jogos para que a IA não os recomende novamente
+### Obtenção de dados de jogos usando a API do [GiantBomb](https://www.giantbomb.com/api/).
+Toda vez que a IA tenta adicionar um jogo, seja às recomendações ou à biblioteca, o programa checa se o jogo já foi registrado no banco de dados, caso não, o jogo é procurado através da API de buscas do GiantBomb. Todos os resultados de uma busca são registrados no banco de dados mas somente o primeiro é utilizado para o comando de adição em questão. 
 
-Visualizar a biblioteca de outros usuários e compartilhamento de jogos entre bibliotecas
+### Interagindo com o modelo de IA
+
+Digite seu comando na caixa de entrada no canto inferior direito da tela e envie clicando a tecla ENTER. Exemplos de comandos que você pode experimentar:
+
+    Recomende jogos de ação
+    Adicone Minecraft à minha biblioteca
+    Coloque a nota de Minecraft como 10
+    Adicione 3 jogos de sua escolha à minha biblioteca
+    Defina o estado de todos os jogos como Lista de Desejos
+    Remova todos os items da minha biblioteca
 
 ## Tecnologias Utilizadas
 
-##### **Backend**
+#### **Backend**
 
 - **Python**: Linguagem de programação. Escolhida por já ser familiar aos integrantes do grupo e possuir uma ampla gama de bibliotecas para auxiliar a implemtação das funcionalidades do software.
 - **Pytest**: Biblioteca de Python. Utilizada para criação de testes unitários automatizados
@@ -50,7 +64,7 @@ Visualizar a biblioteca de outros usuários e compartilhamento de jogos entre bi
 - **Flask**: Biblioteca de Python. Usada para criar as rotas de API que permitem que o frontend interaja com o backend, enviando e recebendo informações.
 - **SQLAlchemy**: Biblioteca de Python. Utilizada para criação do banco de dados SQLite que armazena todas as informações tanto de jogos quanto de usuários.
 
-##### Frontend 
+#### Frontend 
 - **HTML**: Linguagem de marcação. Essencial para definir os componentes que estarão presentes na página da aplicação. 
 - **CSS**: Linguagem de marcação. Essencial para definir como os componentes devem ser exibidos por um navegador. 
 - **Javascript**: Linguagem de programação. Essencial para criar aplicações interativas que podem ser executadas por um navegador.
