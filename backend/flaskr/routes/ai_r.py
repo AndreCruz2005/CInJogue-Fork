@@ -102,18 +102,15 @@ def uploadaudio():
         return jsonify({"error": "No audio file provided"}), 400
     
     audio = request.files['audio']
-    os.makedirs(os.path.join('flaskr', 'temp'), exist_ok=True)
-    audio.save('flaskr/temp/audio.wav')
     
-    file = sr.WavFile('flaskr/temp/audio.wav')
-    with file as source:
-        audio = recognizer.record(source)
-        
-    string = ""
     try:
-        string = recognizer.recognize_google(audio)
-        print("Text: "+string)
-    except Exception as e:
-        print("Exception: "+str(e))
+        # Use the audio file directly without saving it
+        with sr.AudioFile(audio) as source:
+            audio_data = recognizer.record(source)
         
-    return jsonify(string), 200
+        string = recognizer.recognize_google(audio_data, language="pt-BR")
+        print("Text: " + string)
+        return jsonify(string), 200
+    except Exception as e:
+        print("Exception: " + str(e))
+        return jsonify({"error": str(e)}), 500

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { backend } from "../global";
+import { encode } from "wav-encoder";
 import "../styles/chat.css";
 
 import microphoneIcon from "../assets/microphone.svg";
@@ -118,6 +119,7 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 		);
 	};
 
+	// Função para buscar as recomendações do usuário
 	function fetchRecommendations() {
 		axios
 			.post(`${backend}/getrecommendations`, {
@@ -131,14 +133,16 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 			.catch((e) => console.error(e));
 	}
 
-	const sendMessage = () => {
-		if (input == "") {
+	// Função para enviar a mensagem para a IA no backend e receber a resposta
+	const sendMessage = (altInput = "") => {
+		const message = altInput == "" ? input : altInput;
+		if (message == "") {
 			return;
 		}
 		setOutput("Aguardando resposta do modelo.");
 		axios
 			.post(`${backend}/genai`, {
-				prompt: input,
+				prompt: message,
 				username: userData.username,
 				password: userData.password,
 			})
@@ -214,11 +218,21 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 		});
 	};
 
+	// Função para interromper a gravação de áudio
+	const stopRecording = () => {
+		mediaRecorderRef.current.stop();
+		setIsRecording(false);
+	};
+
 	// Função para enviar o áudio gravado para o backend
-	const sendAudio = (audioBlob) => {
+	const sendAudio = async (audioBlob) => {
+		// Converte o áudio para PCM WAV
+		const audioBuffer = await blobToAudioBuffer(audioBlob);
+		const wavBlob = await audioBufferToWavBlob(audioBuffer);
+
 		// Cria um FormData para enviar o blob de áudio
 		const formData = new FormData();
-		formData.append("audio", audioBlob, "recording.wav");
+		formData.append("audio", wavBlob, "recording.wav");
 
 		// Faz uma requisição POST para enviar o áudio para o backend
 		axios
@@ -229,22 +243,30 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 			})
 			.then((response) => {
 				// Atualiza o input com a transcrição do áudio recebida do backend
-				setInput(response.data);
-				// Envia a mensagem transcrita para a IA
-				sendMessage();
+				sendMessage(response.data);
 			})
 			.catch((error) => console.error(error));
 	};
 
-	// Função para interromper a gravação de áudio
-	const stopRecording = () => {
-		mediaRecorderRef.current.stop();
-		setIsRecording(false);
+	// Função para converter Blob de áudio para AudioBuffer
+	const blobToAudioBuffer = async (blob) => {
+		const arrayBuffer = await blob.arrayBuffer();
+		const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+		return await audioContext.decodeAudioData(arrayBuffer);
 	};
 
-	// Atualiza a biblioteca e recomendações quando a página carrega
+	// Fun
+	const audioBufferToWavBlob = async (audioBuffer) => {
+		const wavData = await encode({
+			sampleRate: audioBuffer.sampleRate,
+			channelData: Array.from({ length: audioBuffer.numberOfChannels }, (_, i) => audioBuffer.getChannelData(i)),
+		});
+
+		return new Blob([wavData], { type: "audio/wav" });
+	};
+
+	// Atualiza a recomendações quando a página carrega
 	useEffect(() => {
-		fetchLibrary();
 		fetchRecommendations();
 	}, []);
 

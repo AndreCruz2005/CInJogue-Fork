@@ -191,6 +191,11 @@ export const Library = ({ userData, library, fetchLibrary }) => {
 		}
 	}, [filter, library]);
 
+	// Atualiza a biblioteca quando a página carrega
+	useEffect(() => {
+		fetchLibrary();
+	}, []);
+
 	return (
 		<div id="library-container">
 			<InfoBox />

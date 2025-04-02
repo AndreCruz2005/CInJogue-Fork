@@ -20,7 +20,6 @@ def search_game(game_name, API_KEY=api_key):
     if response.status_code == 200:
         search_results = response.json().get("results", [])
         games = [game for game in search_results if game.get('resource_type') == 'game']
-        print(games[0]['original_game_rating'])
         return games
     
     else:
