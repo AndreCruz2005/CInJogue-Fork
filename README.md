@@ -63,6 +63,7 @@ Digite seu comando na caixa de entrada no canto inferior direito da tela e envie
 - **Requests**: Biblioteca de Python. Utilizada para realizar requisições HTTP para a API da GiantBomb e adquirir dados sobre videogames.
 - **Flask**: Biblioteca de Python. Usada para criar as rotas de API que permitem que o frontend interaja com o backend, enviando e recebendo informações.
 - **SQLAlchemy**: Biblioteca de Python. Utilizada para criação do banco de dados SQLite que armazena todas as informações tanto de jogos quanto de usuários.
+- **Speech Recognizer**: Biblioteca de Python. Utilizada para processar as mensagens de voz e enviar elas como texto para o modelo de IA.
 
 #### Frontend 
 - **HTML**: Linguagem de marcação. Essencial para definir os componentes que estarão presentes na página da aplicação. 
@@ -72,6 +73,7 @@ Digite seu comando na caixa de entrada no canto inferior direito da tela e envie
 - **Vite**: Servidor de desenvolvimento local. Utilizado para execução da aplicação web localmente permitindo o desenvolvimento.
 - **React**: Biblioteca de Javascript. Utilizada pois facilita a criação da interface gráfica da aplicação principalmente pelo uso de state hooks que podem ser usados para atualizar as informações exibidas na página em função de uma variável de forma automática.
 - **Axios**: Biblioteca de Javascript. Utilizada para fazer requisições HTTP ao backend. Escolhida pois possui error handling e JSON parsing automáticos, ao contrário da função nativa de JS fetch().
+- **Wav Encoder**: Biblioteca de Javascript. Utilizada para converter o áudio enviado como mensagem de voz para o formato WAV PCM, pois este é o formato reconhecido pela biblioteca Speech Recognizer no backend.
 
 ## Estrutura do Projeto
 
