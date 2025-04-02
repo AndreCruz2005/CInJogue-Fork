@@ -2,6 +2,32 @@
 
 <b>Deployed demo:</b> https://cinjogue.vercel.app/ (lento)
 
+## Índice
+
+1. [Equipe](#equipe)
+2. [Projeto](#projeto)
+3. [Funcionalidades](#funcionalidades)
+   - [Gerenciamento da biblioteca com auxílio da IA](#gerenciamento-da-biblioteca-com-auxílio-da-ia-que-é-capaz-de-5-comandos)
+   - [Visualizar a biblioteca de outros usuários e compartilhamento de jogos](#visualizar-a-biblioteca-de-outros-usuários-e-compartilhamento-de-jogos)
+   - [Definição de preferências](#definição-de-preferências)
+   - [Marcar jogos para que a IA não os recomende novamente](#marcar-jogos-para-que-a-ia-não-os-recomende-novamente)
+   - [Obtenção de dados de jogos usando a API do GiantBomb](#obtenção-de-dados-de-jogos-usando-a-api-do-giantbomb)
+   - [Interagindo com o modelo de IA](#interagindo-com-o-modelo-de-ia)
+4. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+   - [Backend](#backend)
+   - [Frontend](#frontend)
+5. [Estrutura do Projeto](#estrutura-do-projeto)
+   - [Diretório `frontendJS`](#diretório-frontendjs)
+   - [Diretório `backend`](#diretório-backend)
+   - [Diretório `testes`](#diretório-testes)
+   - [Arquivos de Configuração](#arquivos-de-configuração)
+   - [Outros](#outros)
+6. [Instruções para Execução Local](#instruções-para-execução-local)
+   - [Requisitos](#requisitos)
+   - [Setup](#setup)
+     - [Backend](#backend-1)
+     - [Frontend](#frontend-1)
+
 ## Equipe
 
 Desenvolvimento de Software - CIn/Ufpe - 2024.2 - **Equipe 10**
@@ -23,7 +49,7 @@ Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de 
 
 ## Funcionalidades
 
-### Gerenciamento da biblioteca interagindo com a IA que é capaz de 5 comandos:
+### Gerenciamento da biblioteca com auxílio da IA que é capaz de 5 comandos:
 
 | Commando       | Descrição                                                                                                                                                          |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -33,13 +59,13 @@ Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de 
 | Definir estado | Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>, <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b> |
 | Remover        | Remove item da biblioteca                                                                                                                                          |
 
-### Visualizar a biblioteca de outros usuários e compartilhamento de jogos entre bibliotecas
+### Visualizar a biblioteca de outros usuários e compartilhamento de jogos
 
 Clique no ícone de compartilhamento e insira o nome de um usuário na caixa de entrada indicada. Você sera capaz de visualizar os jogos na biblioteca deste. Items que você possui em comum com o outro usuário serão distinguidos com a cor verde. Clique em um item para adiciona-lo à sua prórpira biblioteca.
 
-### Definição de preferências relacionadas à plataformas, gêneros, temas e faixas etárias com um sistema de tags cridas pelo usuário.
+### Definição de preferências
 
-Clique no ícone de coração, 4 categorias de preferência serão exibidas. Insira suas preferências relevantes a cada categoria em suas respectivas caixas de entrada o que criará tags para cada uma. Você pode remover as tags clicando nos botões X em cada tag. As preferência serão enviadas ao modelo de IA toda vez que você mandar uma mensagem.
+Clique no ícone de coração, 4 categorias de preferência serão exibidas: Plataforma, gênero, tema e faixa etária. Insira suas preferências relevantes a cada categoria em suas respectivas caixas de entrada o que criará tags para cada uma. Você pode remover as tags clicando nos botões X em cada tag. As preferência serão enviadas ao modelo de IA toda vez que você mandar uma mensagem.
 
 ### Marcar jogos para que a IA não os recomende novamente
 
