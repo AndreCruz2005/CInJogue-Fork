@@ -16,7 +16,7 @@ def promptAI():
     
     prompt = data.get('prompt')
     prompt = format_prompt(prompt)
-    print(prompt)
+
     response = GenAI.send_message(str(prompt))
     response = eval(response)
     
@@ -109,8 +109,8 @@ def uploadaudio():
             audio_data = recognizer.record(source)
         
         string = recognizer.recognize_google(audio_data, language="pt-BR")
-        print("Text: " + string)
+        print("Text: " + string, flush=True)
         return jsonify(string), 200
     except Exception as e:
-        print("Exception: " + str(e))
+        print("Exception: " + str(e), flush=True)
         return jsonify({"error": str(e)}), 500
