@@ -3,7 +3,9 @@
 <b>Deployed demo:</b> https://cinjogue.vercel.app/ (lento)
 
 ## Equipe
+
 Desenvolvimento de Software - CIn/Ufpe - 2024.2 - **Equipe 10**
+
 - André Vinícius Nascimento Cruz - **avnc**
 - Gabriel Bezerra Moraes - **gbm2**
 - Lavoisier Oliveira Cândido - **loc2**
@@ -22,25 +24,30 @@ Aplicação que permite ao usuário criar e gerenciar uma biblioteca pessoal de 
 ## Funcionalidades
 
 ### Gerenciamento da biblioteca interagindo com a IA que é capaz de 5 comandos:
-| Commando | Descrição |
-|---|---|
-|Recomendar|Exibe jogos com base nas preferências do usuário, estes podem ser adicionados à biblioteca ou recusados pelo usuário.|
-|Adicionar|Adiciona jogos à biblioteca do usuário.|
-|Classificar|Define a classificação de items da biblioteca com uma pontuação entre 0 e 10.|
-|Definir estado|Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>, <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b>|
-|Remover|Remove item da biblioteca|
+
+| Commando       | Descrição                                                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Recomendar     | Exibe jogos com base nas preferências do usuário, estes podem ser adicionados à biblioteca ou recusados pelo usuário.                                              |
+| Adicionar      | Adiciona jogos à biblioteca do usuário.                                                                                                                            |
+| Classificar    | Define a classificação de items da biblioteca com uma pontuação entre 0 e 10.                                                                                      |
+| Definir estado | Define o estado de um item da biblioteca como <b>Não jogado</b>, <b>Jogado</b>, <b>Ainda jogando</b>, <b>Concluído</b>, <b>Abandonado</b>, <b>Lista de desejos</b> |
+| Remover        | Remove item da biblioteca                                                                                                                                          |
 
 ### Visualizar a biblioteca de outros usuários e compartilhamento de jogos entre bibliotecas
+
 Clique no ícone de compartilhamento e insira o nome de um usuário na caixa de entrada indicada. Você sera capaz de visualizar os jogos na biblioteca deste. Items que você possui em comum com o outro usuário serão distinguidos com a cor verde. Clique em um item para adiciona-lo à sua prórpira biblioteca.
 
 ### Definição de preferências relacionadas à plataformas, gêneros, temas e faixas etárias com um sistema de tags cridas pelo usuário.
+
 Clique no ícone de coração, 4 categorias de preferência serão exibidas. Insira suas preferências relevantes a cada categoria em suas respectivas caixas de entrada o que criará tags para cada uma. Você pode remover as tags clicando nos botões X em cada tag. As preferência serão enviadas ao modelo de IA toda vez que você mandar uma mensagem.
 
 ### Marcar jogos para que a IA não os recomende novamente
+
 Clique em um jogo na aba de recomendações da IA e clique no botão não recomende, o título do jogo será adiconado à uma lista que será enviada ao modelo com a instrução explicíta de que aqueles jogos não devem ser recomendados novamente. Você pode visualizar os jogos nessa lista e removê-los dela clicando no ícone de linhas com um X.
 
 ### Obtenção de dados de jogos usando a API do [GiantBomb](https://www.giantbomb.com/api/).
-Toda vez que a IA tenta adicionar um jogo, seja às recomendações ou à biblioteca, o programa checa se o jogo já foi registrado no banco de dados, caso não, o jogo é procurado através da API de buscas do GiantBomb. Todos os resultados de uma busca são registrados no banco de dados mas somente o primeiro é utilizado para o comando de adição em questão. 
+
+Toda vez que a IA tenta adicionar um jogo, seja às recomendações ou à biblioteca, o programa checa se o jogo já foi registrado no banco de dados, caso não, o jogo é procurado através da API de buscas do GiantBomb. Todos os resultados de uma busca são registrados no banco de dados mas somente o primeiro é utilizado para o comando de adição em questão.
 
 ### Interagindo com o modelo de IA
 
@@ -65,53 +72,69 @@ Digite seu comando na caixa de entrada no canto inferior direito da tela e envie
 - **SQLAlchemy**: Biblioteca de Python. Utilizada para criação do banco de dados SQLite que armazena todas as informações tanto de jogos quanto de usuários.
 - **Speech Recognizer**: Biblioteca de Python. Utilizada para processar as mensagens de voz e enviar elas como texto para o modelo de IA.
 
-#### Frontend 
-- **HTML**: Linguagem de marcação. Essencial para definir os componentes que estarão presentes na página da aplicação. 
-- **CSS**: Linguagem de marcação. Essencial para definir como os componentes devem ser exibidos por um navegador. 
+#### Frontend
+
+- **HTML**: Linguagem de marcação. Essencial para definir os componentes que estarão presentes na página da aplicação.
+- **CSS**: Linguagem de marcação. Essencial para definir como os componentes devem ser exibidos por um navegador.
 - **Javascript**: Linguagem de programação. Essencial para criar aplicações interativas que podem ser executadas por um navegador.
 - **Node.Js/NPM**: Utilizados para criação da aplicação web e instalação de bibliotecas de Javascript.
 - **Vite**: Servidor de desenvolvimento local. Utilizado para execução da aplicação web localmente permitindo o desenvolvimento.
-- **React**: Biblioteca de Javascript. Utilizada pois facilita a criação da interface gráfica da aplicação principalmente pelo uso de state hooks que podem ser usados para atualizar as informações exibidas na página em função de uma variável de forma automática.
+- **React**: Biblioteca de Javascript. Utilizada pois facilita a criação da interface gráfica da aplicação principalmente pelo uso de state hooks que podem ser usados para atualizar as informações exibidas na página em função
+  de uma variável de forma automática.
 - **Axios**: Biblioteca de Javascript. Utilizada para fazer requisições HTTP ao backend. Escolhida pois possui error handling e JSON parsing automáticos, ao contrário da função nativa de JS fetch().
 - **Wav Encoder**: Biblioteca de Javascript. Utilizada para converter o áudio enviado como mensagem de voz para o formato WAV PCM, pois este é o formato reconhecido pela biblioteca Speech Recognizer no backend.
 
 ## Estrutura do Projeto
 
-#### Backend (Servidor em Flask e database com SQLAlchemy e SQLite)
+### Diretório `frontendJS`
 
-```
-├── backend/
-│   ├── flaskr/
-│   │   ├── app.py
-│   │   ├── database/
-│   │   ├── gemini/
-│   │   ├── giantbomb/
-│   │   ├── routes/
-│   ├── requirements.txt
-```
+- **`src/App.jsx`**: Componente principal do frontend que gerencia o estado global da aplicação e renderiza os componentes principais, como biblioteca, chat, e barra lateral.
+- **`src/components/auth.jsx`**: Gerencia a autenticação do usuário, incluindo login e cadastro.
+- **`src/components/library.jsx`**: Exibe a biblioteca de jogos do usuário, permitindo interações como alterar estado, avaliar e remover jogos.
+- **`src/components/chat.jsx`**: Interface para interação com o modelo de IA, incluindo envio de mensagens e gravação de áudio.
+- **`src/components/preferences.jsx`**: Permite ao usuário definir preferências relacionadas a plataformas, gêneros, temas e classificações etárias.
+- **`src/components/blacklist.jsx`**: Gerencia a lista de jogos que o usuário não deseja receber como recomendação.
+- **`src/components/social.jsx`**: Permite visualizar a biblioteca de outros usuários e compartilhar jogos.
+- **`src/components/profile-box.jsx`**: Gerencia as configurações de conta do usuário, como alteração de senha e exclusão de conta.
+- **`src/styles/`**: Contém os arquivos CSS para estilização dos componentes sendo estes: `App.css`, `library.css`, `chat.css`, `auth.css`, `blacklist.css`, `infobox.css`, `preferences.css`, `profile-box.css` e `social.css`.
+- **`index.html`**: Arquivo HTML principal que serve como ponto de entrada para o frontend.
+- **`src/global.js`**: Contém configurações globais, como a URL do backend.
+- **`package.json`**: Lista de dependências do frontend que devem ser instaladas.
 
-#### Frontend (Aplicação web feita com React + Vite)
+### Diretório `backend`
 
-```
-├── frontendJS/
-│   ├── .gitignore
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── node_modules/
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── public/
-│   ├── src/
-│   │   ├── Assets/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   ├── global.js
-│   │   ├── main.jsx
-│   │   ├── styles/
-│   ├── vite.config.js
-```
+- **`flaskr/app.py`**: Arquivo principal do backend que inicializa o servidor Flask, o banco de dados com SQLAlchemy e configura as rotas de API.
+- **`flaskr/gemini/gemini.py`**: Implementa a integração com o modelo de IA Gemini, incluindo as instruções e configurações do modelo.
+- **`flaskr/giantbomb/giantbomb.py`**: Implementa a integração com a API de busca do GiantBomb.
+- **`flaskr/routes/`**: Contém os arquivos que definem as rotas específicas da API, como autenticação, gerenciamento de
+  biblioteca e preferências.
+- **`flaskr/database/`**: Gerencia a interação com o banco de dados SQLite, incluindo modelos e operações CRUD.
+- **`requirements.txt`**: Lista de dependências do backend que devem ser instaladas.
 
-## Requisitos
+### Diretório `testes`
+
+- **`tests/conftest.py`**: Configurações globais para os testes, incluindo a criação de fixtures para inicializar o banco de dados em memória e criar usuários de teste.
+- **`tests/test_users.py`**: Testa funcionalidades relacionadas a usuários, como login, alteração de senha e remoção de conta.
+- **`tests/test_tags.py`**: Testa a adição, remoção e recuperação de preferências do usuário.
+- **`tests/test_recommendations.py`**: Testa a funcionalidade de recomendações, incluindo a remoção de jogos das recomendações.
+- **`tests/test_library.py`**: Testa operações relacionadas à biblioteca do usuário, como adicionar, remover, atualizar estado e avaliar jogos.
+- **`tests/test_blacklist.py`**: Testa a funcionalidade da lista de não recomende, incluindo adicionar e remover jogos da lista.
+- **`tests/test_ai.py`**: Testa a interação com o modelo de IA, verificando os comandos como recomendar, adicionar, remover, avaliar e alterar estado de jogos. Não verifica o conteúdo mas sim a estrutura das respostas, uma vez que o conteúdo é variável. Falhas nesses testes indicariam de a necessidade instruções mais robustas para o modelo generativo.
+
+### Arquivos de Configuração
+
+- **`.env.example`**: Exemplo de arquivo de configuração de variáveis de ambiente, como chaves de API.
+- **`setup.sh`**: Script para configurar e iniciar o backend e frontend automaticamente.
+- **`.prettierrc.yaml`**: Arquivo de configurações para formatação automática do código no VSCode com a extensão Prettier.
+
+### Outros
+
+- **`ROTAS.md`**: Documentação detalhada das rotas da API do backend, incluindo exemplos de requisições e respostas.
+- **`screenshots/`**: Contém capturas de tela da aplicação, ilustrando suas capacidades.
+
+## Instruções para Execução Local
+
+### Requisitos
 
 - [Python 3.13](https://www.python.org/downloads/) ou mais recente
 - [Node.js 20.17.0](https://nodejs.org/en/download) ou mais recente
@@ -120,7 +143,7 @@ Digite seu comando na caixa de entrada no canto inferior direito da tela e envie
 
 **OBS:** Será necessário criar contas em cada uma das plataformas para conseguir uma chave de API.
 
-## Setup
+### Setup
 
 1. Clone o repositório e navegue para o diretório do projeto:
 
@@ -139,7 +162,8 @@ Digite seu comando na caixa de entrada no canto inferior direito da tela e envie
 
    Edite o arquivo .env com suas configurações.
 
-3. Tendo configurado o arquivo .env, execute o arquivo setup.sh em um terminal bash para configurar e iniciar o backend e frontend
+3. Tendo configurado o arquivo .env, execute o arquivo setup.sh em um terminal bash para configurar e iniciar o backend
+   e frontend
    ```
    chmod +x setup.sh
    ./setup.sh

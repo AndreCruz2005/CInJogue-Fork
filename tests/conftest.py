@@ -13,7 +13,7 @@ def app():
     app.config['TESTING'] = True    
     
     with app.app_context():
-        new_game = Game(title="game1", data="{mock: data}")
+        new_game = Game(title="game1", data='{"mock": "data"}')
         db.session.add(new_game)
         db.session.commit()
     

@@ -255,7 +255,7 @@ export const Chat = ({ userData, recommendations, setRecommendations, fetchLibra
 		return await audioContext.decodeAudioData(arrayBuffer);
 	};
 
-	// Fun
+	// Função para converter AudioBuffer para Blob WAV
 	const audioBufferToWavBlob = async (audioBuffer) => {
 		const wavData = await encode({
 			sampleRate: audioBuffer.sampleRate,
