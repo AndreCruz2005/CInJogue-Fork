@@ -35,7 +35,7 @@ Desenvolvimento de Software - CIn/Ufpe - 2024.2 - **Equipe 10**
 - André Vinícius Nascimento Cruz - **avnc**
 - Gabriel Bezerra Moraes - **gbm2**
 - Lavoisier Oliveira Cândido - **loc2**
-- Lucas Moraes - **lmo2**
+- Lucas Moraes Oliveira - **lmo2**
 - Lucas Vinicius Moura da Silva - **lvms** (Enviado para a equipe 11)
 - Luiz Eduardo de Andrade Lins - **leal** (Recebido da equipe 9)
 
